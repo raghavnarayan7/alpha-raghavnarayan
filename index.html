@@ -200,12 +200,12 @@ tr:hover td { background: rgba(59,130,246,0.05); }
 
 const DATA = {
   meta: {
-    runNumber: '7',
-    runDate: '2026-03-30',
-    lastUpdated: 'Mar 30, 2026 (Run #7 \u2014 Monday automated scan + HF Intel). Last trading day: Fri Mar 27. Prices via Web Search. SNPS -5.4% biggest mover. GDX +4.0% best paper performer. Gold $4,524. Brent $112.57. F&G 15 Extreme Fear. Apr 2 Liberation Day in 3 DAYS.',
+    runNumber: '8',
+    runDate: '2026-03-31',
+    lastUpdated: 'Mar 31, 2026 (Run #8 \u2014 Tuesday automated scan). Last trading day: Mon Mar 30. Prices via Web Search. S&P bounced to 6,426 (+0.9%). XLE $62.56 (+1.68% \u2014 CATCHING UP to oil). Gold ~$4,550. Brent $111-115. F&G DROPPED TO 10 (from 15). Iran ESCALATION: Trump threatened to obliterate Iran. Apr 2 tariff review 2 days. Apr 6 Hormuz deadline 7 days.',
     inception: '2026-03-24',
     allocation: 10000,
-    verificationSummary: 'Run #7: 22 claims checked, 3 corrected. Uranium spot corrected from >$100/lb to ~$87-90 (Feb correction). SNPS $380.47 confirmed via article. Mar 27 was last trading day (Fri).',
+    verificationSummary: 'Run #8: 24 claims checked, 4 corrected. CCJ/URA/SNPS use Mar 27 close (Mar 30 unconfirmed). GOOGL/XLE/GDX confirmed Mar 30. S&P 6,426 confirmed. F&G 10 confirmed.',
   },
 
   positions: [
@@ -217,22 +217,22 @@ const DATA = {
       shares: 19,
       entry: 101.55,
       current: 103.92,
-      prevClose: 104.67,
-      stop: 88.00,
+      prevClose: 103.92,
+      stop: 101.55,
       target: 130.00,
       partialExit: { price: 120, pct: 50 },
       entryDate: '2026-03-24',
       horizon: '3-6 months',
-      conviction: 85,
+      conviction: 80,
       status: 'REAL',
       catalysts: [
-        { date: 'Apr 2', event: 'Liberation Day tariffs (10% Section 122 on ~180 countries)', impact: 'CCJ insulated (Canadian). Broad market volatility catalyst.' },
-        { date: 'Apr 6', event: 'Trump extended Hormuz deadline expires', impact: 'Binary catalyst for Iran crisis. Energy security \u2192 nuclear demand narrative.' },
+        { date: 'Apr 2', event: 'Tariff review (Section 122 already live since Feb 24)', impact: 'CCJ insulated (Canadian). Broad market volatility catalyst.' },
+        { date: 'Apr 6', event: 'Trump Hormuz deadline expires (2nd extension)', impact: 'Binary catalyst. Trump threatened to obliterate Iran. Israel struck Isfahan.' },
         { date: 'May 5', event: 'CCJ Q1 Earnings', impact: 'KEY \u2014 Q4 beat by 28.6%. Growth confirmation.' },
         { date: 'H1 2026', event: 'TerraPower NRC Permit', impact: 'Sector-defining catalyst for SMRs' },
       ],
       killCondition: 'Major nuclear incident, hyperscaler cancels nuclear, uranium <$75/lb, NRC denies SMR permits',
-      whyWrong: 'Uranium spot corrected to ~$87 in Feb (not >$100 as previously stated). Kazatomprom +9% production. CCJ correlates with broad market selloff (Dow entering correction).',
+      whyWrong: 'Uranium spot ~$87/lb (Feb correction). Kazatomprom +9% production. Mar 30 close unconfirmed \u2014 using Mar 27 $103.92. STOP RAISED TO $101.55 (entry) = risk-free on capital.',
     },
     {
       ticker: 'URA',
@@ -289,8 +289,8 @@ const DATA = {
       themeNum: 3,
       shares: 5,
       entry: 280.92,
-      current: 273.76,
-      prevClose: 280.72,
+      current: 273.78,
+      prevClose: 273.76,
       stop: 258.00,
       target: 376.00,
       partialExit: { price: 340, pct: 50 },
@@ -304,7 +304,7 @@ const DATA = {
         { date: 'Ongoing', event: 'F&G recovery from 15', impact: 'Contrarian signal triggers when fear eases.' },
       ],
       killCondition: 'Legal liability existential; F&G drops to 5; recession confirmed',
-      whyWrong: 'Klarman trimmed GOOGL 40% (Baupost). Ackman trimming. Liberation Day could cause another leg down. P/E still >25x. Paper trade already -2.55%.',
+      whyWrong: 'Klarman trimmed GOOGL 40% (Baupost). Ackman trimming. F&G dropped to 10 (from 15) \u2014 deeper fear but CLOSER to contrarian entry. P/E still >25x. Paper trade -2.54%.',
     },
     {
       ticker: 'XLE',
@@ -313,7 +313,7 @@ const DATA = {
       themeNum: 2,
       shares: 24,
       entry: 61.52,
-      current: 61.52,
+      current: 62.56,
       prevClose: 61.52,
       stop: 57.00,
       target: 70.00,
@@ -327,7 +327,7 @@ const DATA = {
         { date: 'Apr 2', event: 'Liberation Day tariffs', impact: 'Energy costs already elevated; tariffs add more inflationary pressure.' },
       ],
       killCondition: 'Partial deal reached; oil falls below $85; Hormuz fully reopens',
-      whyWrong: 'XLE FLAT despite Brent surging to $112.57. Broad market selloff offsetting energy gains. Buying at 52wk high means any de-escalation = immediate drawdown.',
+      whyWrong: 'XLE FINALLY catching up to oil (+1.68% on Mar 30). Now at 52wk high $62.56 (range $61.26-$62.79). Iran escalation (Trump threatened obliteration, Israel struck Isfahan) embedded in price. De-escalation = immediate drawdown.',
     },
     {
       ticker: 'GDX',
@@ -336,8 +336,8 @@ const DATA = {
       themeNum: 6,
       shares: 14,
       entry: 82.39,
-      current: 85.68,
-      prevClose: 82.39,
+      current: 85.79,
+      prevClose: 85.68,
       stop: 75.00,
       target: 100.00,
       partialExit: { price: 92, pct: 50 },
@@ -362,30 +362,32 @@ const DATA = {
     { date: '2026-03-25', value: 10141.93, note: 'CCJ close $109.02' },
     { date: '2026-03-26', value: 10059.28, note: 'CCJ close $104.67 [Chrome]. 5 paper trades entered.' },
     { date: '2026-03-27', value: 9988.61, note: 'CCJ $103.92 (-0.72%). SNPS $380.47 (-5.35%). GDX $85.68 (+4.0%). Gold $4,524. Brent $112.57. S&P 5th straight losing week. Dow enters correction.' },
+    { date: '2026-03-30', value: 10034.01, note: 'S&P bounced 6,426 (+0.9%). XLE $62.56 (+1.68%). GDX $85.79 (flat). GOOGL $273.78 (flat). Gold ~$4,550. Brent $111-115. F&G 10 (DEEPER fear). CCJ stop raised to $101.55 (entry).' },
   ],
 
   macro: {
     kpis: [
-      { label: 'S&P 500', value: '6,368.85', sub: '-1.67% (5th straight losing week) [Web Search]', color: 'var(--red)' },
-      { label: 'Nasdaq', value: '20,948.36', sub: '-2.15%. Entered correction territory. [Web Search]', color: 'var(--red)' },
-      { label: 'Dow Jones', value: '45,166.64', sub: '-793pts (-1.73%). ENTERED CORRECTION. [Web Search]', color: 'var(--red)' },
-      { label: 'VIX', value: '~28-31', sub: 'Elevated. Prior: 27.44. Range 20.28-35.30 in Mar. [ESTIMATED]', color: 'var(--red)' },
-      { label: 'Gold', value: '$4,524/oz', sub: '+$115 (+2.62%). Safe haven surge. [Web Search]', color: 'var(--green)' },
-      { label: 'Brent Crude', value: '$112.57/bbl', sub: '+4.22%. Iran/Hormuz premium. [Web Search]', color: 'var(--red)' },
-      { label: 'WTI Crude', value: '$99.64/bbl', sub: '+5.46%. Breached $100 threshold. [Web Search]', color: 'var(--red)' },
-      { label: 'Uranium Spot', value: '~$87-90/lb', sub: 'CORRECTED from >$100. Spot $86.95 end Feb. Long-term $90. [Web Search]', color: 'var(--amber)' },
-      { label: 'Fear & Greed', value: '15/100', sub: 'EXTREME FEAR. 6/7 gauges extreme. [Web Search]', color: 'var(--red)' },
-      { label: 'AAII Bearish', value: '49.8%', sub: '7th straight week above avg. Bullish only 32.1%. [Web Search]', color: 'var(--red)' },
-      { label: 'Fed Rate', value: '3.50-3.75%', sub: 'Held Mar. PCE 2.7%, Core PCE 3.1%. NO cuts 2026. [Web Search]', color: '' },
-      { label: '10Y Yield', value: '4.44%', sub: '+0.01%. Sticky. [Web Search]', color: '' },
-      { label: 'NFP (Feb)', value: '-92,000', sub: 'Job losses. Unemployment 4.4%. [Web Search]', color: 'var(--red)' },
+      { label: 'S&P 500', value: '6,426', sub: '+0.9% (bounce from 6,369). Streak broken? [Web Search - 247wallst/CNBC]', color: 'var(--green)' },
+      { label: 'Nasdaq', value: '~21,100', sub: 'Bounce expected. Still in correction territory. [ESTIMATED from S&P]', color: 'var(--amber)' },
+      { label: 'Dow Jones', value: '~45,600', sub: 'Bounce day. Still in correction. [ESTIMATED from S&P]', color: 'var(--amber)' },
+      { label: 'VIX', value: '~28-31', sub: 'Elevated. Range 20.28-35.30 in Mar. [ESTIMATED]', color: 'var(--red)' },
+      { label: 'Gold', value: '$4,550/oz', sub: '+$26 (+0.6%) from $4,524. Safe haven bid persists. [Web Search - Fortune]', color: 'var(--green)' },
+      { label: 'Brent Crude', value: '$111-115/bbl', sub: 'LARGEST MONTHLY GAIN SINCE INCEPTION (+55% in Mar). Hormuz closure. [Web Search - CNBC]', color: 'var(--red)' },
+      { label: 'WTI Crude', value: '$102.88/bbl', sub: 'Closed above $100. First time since Jul 2022. [Web Search - CNBC]', color: 'var(--red)' },
+      { label: 'Uranium Spot', value: '~$87-90/lb', sub: 'Unchanged. Spot $86.95 end Feb. Long-term $90. [Web Search]', color: 'var(--amber)' },
+      { label: 'Fear & Greed', value: '10/100', sub: '\u2b07\ufe0f DOWN FROM 15. DEEPEST EXTREME FEAR. [Web Search - feargreedmeter.com]', color: 'var(--red)' },
+      { label: 'AAII Bearish', value: '~50%', sub: '8th+ straight week above avg. [ESTIMATED from trend]', color: 'var(--red)' },
+      { label: 'Fed Rate', value: '3.50-3.75%', sub: 'On hold. Only 1 cut projected 2026 (dot plot). Oil inflation sticky. [Web Search - CME]', color: '' },
+      { label: '10Y Yield', value: '4.35%', sub: '-9bps from 4.44%. Flight to safety bid. [Web Search - FRED]', color: 'var(--green)' },
+      { label: 'NFP (Feb)', value: '-92,000', sub: 'Claims stabilizing (4-wk avg 210.5K, declining). Mar NFP due Apr 11. [Web Search]', color: 'var(--red)' },
     ],
-    regime: 'RISK-OFF DEEPENING: Dow in correction + Nasdaq in correction + Oil >$112 + F&G 15 + NFP negative + Liberation Day in 3 days',
-    narrative: `<p><b>MARKET REGIME (Run #7, Mon Mar 30):</b> Friday capped the 5th straight losing week for S&P 500 \u2014 longest streak in 4 years. Dow officially entered correction territory (-10% from highs). Nasdaq also in correction. Brent crude surged past $112 on Strait of Hormuz disruption (17.8M bbl/day transit threatened). WTI briefly breached $100 \u2014 first time since July 2022.</p>
-<p><b>STAGFLATION SETUP INTENSIFYING:</b> Oil >$110 + PCE 2.7% + Core PCE 3.1% + NFP -92K + Fed on hold = textbook stagflation. JPMorgan warned if oil stays ~$110 through year-end, consensus earnings cut 2-5%. CME FedWatch now pricing NO rate cut in 2026 (first cut mid-2027). This is the worst macro backdrop since the Iran attacks began Feb 28.</p>
-<p><b>URANIUM SPOT CORRECTION:</b> Key finding this run \u2014 uranium spot corrected to $86.95 at end of February. Prior runs stated ">$100/lb" which was the January peak. Long-term contract price at $90/lb. The structural thesis remains (AI power demand 176\u2192580 TWh by 2028, DOE $2.7B enrichment commitment), but spot price is lower than previously reported. CCJ still trading above entry.</p>
-<p><b>DUAL CATALYST COUNTDOWN:</b> Apr 2 Liberation Day (3 days) + Apr 6 Iran Hormuz deadline (7 days). SCOTUS ruled IEEPA tariffs unconstitutional in Feb 2026 \u2014 replaced with Section 122 at 10% flat. Portfolio balanced for both outcomes. Iran rejected ceasefire (15-point plan "one-sided and unfair"). Trump extended deadline to Apr 6.</p>
-<p><b>GOLD SURGE:</b> Gold rallied to $4,524 (+2.62%) after a brutal -10% weekly rout (Mar 20, worst since 2011). Recovery driven by safe haven demand as equity markets sell off. GDX paper trade benefiting (+4.0%).</p>`
+    regime: 'RISK-OFF WITH BOUNCE: S&P +0.9% but F&G 10 (deeper fear) + Oil >$111 + Iran escalating + Apr 2 tariff review 2 days + Apr 6 Hormuz deadline 7 days',
+    narrative: `<p><b>MARKET REGIME (Run #8, Tue Mar 31):</b> S&P bounced to 6,426 on Monday (+0.9%), potentially breaking 5-week losing streak. BUT F&G dropped to 10 (from 15) \u2014 deepest extreme fear reading. Bounce may be dead-cat with dual catalysts ahead (Apr 2 + Apr 6). Brent crude made HISTORY: +55% for March, largest monthly gain since Brent inception (prev record: +46% Sept 1990, Gulf War I).</p>
+<p><b>IRAN ESCALATION \u2014 CRITICAL:</b> Trump threatened to "completely obliterate" Iran\u2019s power plants, oil wells, and Kharg Island. Israel struck Isfahan killing IRGC naval commander. Iran fired missiles at central Israel. Strait closed to commercial traffic since Mar 2 (17.8M bbl/day disrupted). Apr 6 deadline is 2nd extension. Kinetic strikes happening on both sides.</p>
+<p><b>TARIFF CLARIFICATION:</b> Section 122 tariffs ALREADY LIVE (Feb 24\u2013Jul 24, 10% on all imports). Apr 2 is mid-point review, NOT a new tariff event. Reduces Apr 2 as standalone catalyst. Apr 6 Iran deadline is the REAL binary event.</p>
+<p><b>AI POWER DEMAND (STRUCTURAL):</b> US data centers now draw 41 GW (150% increase/5yr). 1,000+ TWh by 2030 globally. 85-90 GW new nuclear needed. 33 countries pledge to triple nuclear by 2050. Microsoft/Google/Amazon signed nuclear PPAs. Uranium thesis intact despite spot correction to $87.</p>
+<p><b>LABOR MARKET:</b> Feb NFP -92K was shock, but claims stabilizing \u2014 4-wk avg 210.5K (4th consecutive decline), continued claims 10-month low. Not recessionary yet. Mar NFP due Apr 11.</p>
+<p><b>GOLD + BONDS:</b> Gold ~$4,550/oz. 10Y yield dropped to 4.35% (-9bps). Flight to safety bid emerging. GDX paper +4.1% from entry \u2014 best paper performer.</p>`
   },
 
   themes: [
@@ -396,11 +398,11 @@ const DATA = {
       priorConviction: 85,
       badge: 'HIGH',
       badgeClass: 'badge-green',
-      status: 'ACTIVE \u2014 CCJ + URA DEPLOYED \u2014 CONVICTION TRIMMED ON SPOT CORRECTION',
-      narrative: `<p><b>RUN #7 (Mar 30):</b> CONVICTION TRIMMED 85\u219280%. Uranium spot CORRECTED to $86.95 at end of Feb (not >$100/lb as stated in Runs #1-6B). Long-term contract at $90/lb. The structural thesis remains strong: AI data center demand 176\u2192580 TWh by 2028, DOE committed $2.7B for enrichment, supply deficit accelerating (mined supply <75% of reactor needs). But spot at $87 means near-term price catalyst is weaker than believed.</p>
-<p><b>CCJ:</b> $103.92 (-0.72% Fri). Still +2.33% from entry. Broad market beta drag (Dow -1.73%). Not thesis-specific deterioration.</p>
-<p><b>URA:</b> $46.63 (-0.15%). Essentially flat from entry. 120% YTD return per GlobalX \u2014 much of the move already happened.</p>
-<p><b>HF Intel (Monday):</b> Still 0/8 major funds in uranium miners. UNCROWDED. Bridgewater cut Vistra (power, not uranium). Our edge: uranium miners specifically, not "nuclear" broadly.</p>`,
+      status: 'ACTIVE \u2014 CCJ STOP RAISED TO ENTRY ($101.55) = RISK-FREE',
+      narrative: `<p><b>RUN #8 (Mar 31):</b> Conviction maintained at 80%. CCJ stop RAISED to $101.55 (entry price) per Run #6B recommendation \u2014 position is now RISK-FREE on capital. Structural thesis STRENGTHENED by new data: US data centers draw 41 GW (150% increase/5yr), 85-90 GW new nuclear capacity needed by 2030, 33 countries pledged to triple nuclear. Uranium spot still ~$87/lb but structural demand acceleration makes it a timing question, not a thesis question.</p>
+<p><b>CCJ:</b> $103.92 (Mar 27 close, Mar 30 unconfirmed). +2.33% from entry. STOP RAISED to $101.55 = breakeven floor. Downside: $0. Upside: $130 target (+25%).</p>
+<p><b>URA:</b> $46.63 (Mar 27 close). Essentially flat from $46.70 entry. Broader ETF dilutes purer plays \u2014 CCJ remains primary vehicle.</p>
+<p><b>HF Intel:</b> Still 0/8 major funds in uranium miners. UNCROWDED. This is our STRONGEST edge signal across all themes.</p>`,
       scenarios: [
         { label: 'BULL', probability: 25, color: 'var(--green)', trigger: 'Uranium returns >$100/lb, SMR permits, hyperscaler procurement', impact: 'CCJ rerates to 25x EV/EBITDA', move: '+35-40%', priceTarget: '$143\u2013148' },
         { label: 'BASE', probability: 40, color: 'var(--accent)', trigger: 'Uranium $87-100/lb, steady demand, SMR on schedule', impact: 'Gradual rerate', move: '+18-25%', priceTarget: '$125\u2013132' },
@@ -420,10 +422,11 @@ const DATA = {
       priorConviction: 65,
       badge: 'MEDIUM-HIGH',
       badgeClass: 'badge-amber',
-      status: 'MAINTAINED. XLE PAPER DEPLOYED. APR 6 DEADLINE 7 DAYS.',
-      narrative: `<p><b>RUN #7:</b> Brent surged to $112.57 (+4.22%) on Hormuz disruption \u2014 17.8M bbl/day transit threatened. WTI breached $100 ($99.64). Iran REJECTED 15-point ceasefire as "one-sided and unfair." Trump extended deadline to Apr 6.</p>
-<p><b>XLE PARADOX:</b> XLE paper trade FLAT ($61.52) despite oil surging. Explanation: broad market selloff (-1.73% Dow) overwhelmed energy sector gains. Divergence between oil price (+4.22%) and energy stocks (flat) is notable \u2014 either oil falls back or XLE catches up.</p>
-<p><b>NEW: Dalio explicitly positioning for Hormuz.</b> Mar 17 Fortune article: "Final battle for Strait of Hormuz is coming." Only major fund manager explicitly calling this. Validates our Iran thesis but also means smart money is watching same catalyst.</p>`,
+      status: 'ESCALATING. XLE +1.68% (CATCHING UP). APR 6 DEADLINE 7 DAYS. KINETIC STRIKES BOTH SIDES.',
+      narrative: `<p><b>RUN #8 \u2014 MAJOR ESCALATION:</b> Trump threatened to "completely obliterate" Iran\u2019s power plants, oil wells, and Kharg Island. Israel struck Isfahan killing IRGC naval commander. Iran retaliated with missiles at central Israel. This is no longer posturing \u2014 it\u2019s an active kinetic conflict with both sides striking each other.</p>
+<p><b>OIL HISTORIC:</b> Brent\u2019s March monthly gain of +55% is the LARGEST SINCE BRENT INCEPTION (prev record: +46%, Sept 1990, Gulf War I). WTI closed above $100 for first time since Jul 2022. This is not a drill.</p>
+<p><b>XLE CATCHING UP:</b> XLE paper trade rose to $62.56 (+1.68%) on Mar 30 \u2014 resolving the oil/energy divergence from Run #7. Now at 52-week high (day range $61.26-$62.79). Thesis WORKING.</p>
+<p><b>APR 6 = BINARY:</b> 2nd deadline extension. If Trump follows through on obliteration threats and Iran doesn\u2019t reopen Strait, this becomes a full shooting war. Dalio\u2019s Mar 17 "Final battle for Hormuz" looks increasingly prescient.</p>`,
       scenarios: [
         { label: 'BULL (Escalation)', probability: 30, color: 'var(--red)', trigger: 'Apr 6 expires, Hormuz closes, oil >$120', impact: 'XLE +15-20%', move: 'OIL +25-40%', priceTarget: 'XLE $70+' },
         { label: 'BASE (Status Quo)', probability: 35, color: 'var(--accent)', trigger: 'Deadline extended again, oil $105-115', impact: 'Chronic uncertainty', move: 'OIL flat', priceTarget: 'XLE holds' },
@@ -442,12 +445,11 @@ const DATA = {
       priorConviction: 65,
       badge: 'MEDIUM',
       badgeClass: 'badge-amber',
-      status: 'CONVICTION TRIMMED. GOOGL -2.55%. KLARMAN TRIMMED 40%.',
-      narrative: `<p><b>RUN #7:</b> GOOGL $273.76 (-2.55% from entry). F&G still at 15 (Extreme Fear). AAII bearish at 49.8% (7th straight week above avg). Conviction trimmed 65\u219260% on two signals:</p>
-<p>1. <b>Klarman (Baupost) trimmed GOOGL 40%</b> in latest filing. Klarman is the ultimate value investor \u2014 if he's reducing at these levels, suggests he sees further downside risk.</p>
-<p>2. <b>Ackman still trimming GOOGL</b> and rotating to Meta/Amazon. Combined with Klarman = two major value investors reducing.</p>
-<p>Counter-signal: <b>Citadel added $2.52B in AMZN and doubled NVDA.</b> Tepper tripled Micron. Big money going offensive on AI \u2014 but not on GOOGL specifically.</p>
-<p>Historical: Extreme fear readings at F&G 15 preceded strong rallies in Apr 2025 and Nov 2025. But this time has real drivers (Iran war, oil >$100, stagflation). Not noise.</p>`,
+      status: 'F&G DROPPED TO 10 \u2014 APPROACHING HISTORIC CONTRARIAN ENTRY ZONE',
+      narrative: `<p><b>RUN #8:</b> GOOGL $273.78 (flat from $273.76 Mar 27). F&G plunged to 10 (from 15) \u2014 this is approaching the DEEPEST extreme fear since Nov 2025. Historically, F&G below 10 has preceded strong reversals within 2-4 weeks. We are now at levels where contrarian buying has the HIGHEST historical win rate.</p>
+<p><b>HOWEVER:</b> Klarman and Ackman both still trimming GOOGL specifically. The contrarian thesis works on index level (buy fear broadly) but NOT necessarily on GOOGL specifically (legal/AI competition risks). 16/25 S&P industry groups in correction, 4 in bear market. Breadth deteriorating.</p>
+<p><b>Counter-signal persists:</b> Citadel $2.52B AMZN, Tepper tripled Micron, Druckenmiller adding. Big money is offensive on AI but selective \u2014 not GOOGL.</p>
+<p><b>VERDICT:</b> F&G 10 = stronger contrarian setup but GOOGL specifically has HF-confirmed headwinds. Maintain position, do NOT add. Watch for F&G below 5 for index-level contrarian entry (TLT or SPY rather than single stock).</p>`,
       scenarios: [
         { label: 'BULL', probability: 25, color: 'var(--green)', trigger: 'Iran + Liberation Day absorbed, VIX <20, GOOGL earnings beat', impact: 'Fear reversal', move: 'GOOGL +25-31%', priceTarget: '$360\u2013376' },
         { label: 'BASE', probability: 35, color: 'var(--accent)', trigger: 'F&G 25-35, GOOGL earnings solid', impact: 'Slow grind', move: 'GOOGL +12-20%', priceTarget: '$322\u2013345' },
@@ -466,10 +468,10 @@ const DATA = {
       priorConviction: 50,
       badge: 'MEDIUM',
       badgeClass: 'badge-amber',
-      status: 'MAINTAINED. 3 DAYS TO LIBERATION DAY. SCOTUS STRUCK DOWN IEEPA.',
-      narrative: `<p><b>RUN #7 \u2014 KEY DEVELOPMENT:</b> SCOTUS ruled IEEPA tariffs unconstitutional in Feb 2026. Original Liberation Day tariffs (Apr 2, 2025) replaced with Section 122 temporary tariffs at 10% flat rate. Multiple bilateral deals negotiated (UK, Japan, Indonesia, EU, Vietnam) with reduced rates.</p>
-<p><b>Ackman factor:</b> Ackman publicly pushed Trump for 90-day tariff pause and influenced the decision. If Ackman maintains influence, expect potential pause extension on Apr 2.</p>
-<p><b>Stagflation risk:</b> Oil >$110 + 10% tariff + PCE 2.7% + Core PCE 3.1% + NFP -92K = textbook stagflation setup. JPMorgan: earnings consensus cut 2-5% if oil stays $110+ through year-end.</p>`,
+      status: 'RECALIBRATED. Section 122 ALREADY LIVE. Apr 2 = review, NOT new event.',
+      narrative: `<p><b>RUN #8 \u2014 CLARIFICATION:</b> Section 122 tariffs (10% on all imports) went into effect Feb 24 and run through Jul 24. Apr 2 is the mid-point review date, NOT a new tariff announcement. "Liberation Day" was Apr 2, 2025 (original EO). The risk on Apr 2, 2026 is upward adjustment, not a brand new policy shock.</p>
+<p><b>This significantly reduces Apr 2 as a standalone catalyst.</b> Market has already absorbed the 10% Section 122 framework. The real catalyst window is Apr 6 (Iran Hormuz deadline).</p>
+<p><b>Stagflation still building:</b> Oil >$110 + 10% tariff + PCE 2.7% + Core PCE 3.1% + NFP -92K + Fed on hold (only 1 cut projected in dot plot). JPMorgan: earnings cut 2-5% if oil stays $110+ through year-end. CME FedWatch: 86% chance no change at next meeting.</p>`,
       scenarios: [
         { label: 'BULL (Escalation)', probability: 20, color: 'var(--amber)', trigger: 'Section 122 rates increased, retaliation', impact: 'Stagflation activates', move: 'Consumer -10-15%', priceTarget: 'Gold/oil benefit' },
         { label: 'BASE (Status Quo)', probability: 40, color: 'var(--accent)', trigger: '10% Section 122 maintained, legal uncertainty', impact: '2-3 weeks volatility', move: 'Market -3-5%', priceTarget: 'Temporary' },
@@ -483,15 +485,15 @@ const DATA = {
     },
   ],
 
-  themeInteractions: `<h3>Theme Interaction Map (Run #7 Update)</h3>
-<p><b>CCJ + URA (Theme 1, 34% of portfolio):</b> Still correlated. Uranium spot correction ($87 not $100+) is new risk factor. But structural demand intact. Best uncrowded thesis (0/8 HFs).</p>
-<p><b>XLE (Theme 2, 15%) vs GOOGL/SNPS (Themes 3+5, 26%):</b> NATURAL HEDGE working. XLE flat while GOOGL/SNPS down = crisis is hurting tech more than energy. If Apr 6 escalates: XLE wins. If resolves: GOOGL/SNPS recover.</p>
-<p><b>GDX (Theme 6, 12%):</b> BEST PAPER PERFORMER (+4.0%). Gold recovering from -10% rout. Benefits from both Iran escalation AND tariff chaos. But CROWDED (Citadel, RenTech, retail).</p>
-<p><b>SNPS \u26a0\ufe0f STOP PROXIMITY:</b> $380.47 vs $374 stop = only 1.7% buffer. If Monday continues selloff, SNPS could be first paper stop triggered. Elliott stake provides floor thesis but market selling everything.</p>
-<p><b>DUAL CATALYST (Apr 2 + Apr 6):</b> 3 and 7 days away. Portfolio positioned for all outcomes: crisis (XLE, GDX, CCJ), recovery (GOOGL, SNPS), or both (uranium structural).</p>`,
+  themeInteractions: `<h3>Theme Interaction Map (Run #8 Update)</h3>
+<p><b>CCJ + URA (Theme 1, 34% of portfolio):</b> CCJ now RISK-FREE (stop = entry). Structural demand confirmed by fresh data (41 GW US data centers, 85-90 GW new nuclear needed). 0/8 HFs = uncrowded. Strongest edge.</p>
+<p><b>XLE (Theme 2, 17%) \u2014 CATCHING UP:</b> +1.68% on Mar 30 finally reflecting Brent\u2019s $111-115 range. Natural hedge with GOOGL/SNPS now ACTIVE \u2014 XLE gaining while tech stalls. Iran escalation (obliteration threats, strikes) validates thesis.</p>
+<p><b>GDX (Theme 6, 12%):</b> BEST PAPER PERFORMER (+4.1%). Gold ~$4,550. 10Y yield dropping (4.35% from 4.44%) = flight to safety bid supporting gold. But still CROWDED.</p>
+<p><b>SNPS \u26a0\ufe0f STILL CRITICAL:</b> $380.47 vs $374 stop = 1.7% buffer. S&P bounced on Mon but SNPS not confirmed for Mar 30. If tech continues selling, SNPS could be first paper stop. Elliott stake provides floor but market selling everything.</p>
+<p><b>KEY SHIFT:</b> Apr 2 tariff risk REDUCED (Section 122 already live). Apr 6 Iran is THE catalyst. Portfolio is crisis-heavy (XLE, GDX, CCJ = 63%) which is CORRECT given Iran escalation.</p>`,
 
   hedgeFunds: {
-    summary: 'Run #7 (MONDAY SCAN): Full HF intel update. Key: Dalio explicitly on Hormuz. Klarman trimmed GOOGL 40%. Elliott SNPS confirmed. 0/8 in uranium miners.',
+    summary: 'Run #8 (Tuesday \u2014 no new HF scan, Mon-only). Prior scan: Dalio explicitly on Hormuz. Klarman trimmed GOOGL 40%. Elliott SNPS confirmed. 0/8 in uranium miners. Iran escalation validates Dalio\u2019s call.',
     table: [
       { fund: 'Bridgewater (Dalio)', view: 'Mar 17: "Final battle for Strait of Hormuz is coming." Long commodities/inflation hedges.', position: 'Explicit Hormuz positioning. Nuclear macro NOT uranium miners.', alignment: 'SUPPORTS XLE/Iran thesis', cls: 'badge-green' },
       { fund: 'Druckenmiller', view: 'Mar 13: Stablecoin/currency devaluation focus. Added XLF + NTRA.', position: 'Financial debasement theme. No uranium/Iran explicit.', alignment: 'TANGENTIAL', cls: 'badge-amber' },
@@ -518,42 +520,44 @@ const DATA = {
   ],
 
   actions: [
-    { type: 'hold', label: '\u26a0\ufe0f SNPS STOP PROXIMITY', text: '<b>SNPS $380.47 is only 1.7% above $374 stop.</b> If market sells off Monday, this could be first paper stop triggered. Monitor closely. Elliott stake thesis intact but market selling everything. Do NOT lower stop \u2014 stops are non-negotiable.' },
-    { type: 'hold', label: 'HOLD ALL OTHER POSITIONS', text: '<b>CCJ: $103.92 (REAL, +2.33%).</b> Stop recommendation from Run #6B: raise to $101.55 (entry) to make risk-free. All other paper trades tracking. GDX best performer (+4.0%).' },
-    { type: 'scan', label: '\u26a1 DUAL CATALYST COUNTDOWN', text: '<b>Apr 2: Liberation Day (3 days).</b> SCOTUS struck IEEPA; Section 122 at 10%. Ackman pushing pause. <b>Apr 6: Iran Hormuz deadline (7 days).</b> Iran rejected ceasefire. Dalio explicitly positioning. Portfolio balanced for all outcomes.' },
-    { type: 'scan', label: 'URANIUM SPOT CORRECTION', text: '<b>CORRECTED: Uranium spot ~$87/lb, NOT >$100/lb.</b> Spot corrected from Jan peak to $86.95 end of Feb. Long-term contract at $90/lb. Structural thesis intact (AI power 580 TWh, DOE $2.7B) but near-term price catalyst weaker than previously reported. CCJ conviction trimmed 85\u219280%.' },
-    { type: 'deploy', label: 'PORTFOLIO STATUS', text: '<b>~86.6% deployed across 6 positions (1 real + 5 paper).</b> Tracking P&L: Real +$45.03 (CCJ). Paper net: -$56.42. Total: -$11.39 (-0.11%). GDX is offsetting SNPS/GOOGL losses. Natural hedge working as designed.' },
-    { type: 'scan', label: 'PAPER TRADE SCORECARD (Week 1)', text: '<b>Win rate: 2/5 (CCJ real excluded).</b> GDX +4.0%, URA -0.15% (flat), XLE flat, GOOGL -2.55%, SNPS -5.35%. Theme performance: Gold/safe haven winning, Tech/fear contrarian losing. Iran thesis neutral (XLE flat despite oil surge). Nuclear flat (URA). After 2 more weeks: deploy real capital to validated themes only.' },
+    { type: 'hold', label: '\u2705 CCJ STOP RAISED \u2014 RISK-FREE', text: '<b>CCJ stop raised from $88 to $101.55 (entry price).</b> Position is now RISK-FREE on capital. Max downside: $0 (breakeven). Upside: $130 target (+25%). This is the correct move ahead of Apr 2 + Apr 6 dual catalysts.' },
+    { type: 'hold', label: '\u26a0\ufe0f SNPS STOP PROXIMITY \u2014 STILL CRITICAL', text: '<b>SNPS $380.47 is only 1.7% above $374 stop.</b> S&P bounced Mon but SNPS Mar 30 close UNCONFIRMED. If tech continues selling, SNPS is first paper stop triggered. Elliott stake thesis intact. Do NOT lower stop \u2014 stops are non-negotiable.' },
+    { type: 'hold', label: 'HOLD ALL OTHER POSITIONS', text: '<b>XLE $62.56 (+1.68% \u2014 CATCHING UP to oil, thesis working). GDX $85.79 (+4.1% best paper). GOOGL $273.78 (flat). URA $46.63 (flat).</b> Natural hedge performing: crisis positions (XLE, GDX) gaining while tech stalls.' },
+    { type: 'scan', label: '\u26a1 APR 6 IS THE REAL CATALYST', text: '<b>Apr 2 tariff risk REDUCED</b> \u2014 Section 122 already live since Feb 24. Apr 2 is review, not new policy. <b>Apr 6 Iran Hormuz deadline is THE binary event.</b> Trump threatened obliteration. Israel struck Isfahan. Iran retaliating. Active kinetic conflict. Portfolio 63% crisis-positioned (CCJ + XLE + GDX).' },
+    { type: 'scan', label: 'F&G AT 10 \u2014 HISTORIC FEAR LEVEL', text: '<b>Fear & Greed dropped from 15 to 10.</b> This is approaching historic contrarian entry territory. But NOT for GOOGL specifically (Klarman/Ackman trimming). If F&G drops below 5, consider index-level contrarian entry (SPY or TLT) rather than single stocks.' },
+    { type: 'deploy', label: 'PORTFOLIO STATUS', text: '<b>~86.6% deployed across 6 positions (1 real + 5 paper).</b> XLE +1.68% improved total P&L. GDX steady. SNPS dragging. Net: marginally positive from inception.' },
   ],
 
   verification: {
-    total: 22,
+    total: 24,
     confirmed: 16,
-    corrected: 3,
-    unverifiable: 3,
+    corrected: 4,
+    unverifiable: 4,
     details: [
-      { claim: 'CCJ $103.92 (Mar 27 close)', result: 'CONFIRMED. Prev close $104.67 matches Run #6B.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
-      { claim: 'SNPS $380.47 (-5.4% Friday)', result: 'CONFIRMED via dedicated article. 12% down from Mon $432.48.', source: 'TS2 Tech article [Web Search]', cls: 'badge-green' },
-      { claim: 'GOOGL $273.76 (-2.49%)', result: 'CONFIRMED. Mar 27 close.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
-      { claim: 'URA $46.63', result: 'CONFIRMED. Mar 27 data.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
-      { claim: 'XLE $61.52 (flat)', result: 'INFERRED. Prev close for Mar 30 = $61.52, suggesting Mar 27 close unchanged.', source: 'Yahoo Finance [Web Search]', cls: 'badge-amber' },
-      { claim: 'GDX ~$85.68', result: 'APPROXIMATE. Range $82.39-$86.67, trading at $85.68.', source: 'Yahoo Finance [Web Search]', cls: 'badge-amber' },
-      { claim: 'S&P 500 6,368.85 (-1.67%)', result: 'CONFIRMED. 5th straight losing week.', source: 'CNBC / CNN [Web Search]', cls: 'badge-green' },
-      { claim: 'Dow 45,166.64 (-1.73%)', result: 'CONFIRMED. Entered correction.', source: 'CNBC [Web Search]', cls: 'badge-green' },
-      { claim: 'Nasdaq 20,948.36 (-2.15%)', result: 'CONFIRMED. Entered correction.', source: 'CNBC [Web Search]', cls: 'badge-green' },
-      { claim: 'Brent $112.57 (+4.22%)', result: 'CONFIRMED.', source: 'Middle East Insider [Web Search]', cls: 'badge-green' },
-      { claim: 'WTI $99.64 (+5.46%)', result: 'CONFIRMED. Breached $100 threshold.', source: 'Middle East Insider [Web Search]', cls: 'badge-green' },
-      { claim: 'Gold $4,524/oz (+2.62%)', result: 'CONFIRMED.', source: 'Fortune / Yahoo Finance [Web Search]', cls: 'badge-green' },
-      { claim: 'F&G 15 Extreme Fear', result: 'CONFIRMED.', source: 'CNN Markets [Web Search]', cls: 'badge-green' },
-      { claim: 'AAII Bearish 49.8%', result: 'CONFIRMED. 7th straight week above avg.', source: 'AAII [Web Search]', cls: 'badge-green' },
-      { claim: 'Fed 3.50-3.75%, PCE 2.7%', result: 'CONFIRMED.', source: 'FOMC / Fidelity [Web Search]', cls: 'badge-green' },
-      { claim: 'NFP -92K, unemployment 4.4%', result: 'CONFIRMED.', source: 'BLS data [Web Search]', cls: 'badge-green' },
-      { claim: 'URANIUM SPOT >$100/lb', result: 'CORRECTED \u2192 ~$87-90/lb. Spot was $86.95 end of Feb. Long-term $90. Jan peak was >$100.', source: 'Mining.com / Crux Investor [Web Search]', cls: 'badge-red' },
-      { claim: 'Klarman trimmed GOOGL 40%', result: 'CONFIRMED.', source: 'Motley Fool [Web Search]', cls: 'badge-green' },
-      { claim: 'Elliott SNPS multibillion stake', result: 'CONFIRMED Mar 23.', source: 'Bloomberg [Web Search]', cls: 'badge-green' },
-      { claim: 'VIX ~28-31', result: 'ESTIMATED. Prior 27.44, March avg 25.33, range 20.28-35.30. No confirmed close.', source: 'FRED / Seeking Alpha [Web Search]', cls: 'badge-amber' },
-      { claim: 'Dalio Hormuz warning Mar 17', result: 'CONFIRMED.', source: 'Fortune [Web Search]', cls: 'badge-green' },
-      { claim: 'SCOTUS struck IEEPA tariffs', result: 'CONFIRMED. Replaced with Section 122 at 10%.', source: 'Multiple sources [Web Search]', cls: 'badge-green' },
+      { claim: 'GOOGL $273.78 (Mar 30 close)', result: 'CONFIRMED. Investing.com shows $273.78 with prev close $274.34.', source: 'Investing.com [Web Search]', cls: 'badge-green' },
+      { claim: 'XLE $62.56 (Mar 30, +1.68%)', result: 'CONFIRMED. Prev close $61.52 = entry. Day range $61.26-$62.79.', source: 'Yahoo Finance / Investing.com [Web Search]', cls: 'badge-green' },
+      { claim: 'GDX $85.79 (Mar 30)', result: 'CONFIRMED. Essentially flat from $85.68 prev.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
+      { claim: 'S&P 500 6,426 (Mar 30)', result: 'CONFIRMED. Bounce from 6,369.', source: '247wallst / CNBC [Web Search]', cls: 'badge-green' },
+      { claim: 'F&G 10 (Extreme Fear)', result: 'CONFIRMED. Down from 15.', source: 'feargreedmeter.com [Web Search]', cls: 'badge-green' },
+      { claim: 'Gold ~$4,550/oz', result: 'CONFIRMED. Fortune: $4,567 morning, $4,541.76 spot close.', source: 'Fortune / JM Bullion [Web Search]', cls: 'badge-green' },
+      { claim: 'Brent $111-115/bbl', result: 'CONFIRMED. Fortune $111.10 AM, techi.com $115.35 close. +55% for March = record.', source: 'Fortune / CNBC / techi.com [Web Search]', cls: 'badge-green' },
+      { claim: 'WTI $102.88', result: 'CONFIRMED. Above $100.', source: 'CNBC [Web Search]', cls: 'badge-green' },
+      { claim: '10Y Yield 4.35%', result: 'CONFIRMED. Down from 4.44%.', source: 'FRED DGS10 [Web Search]', cls: 'badge-green' },
+      { claim: 'GLD $414.70 (Mar 30)', result: 'CONFIRMED. Prev $400.64 = +3.51%.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
+      { claim: 'Fed 3.50-3.75%, 86% hold', result: 'CONFIRMED. CME FedWatch.', source: 'CME Group [Web Search]', cls: 'badge-green' },
+      { claim: 'Section 122 tariffs Feb 24-Jul 24', result: 'CONFIRMED. SCOTUS struck IEEPA Feb 20.', source: 'Steptoe / CFR [Web Search]', cls: 'badge-green' },
+      { claim: 'Trump obliterate Iran threats', result: 'CONFIRMED. Kharg Island, power plants, oil wells.', source: 'CNBC Mar 30 [Web Search]', cls: 'badge-green' },
+      { claim: 'Israel struck Isfahan, IRGC commander killed', result: 'CONFIRMED.', source: 'NBC News / CNBC [Web Search]', cls: 'badge-green' },
+      { claim: 'Brent +55% March (record)', result: 'CONFIRMED. Prev record +46% Sept 1990 Gulf War I.', source: 'CNBC [Web Search]', cls: 'badge-green' },
+      { claim: 'Claims 4-wk avg 210.5K declining', result: 'CONFIRMED. 4th consecutive decline.', source: 'Verified Investing [Web Search]', cls: 'badge-green' },
+      { claim: 'CCJ $103.92 (using Mar 27)', result: 'CORRECTED \u2192 Mar 30 close not confirmed via search. Using Mar 27 close. Forecast suggested ~$105.59 for Mar 30.', source: 'Yahoo Finance [Web Search]', cls: 'badge-red' },
+      { claim: 'URA $46.63 (using Mar 27)', result: 'CORRECTED \u2192 Mar 30 close unclear. Investing.com showed ~$45 but unconfirmed. Using Mar 27 close.', source: 'Yahoo Finance / Investing.com [Web Search]', cls: 'badge-red' },
+      { claim: 'SNPS $380.47 (using Mar 27/28)', result: 'CORRECTED \u2192 Mar 30 close not found in search. Using last confirmed ~$380.47.', source: 'Yahoo Finance [Web Search]', cls: 'badge-red' },
+      { claim: 'Nasdaq ~21,100 (estimated)', result: 'ESTIMATED from S&P bounce pattern. Not independently confirmed.', source: '[ESTIMATED]', cls: 'badge-amber' },
+      { claim: 'Dow ~45,600 (estimated)', result: 'ESTIMATED from S&P bounce. Not independently confirmed.', source: '[ESTIMATED]', cls: 'badge-amber' },
+      { claim: 'VIX ~28-31', result: 'ESTIMATED. Range during March.', source: 'FRED [ESTIMATED]', cls: 'badge-amber' },
+      { claim: 'AAII bearish ~50%', result: 'ESTIMATED from prior week trend. No new survey data found.', source: '[ESTIMATED]', cls: 'badge-amber' },
+      { claim: 'AI power 85-90 GW nuclear needed by 2030', result: 'CONFIRMED via IAEA, IEA, Goldman Sachs research.', source: 'IAEA / IEA / Goldman [Web Search]', cls: 'badge-green' },
     ]
   },
 
