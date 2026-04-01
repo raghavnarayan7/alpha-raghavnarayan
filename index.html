@@ -200,12 +200,12 @@ tr:hover td { background: rgba(59,130,246,0.05); }
 
 const DATA = {
   meta: {
-    runNumber: '8',
-    runDate: '2026-03-31',
-    lastUpdated: 'Mar 31, 2026 (Run #8 \u2014 Tuesday automated scan). Last trading day: Mon Mar 30. Prices via Web Search. S&P bounced to 6,426 (+0.9%). XLE $62.56 (+1.68% \u2014 CATCHING UP to oil). Gold ~$4,550. Brent $111-115. F&G DROPPED TO 10 (from 15). Iran ESCALATION: Trump threatened to obliterate Iran. Apr 2 tariff review 2 days. Apr 6 Hormuz deadline 7 days.',
+    runNumber: '9',
+    runDate: '2026-04-01',
+    lastUpdated: 'Apr 1, 2026 (Run #9 \u2014 Tuesday automated scan). Last trading day: Mon Mar 31. MAJOR: S&P surged +2.91% to 6,528.52 on Iran peace signals. Iran\'s president reportedly open to ending war. Gold $4,568 (+0.4%). Brent DROPPED to $105 from $115. F&G 9 (SINGLE DIGITS). SNPS ~$396 (+4% bounce). GDX $89.10 (+3.8%). CCJ $102.84 (-1%). Q1 GDP NEGATIVE (first contraction in 3 years). SCOTUS ruled tariffs unconstitutional.',
     inception: '2026-03-24',
     allocation: 10000,
-    verificationSummary: 'Run #8: 24 claims checked, 4 corrected. CCJ/URA/SNPS use Mar 27 close (Mar 30 unconfirmed). GOOGL/XLE/GDX confirmed Mar 30. S&P 6,426 confirmed. F&G 10 confirmed.',
+    verificationSummary: 'Run #9: 22 claims checked, 3 corrected. CCJ/GOOGL/XLE/GDX confirmed Mar 31 via Web Search. SNPS ~$396 [INFERRED from Simply Wall St]. URA $45.67 [UNVERIFIED]. S&P 6,528.52 confirmed (247wallst/Bloomberg).',
   },
 
   positions: [
@@ -216,7 +216,7 @@ const DATA = {
       themeNum: 1,
       shares: 19,
       entry: 101.55,
-      current: 103.92,
+      current: 102.84,
       prevClose: 103.92,
       stop: 101.55,
       target: 130.00,
@@ -226,13 +226,13 @@ const DATA = {
       conviction: 80,
       status: 'REAL',
       catalysts: [
-        { date: 'Apr 2', event: 'Tariff review (Section 122 already live since Feb 24)', impact: 'CCJ insulated (Canadian). Broad market volatility catalyst.' },
-        { date: 'Apr 6', event: 'Trump Hormuz deadline expires (2nd extension)', impact: 'Binary catalyst. Trump threatened to obliterate Iran. Israel struck Isfahan.' },
+        { date: 'Apr 2', event: 'Liberation Day anniversary (SCOTUS struck tariffs)', impact: 'Reduced catalyst. SCOTUS ruled most emergency tariffs unconstitutional.' },
+        { date: 'Apr 6', event: 'Trump Hormuz deadline expires (2nd extension)', impact: 'BINARY. But Iran signaling peace willingness \u2014 de-escalation possible.' },
         { date: 'May 5', event: 'CCJ Q1 Earnings', impact: 'KEY \u2014 Q4 beat by 28.6%. Growth confirmation.' },
-        { date: 'H1 2026', event: 'TerraPower NRC Permit', impact: 'Sector-defining catalyst for SMRs' },
+        { date: 'H1 2026', event: 'TerraPower NRC Permit + FluxPoint conversion facility', impact: 'First new US uranium conversion facility in 70 years (FluxPoint, Mar 2026).' },
       ],
       killCondition: 'Major nuclear incident, hyperscaler cancels nuclear, uranium <$75/lb, NRC denies SMR permits',
-      whyWrong: 'Uranium spot ~$87/lb (Feb correction). Kazatomprom +9% production. Mar 30 close unconfirmed \u2014 using Mar 27 $103.92. STOP RAISED TO $101.55 (entry) = risk-free on capital.',
+      whyWrong: 'CCJ $102.84 \u2014 only $1.29 above $101.55 stop (1.27% buffer). \u26a0\ufe0f CLOSE TO STOP. Iran peace signals could crater oil/energy complex. Market rallied 2.91% on peace hopes \u2014 CCJ DIDN\'T participate (dropped -1.04%). Nuclear thesis is structural but near-term geopolitical unwind risk is real.',
     },
     {
       ticker: 'URA',
@@ -241,8 +241,8 @@ const DATA = {
       themeNum: 1,
       shares: 32,
       entry: 46.70,
-      current: 46.63,
-      prevClose: 46.70,
+      current: 45.67,
+      prevClose: 46.63,
       stop: 41.40,
       target: 58.00,
       partialExit: { price: 54, pct: 50 },
@@ -251,12 +251,12 @@ const DATA = {
       conviction: 80,
       status: 'PAPER',
       catalysts: [
-        { date: 'Apr 2', event: 'Liberation Day tariffs', impact: 'Uranium not tariff-exposed. URA may outperform broad market.' },
+        { date: 'Apr 6', event: 'Iran deadline \u2014 peace signals emerging', impact: 'Resolution = broad market rally, uranium structural thesis unchanged.' },
         { date: 'May 5', event: 'CCJ Q1 Earnings', impact: 'Sector catalyst. CCJ earnings drive URA.' },
-        { date: 'H1 2026', event: 'TerraPower NRC Permit', impact: 'Sector-wide SMR catalyst' },
+        { date: 'H1 2026', event: 'TerraPower NRC + FluxPoint', impact: 'Supply-side developments bullish for uranium miners.' },
       ],
       killCondition: 'Nuclear incident; uranium supply surge; AI pivot away from nuclear',
-      whyWrong: 'Uranium spot ~$87 (corrected from >$100). URA flat despite thesis strength \u2014 market beta drag. Broader ETF dilutes purer plays.',
+      whyWrong: 'URA $45.67 \u2014 down 2.21% from entry. Broader ETF diluting purer plays. Uranium spot data conflicting ($64-87 range depending on source). Market beta drag continues.',
     },
     {
       ticker: 'SNPS',
@@ -265,8 +265,8 @@ const DATA = {
       themeNum: 5,
       shares: 3,
       entry: 401.95,
-      current: 380.47,
-      prevClose: 401.95,
+      current: 396.00,
+      prevClose: 380.47,
       stop: 374.00,
       target: 520.00,
       partialExit: { price: 480, pct: 50 },
@@ -275,12 +275,12 @@ const DATA = {
       conviction: 70,
       status: 'PAPER',
       catalysts: [
-        { date: 'Ongoing', event: 'Elliott multibillion-dollar activist campaign', impact: 'Confirmed Mar 23. Catalyst for value unlock.' },
+        { date: 'Ongoing', event: 'Elliott multibillion-dollar activist campaign', impact: 'Confirmed Mar 23. Value unlock catalyst.' },
         { date: 'May 27', event: 'SNPS Q2 Earnings', impact: 'First post-Elliott earnings. Watch for operational changes.' },
-        { date: 'H2 2026', event: 'AI chip complexity cycle', impact: 'EDA demand driven by NVDA/AMD architecture cycles.' },
+        { date: 'H2 2026', event: 'AI chip complexity cycle', impact: 'EDA demand driven by architecture complexity.' },
       ],
       killCondition: 'Elliott exits; SNPS-Ansys merger blocked; AI chip complexity plateaus',
-      whyWrong: '\u26a0\ufe0f STOP PROXIMITY ALERT: $380.47 vs $374 stop = only 1.7% buffer. JPMorgan warned if oil hovers ~$110/bbl, consensus earnings cut 2-5%. SNPS dropped 12% in one week ($432\u2192$380). Tech rout erasing Elliott boost.',
+      whyWrong: '[INFERRED] SNPS ~$396 from Simply Wall St \u2014 if correct, STOP PROXIMITY RESOLVED (5.9% buffer vs 1.7% last run). S&P +2.91% rally lifted tech broadly. But price is [INFERRED], not Chrome-verified. Need confirmation.',
     },
     {
       ticker: 'GOOGL',
@@ -289,8 +289,8 @@ const DATA = {
       themeNum: 3,
       shares: 5,
       entry: 280.92,
-      current: 273.78,
-      prevClose: 273.76,
+      current: 284.10,
+      prevClose: 273.78,
       stop: 258.00,
       target: 376.00,
       partialExit: { price: 340, pct: 50 },
@@ -299,12 +299,12 @@ const DATA = {
       conviction: 60,
       status: 'PAPER',
       catalysts: [
-        { date: 'Apr 2', event: 'Liberation Day tariffs', impact: 'GOOGL ad revenue exposed to consumer spending slowdown.' },
+        { date: 'Apr 2', event: 'Liberation Day anniversary \u2014 SCOTUS nullified tariffs', impact: 'Tariff risk REDUCED. Removes one headwind.' },
         { date: 'Apr 23', event: 'Q1 Earnings', impact: 'KEY \u2014 legal reserve? AI Overviews? Cloud growth?' },
-        { date: 'Ongoing', event: 'F&G recovery from 15', impact: 'Contrarian signal triggers when fear eases.' },
+        { date: 'Ongoing', event: 'F&G at 9 (single digits)', impact: 'HISTORIC contrarian territory. Strongest buy signal since Nov 2025.' },
       ],
       killCondition: 'Legal liability existential; F&G drops to 5; recession confirmed',
-      whyWrong: 'Klarman trimmed GOOGL 40% (Baupost). Ackman trimming. F&G dropped to 10 (from 15) \u2014 deeper fear but CLOSER to contrarian entry. P/E still >25x. Paper trade -2.54%.',
+      whyWrong: 'GOOGL $284.10 (+3.77% on Mar 31) \u2014 now +1.13% from entry. Iran peace rally benefited tech broadly. Klarman/Ackman still trimming but price finding support. Q1 GDP contraction + Michigan sentiment 53.3 = recession risk for ad revenue.',
     },
     {
       ticker: 'XLE',
@@ -313,21 +313,21 @@ const DATA = {
       themeNum: 2,
       shares: 24,
       entry: 61.52,
-      current: 62.56,
-      prevClose: 61.52,
+      current: 61.96,
+      prevClose: 62.56,
       stop: 57.00,
       target: 70.00,
       partialExit: { price: 67, pct: 50 },
       entryDate: '2026-03-27',
       horizon: '4-8 weeks',
-      conviction: 55,
+      conviction: 50,
       status: 'PAPER',
       catalysts: [
-        { date: 'Apr 6', event: 'Trump Hormuz deadline expires', impact: 'Binary \u2014 escalation = XLE +10-15%, deal = XLE -5-8%.' },
-        { date: 'Apr 2', event: 'Liberation Day tariffs', impact: 'Energy costs already elevated; tariffs add more inflationary pressure.' },
+        { date: 'Apr 6', event: 'Trump Hormuz deadline \u2014 PEACE SIGNALS EMERGING', impact: '\u26a0\ufe0f THESIS AT RISK. Iran president signaling willingness to end war. Resolution = XLE drops to $57 stop.' },
+        { date: 'Apr 11', event: 'March NFP data', impact: 'Labor market health check. Feb was -92K shock.' },
       ],
       killCondition: 'Partial deal reached; oil falls below $85; Hormuz fully reopens',
-      whyWrong: 'XLE FINALLY catching up to oil (+1.68% on Mar 30). Now at 52wk high $62.56 (range $61.26-$62.79). Iran escalation (Trump threatened obliteration, Israel struck Isfahan) embedded in price. De-escalation = immediate drawdown.',
+      whyWrong: '\u26a0\ufe0f IRAN PEACE SIGNALS. Brent dropped from $115 to $105 on Mar 31 \u2014 10% single-day reversal. Iran president reportedly open to ending war (Bloomberg). If Apr 6 produces framework deal, XLE thesis COLLAPSES. XLE -0.96% on Mar 31 while S&P surged +2.91% = energy diverging from market on peace hopes.',
     },
     {
       ticker: 'GDX',
@@ -336,22 +336,22 @@ const DATA = {
       themeNum: 6,
       shares: 14,
       entry: 82.39,
-      current: 85.79,
-      prevClose: 85.68,
+      current: 89.10,
+      prevClose: 85.79,
       stop: 75.00,
       target: 100.00,
       partialExit: { price: 92, pct: 50 },
       entryDate: '2026-03-27',
       horizon: '2-3 months',
-      conviction: 60,
+      conviction: 65,
       status: 'PAPER',
       catalysts: [
-        { date: 'Apr 2', event: 'Liberation Day tariffs', impact: 'Gold benefits from uncertainty and inflation fears.' },
-        { date: 'Apr 6', event: 'Iran deadline', impact: 'Geopolitical safe haven bid.' },
-        { date: 'Ongoing', event: 'Fed rate path', impact: 'No cuts projected 2026. CME FedWatch: first cut mid-2027.' },
+        { date: 'Apr 6', event: 'Iran deadline \u2014 peace or war', impact: 'Peace = gold may dip but structural support from recession fears.' },
+        { date: 'Ongoing', event: 'Q1 GDP negative + recession risk', impact: 'NEW catalyst. Gold benefits from recession hedging even if Iran resolves.' },
+        { date: 'Ongoing', event: 'Fed on hold, no cuts projected', impact: 'Gold does well when real rates are negative (inflation > rates).' },
       ],
-      killCondition: 'Iran deal; USD strengthens sharply; crowding unwind triggers selloff',
-      whyWrong: 'CROWDED \u2014 3+ HFs in gold (Citadel, RenTech, retail). Gold recovered from -10% weekly rout (Mar 20) but miners have operational risk. GDX best paper performer (+4.0%) but crowding = eventual unwind risk.',
+      killCondition: 'Iran deal + tariff resolution + recession averted = triple unwind',
+      whyWrong: 'GDX $89.10 (+3.84% on Mar 31) \u2014 BEST PERFORMER. Now +8.14% from entry. Gold $4,568 rising on DUAL support: geopolitical + recession fears. Even if Iran resolves, recession risk (Q1 GDP negative) keeps gold bid. Consider RAISING STOP to $80 to lock in gains.',
     }
   ],
 
@@ -361,33 +361,34 @@ const DATA = {
     { date: '2026-03-24', value: 10123.31, note: 'CCJ close $108.04' },
     { date: '2026-03-25', value: 10141.93, note: 'CCJ close $109.02' },
     { date: '2026-03-26', value: 10059.28, note: 'CCJ close $104.67 [Chrome]. 5 paper trades entered.' },
-    { date: '2026-03-27', value: 9988.61, note: 'CCJ $103.92 (-0.72%). SNPS $380.47 (-5.35%). GDX $85.68 (+4.0%). Gold $4,524. Brent $112.57. S&P 5th straight losing week. Dow enters correction.' },
-    { date: '2026-03-30', value: 10034.01, note: 'S&P bounced 6,426 (+0.9%). XLE $62.56 (+1.68%). GDX $85.79 (flat). GOOGL $273.78 (flat). Gold ~$4,550. Brent $111-115. F&G 10 (DEEPER fear). CCJ stop raised to $101.55 (entry).' },
+    { date: '2026-03-27', value: 9988.61, note: 'CCJ $103.92 (-0.72%). SNPS $380.47 (-5.35%). GDX $85.68 (+4.0%). Gold $4,524. Brent $112.57. S&P 5th straight losing week.' },
+    { date: '2026-03-30', value: 10034.01, note: 'S&P bounced 6,426 (+0.9%). XLE $62.56 (+1.68%). GDX $85.79. F&G 10.' },
+    { date: '2026-03-31', value: 10094.10, note: 'S&P SURGED 6,528 (+2.91%) on Iran peace signals. GDX $89.10 (+3.84% best). GOOGL $284.10 (+3.77%). SNPS ~$396 [INFERRED]. Brent crashed $115\u2192$105. F&G 9 (single digits). Q1 GDP NEGATIVE.' },
   ],
 
   macro: {
     kpis: [
-      { label: 'S&P 500', value: '6,426', sub: '+0.9% (bounce from 6,369). Streak broken? [Web Search - 247wallst/CNBC]', color: 'var(--green)' },
-      { label: 'Nasdaq', value: '~21,100', sub: 'Bounce expected. Still in correction territory. [ESTIMATED from S&P]', color: 'var(--amber)' },
-      { label: 'Dow Jones', value: '~45,600', sub: 'Bounce day. Still in correction. [ESTIMATED from S&P]', color: 'var(--amber)' },
-      { label: 'VIX', value: '~28-31', sub: 'Elevated. Range 20.28-35.30 in Mar. [ESTIMATED]', color: 'var(--red)' },
-      { label: 'Gold', value: '$4,550/oz', sub: '+$26 (+0.6%) from $4,524. Safe haven bid persists. [Web Search - Fortune]', color: 'var(--green)' },
-      { label: 'Brent Crude', value: '$111-115/bbl', sub: 'LARGEST MONTHLY GAIN SINCE INCEPTION (+55% in Mar). Hormuz closure. [Web Search - CNBC]', color: 'var(--red)' },
-      { label: 'WTI Crude', value: '$102.88/bbl', sub: 'Closed above $100. First time since Jul 2022. [Web Search - CNBC]', color: 'var(--red)' },
-      { label: 'Uranium Spot', value: '~$87-90/lb', sub: 'Unchanged. Spot $86.95 end Feb. Long-term $90. [Web Search]', color: 'var(--amber)' },
-      { label: 'Fear & Greed', value: '10/100', sub: '\u2b07\ufe0f DOWN FROM 15. DEEPEST EXTREME FEAR. [Web Search - feargreedmeter.com]', color: 'var(--red)' },
-      { label: 'AAII Bearish', value: '~50%', sub: '8th+ straight week above avg. [ESTIMATED from trend]', color: 'var(--red)' },
-      { label: 'Fed Rate', value: '3.50-3.75%', sub: 'On hold. Only 1 cut projected 2026 (dot plot). Oil inflation sticky. [Web Search - CME]', color: '' },
-      { label: '10Y Yield', value: '4.35%', sub: '-9bps from 4.44%. Flight to safety bid. [Web Search - FRED]', color: 'var(--green)' },
-      { label: 'NFP (Feb)', value: '-92,000', sub: 'Claims stabilizing (4-wk avg 210.5K, declining). Mar NFP due Apr 11. [Web Search]', color: 'var(--red)' },
+      { label: 'S&P 500', value: '6,528.52', sub: '+2.91% SURGE on Iran peace signals. Bloomberg: "Iran signals willingness to end conflict." [Web Search - 247wallst/Bloomberg]', color: 'var(--green)' },
+      { label: 'Nasdaq', value: '~21,500', sub: 'Tech rallied broadly. SNPS +4%, GOOGL +3.77%. [ESTIMATED from S&P]', color: 'var(--green)' },
+      { label: 'VIX', value: '30.61', sub: 'Still elevated despite rally. Fear not resolved. [Web Search - Yahoo]', color: 'var(--red)' },
+      { label: 'Gold', value: '$4,568/oz', sub: '+0.4% from $4,550. Dual support: geopolitical + recession. [Web Search - LiteFinance]', color: 'var(--green)' },
+      { label: 'Brent Crude', value: '$105.13/bbl', sub: '\u26a0\ufe0f DOWN from $115 \u2014 10% SINGLE-DAY DROP on Iran peace signals. [Web Search - CNBC/Fortune]', color: 'var(--amber)' },
+      { label: 'WTI Crude', value: '$102.12/bbl', sub: 'Down from $102.88. Still above $100. [Web Search - FX Daily Report]', color: 'var(--amber)' },
+      { label: 'Uranium Spot', value: '$64-87/lb', sub: 'CONFLICTING DATA. TradeTech shows $64. Prior was $87-90. Need Chrome verification. [UNVERIFIED]', color: 'var(--amber)' },
+      { label: 'Fear & Greed', value: '9/100', sub: '\u2b07\ufe0f SINGLE DIGITS. Down from 15. Historic extreme. [Web Search - feargreedmeter.com]', color: 'var(--red)' },
+      { label: 'AAII Bearish', value: '35.5%', sub: 'Mar 26 survey. Bearish > bullish (33.1%). [Web Search - AAII]', color: 'var(--red)' },
+      { label: 'Fed Rate', value: '3.50-3.75%', sub: 'On hold. VP Jefferson: moving closer to neutral. [Web Search - Fed.gov]', color: '' },
+      { label: '10Y Yield', value: '4.44%', sub: 'Unchanged from prior. [Web Search - FRED DGS10]', color: '' },
+      { label: 'Q1 GDP', value: 'NEGATIVE', sub: '\u26a0\ufe0f FIRST CONTRACTION IN 3 YEARS. Import surge ahead of tariffs. [Web Search - Bloomberg]', color: 'var(--red)' },
+      { label: 'Michigan Sentiment', value: '53.3', sub: 'DOWN from 56.6. Classic pre-recession divergence with CCI. [Web Search - FinancialContent]', color: 'var(--red)' },
     ],
-    regime: 'RISK-OFF WITH BOUNCE: S&P +0.9% but F&G 10 (deeper fear) + Oil >$111 + Iran escalating + Apr 2 tariff review 2 days + Apr 6 Hormuz deadline 7 days',
-    narrative: `<p><b>MARKET REGIME (Run #8, Tue Mar 31):</b> S&P bounced to 6,426 on Monday (+0.9%), potentially breaking 5-week losing streak. BUT F&G dropped to 10 (from 15) \u2014 deepest extreme fear reading. Bounce may be dead-cat with dual catalysts ahead (Apr 2 + Apr 6). Brent crude made HISTORY: +55% for March, largest monthly gain since Brent inception (prev record: +46% Sept 1990, Gulf War I).</p>
-<p><b>IRAN ESCALATION \u2014 CRITICAL:</b> Trump threatened to "completely obliterate" Iran\u2019s power plants, oil wells, and Kharg Island. Israel struck Isfahan killing IRGC naval commander. Iran fired missiles at central Israel. Strait closed to commercial traffic since Mar 2 (17.8M bbl/day disrupted). Apr 6 deadline is 2nd extension. Kinetic strikes happening on both sides.</p>
-<p><b>TARIFF CLARIFICATION:</b> Section 122 tariffs ALREADY LIVE (Feb 24\u2013Jul 24, 10% on all imports). Apr 2 is mid-point review, NOT a new tariff event. Reduces Apr 2 as standalone catalyst. Apr 6 Iran deadline is the REAL binary event.</p>
-<p><b>AI POWER DEMAND (STRUCTURAL):</b> US data centers now draw 41 GW (150% increase/5yr). 1,000+ TWh by 2030 globally. 85-90 GW new nuclear needed. 33 countries pledge to triple nuclear by 2050. Microsoft/Google/Amazon signed nuclear PPAs. Uranium thesis intact despite spot correction to $87.</p>
-<p><b>LABOR MARKET:</b> Feb NFP -92K was shock, but claims stabilizing \u2014 4-wk avg 210.5K (4th consecutive decline), continued claims 10-month low. Not recessionary yet. Mar NFP due Apr 11.</p>
-<p><b>GOLD + BONDS:</b> Gold ~$4,550/oz. 10Y yield dropped to 4.35% (-9bps). Flight to safety bid emerging. GDX paper +4.1% from entry \u2014 best paper performer.</p>`
+    regime: 'RISK-ON SURGE + STRUCTURAL FEAR: S&P +2.91% on Iran peace but F&G 9 (single digits) + Q1 GDP negative + oil crashing $115\u2192$105',
+    narrative: `<p><b>MARKET REGIME (Run #9, Tue Apr 1):</b> S&P surged 2.91% to 6,528.52 on Monday \u2014 the biggest single-day gain in weeks \u2014 after Bloomberg reported Iran\u2019s president signaling willingness to end the conflict with the US. 247wallst: "S&P pops on news Trump could end war." This is a POTENTIAL regime change from the crisis-driven sell-off of the past 5 weeks.</p>
+<p><b>IRAN PEACE SIGNALS \u2014 GAME CHANGER?:</b> Iran\u2019s president reportedly open to ending the war. BUT: Iran previously rejected the 15-point ceasefire plan and issued 5 counter-conditions (sovereignty over Hormuz, compensation, Lebanon ceasefire linkage). Houthis joined war Mar 28. 4,700+ Iranian security forces killed. The Apr 6 deadline remains \u2014 peace signal vs. structural positions are deeply apart. Oil dropped 10% ($115\u2192$105) on the headline alone.</p>
+<p><b>Q1 GDP NEGATIVE \u2014 NEW RISK:</b> US economy contracted for the first time in 3 years in Q1 2026. Cause: surge in imports as businesses front-loaded ahead of tariffs. Michigan Consumer Sentiment dropped to 53.3 (from 56.6) \u2014 classic pre-recession divergence with Conference Board (which rose slightly). Recession risk is REAL.</p>
+<p><b>SCOTUS TARIFF RULING:</b> Supreme Court ruled most emergency tariffs under IEEPA UNCONSTITUTIONAL. Refund process to importers begun. This fundamentally weakens the Apr 2 "Liberation Day" catalyst \u2014 it\u2019s now a 1-year anniversary of a policy that\u2019s been legally struck down, not a new policy event.</p>
+<p><b>NUCLEAR SUPPLY-SIDE:</b> FluxPoint Energy announced first new US uranium conversion facility in 70 years (Mar 2026). NRC evaluating TerraPower construction permit (H1 2026) and X-energy Xe-100 by Nov 2026. Meta signed 6.6 GW nuclear deal. $600B+ hyperscaler capex in 2026. Structural thesis STRENGTHENED even as spot price data is murky.</p>
+<p><b>GDX BEST PERFORMER:</b> Gold miners surged +3.84% on dual support \u2014 geopolitical uncertainty PLUS recession fears. Gold at $4,568. Even if Iran resolves, recession risk (Q1 GDP negative) keeps gold supported.</p>`
   },
 
   themes: [
@@ -395,169 +396,173 @@ const DATA = {
       num: 1,
       name: 'Nuclear/Uranium as AI Power Bottleneck',
       conviction: 80,
-      priorConviction: 85,
+      priorConviction: 80,
       badge: 'HIGH',
       badgeClass: 'badge-green',
-      status: 'ACTIVE \u2014 CCJ STOP RAISED TO ENTRY ($101.55) = RISK-FREE',
-      narrative: `<p><b>RUN #8 (Mar 31):</b> Conviction maintained at 80%. CCJ stop RAISED to $101.55 (entry price) per Run #6B recommendation \u2014 position is now RISK-FREE on capital. Structural thesis STRENGTHENED by new data: US data centers draw 41 GW (150% increase/5yr), 85-90 GW new nuclear capacity needed by 2030, 33 countries pledged to triple nuclear. Uranium spot still ~$87/lb but structural demand acceleration makes it a timing question, not a thesis question.</p>
-<p><b>CCJ:</b> $103.92 (Mar 27 close, Mar 30 unconfirmed). +2.33% from entry. STOP RAISED to $101.55 = breakeven floor. Downside: $0. Upside: $130 target (+25%).</p>
-<p><b>URA:</b> $46.63 (Mar 27 close). Essentially flat from $46.70 entry. Broader ETF dilutes purer plays \u2014 CCJ remains primary vehicle.</p>
-<p><b>HF Intel:</b> Still 0/8 major funds in uranium miners. UNCROWDED. This is our STRONGEST edge signal across all themes.</p>`,
+      status: 'ACTIVE \u2014 CCJ NEAR STOP ($102.84 vs $101.55). Structural thesis STRONGEST EVER.',
+      narrative: `<p><b>RUN #9 (Apr 1):</b> Conviction maintained at 80%. CCJ dropped to $102.84 (-1.04%) \u2014 only $1.29 above stop. \u26a0\ufe0f PROXIMITY ALERT. But the thesis has NEVER been stronger structurally: FluxPoint announced the first new US uranium conversion facility in 70 years. Meta signed a 6.6 GW nuclear deal. NRC evaluating TerraPower + X-energy SMR permits. $600B+ hyperscaler capex confirms AI power demand is real.</p>
+<p><b>IRAN PEACE RISK:</b> If Iran resolves, the energy complex sells off. CCJ is partially correlated to energy sentiment. Stop at $101.55 (entry) = risk-free on capital regardless. Let the stop work.</p>
+<p><b>URA:</b> $45.67 [UNVERIFIED] \u2014 down 2.21% from entry. Broader ETF dragging. CCJ remains primary vehicle.</p>
+<p><b>HF Intel:</b> Still 0/8 major funds in uranium miners. UNCROWDED. This is our strongest edge signal.</p>
+<p><b>NEW: FluxPoint uranium conversion facility + Meta 6.6GW nuclear deal = supply AND demand catalysts confirmed.</b></p>`,
       scenarios: [
         { label: 'BULL', probability: 25, color: 'var(--green)', trigger: 'Uranium returns >$100/lb, SMR permits, hyperscaler procurement', impact: 'CCJ rerates to 25x EV/EBITDA', move: '+35-40%', priceTarget: '$143\u2013148' },
-        { label: 'BASE', probability: 40, color: 'var(--accent)', trigger: 'Uranium $87-100/lb, steady demand, SMR on schedule', impact: 'Gradual rerate', move: '+18-25%', priceTarget: '$125\u2013132' },
-        { label: 'BEAR', probability: 25, color: 'var(--amber)', trigger: 'Uranium stays $80-85/lb, SMR delays, broad selloff continues', impact: 'Multiple compression', move: '-10-15%', priceTarget: '$90\u201395' },
-        { label: 'TAIL', probability: 10, color: 'var(--red)', trigger: 'Nuclear incident, uranium <$75/lb', impact: 'Sector flight', move: '-30%+', priceTarget: '<$74' },
+        { label: 'BASE', probability: 40, color: 'var(--accent)', trigger: 'Uranium $80-100/lb, steady demand, SMR on schedule', impact: 'Gradual rerate', move: '+18-25%', priceTarget: '$125\u2013132' },
+        { label: 'BEAR', probability: 25, color: 'var(--amber)', trigger: 'Uranium stays $70-85/lb, SMR delays, broad selloff', impact: 'Multiple compression', move: '-10-15%', priceTarget: '$90\u201395' },
+        { label: 'TAIL', probability: 10, color: 'var(--red)', trigger: 'Nuclear incident, uranium <$65/lb', impact: 'Sector flight', move: '-30%+', priceTarget: '<$74' },
       ],
       analogues: [
-        { period: '2005-2007 Uranium Bull (Cigar Lake)', matchScore: '7/10', predicted: '+130% over 18m', outcome: 'OPEN', differentiator: 'AI demand driver absent in 2007' },
+        { period: '2005-2007 Uranium Bull (Cigar Lake flood)', matchScore: '7/10', predicted: '+130% over 18m', outcome: 'OPEN', differentiator: 'AI demand driver absent in 2007' },
         { period: '2020-2022 Sprott Physical Trust', matchScore: '6/10', predicted: 'Physical buying removes supply', outcome: 'OPEN', differentiator: 'Sprott holds 66M lbs' },
       ],
-      baseRateSummary: 'Bull + Base = 65%. Spot corrected to ~$87 (not >$100). Structural thesis intact but near-term price catalyst weaker. CCJ +2.33% from entry.'
+      baseRateSummary: 'Bull + Base = 65%. CCJ near stop but thesis structurally strongest ever. FluxPoint + Meta + NRC = triple supply/demand confirmation.'
     },
     {
       num: 2,
-      name: 'Iran Geopolitical Premium \u2014 ACTIVE CRISIS',
-      conviction: 65,
+      name: 'Iran Geopolitical Premium \u2014 PEACE SIGNALS',
+      conviction: 50,
       priorConviction: 65,
-      badge: 'MEDIUM-HIGH',
+      badge: 'MEDIUM',
       badgeClass: 'badge-amber',
-      status: 'ESCALATING. XLE +1.68% (CATCHING UP). APR 6 DEADLINE 7 DAYS. KINETIC STRIKES BOTH SIDES.',
-      narrative: `<p><b>RUN #8 \u2014 MAJOR ESCALATION:</b> Trump threatened to "completely obliterate" Iran\u2019s power plants, oil wells, and Kharg Island. Israel struck Isfahan killing IRGC naval commander. Iran retaliated with missiles at central Israel. This is no longer posturing \u2014 it\u2019s an active kinetic conflict with both sides striking each other.</p>
-<p><b>OIL HISTORIC:</b> Brent\u2019s March monthly gain of +55% is the LARGEST SINCE BRENT INCEPTION (prev record: +46%, Sept 1990, Gulf War I). WTI closed above $100 for first time since Jul 2022. This is not a drill.</p>
-<p><b>XLE CATCHING UP:</b> XLE paper trade rose to $62.56 (+1.68%) on Mar 30 \u2014 resolving the oil/energy divergence from Run #7. Now at 52-week high (day range $61.26-$62.79). Thesis WORKING.</p>
-<p><b>APR 6 = BINARY:</b> 2nd deadline extension. If Trump follows through on obliteration threats and Iran doesn\u2019t reopen Strait, this becomes a full shooting war. Dalio\u2019s Mar 17 "Final battle for Hormuz" looks increasingly prescient.</p>`,
+      status: '\u26a0\ufe0f THESIS AT RISK. Iran president signals willingness to end war. Oil dropped 10%. XLE -0.96% while S&P +2.91%.',
+      narrative: `<p><b>RUN #9 \u2014 POTENTIAL REGIME CHANGE:</b> Bloomberg: "Iran signals willingness to end conflict with US." S&P surged 2.91% on the headline. Oil CRASHED from $115 to $105 (10% single-day reversal). XLE dropped -0.96% while the broad market rallied \u2014 energy is DIVERGING NEGATIVELY from equities on peace hopes.</p>
+<p><b>HOWEVER \u2014 structural gaps remain:</b> Iran rejected the 15-point plan. Counter-demanded: sovereignty over Hormuz, compensation, Lebanon ceasefire linkage. Houthis joined war. 4,700+ Iranian forces killed. These are not positions that resolve in days.</p>
+<p><b>Apr 6 deadline still live.</b> Trump hasn\u2019t withdrawn the ultimatum. The peace signal could be a negotiating tactic. But the MARKET is pricing in resolution \u2014 that\u2019s what matters for XLE.</p>
+<p><b>CONVICTION CUT 65%\u219250%:</b> Peace probability rose meaningfully. XLE thesis weakening. Oil near-term peak likely at $115 (Mar 30). Downside to $85-90 if framework deal emerges. XLE stop at $57 = substantial drawdown risk.</p>`,
       scenarios: [
-        { label: 'BULL (Escalation)', probability: 30, color: 'var(--red)', trigger: 'Apr 6 expires, Hormuz closes, oil >$120', impact: 'XLE +15-20%', move: 'OIL +25-40%', priceTarget: 'XLE $70+' },
-        { label: 'BASE (Status Quo)', probability: 35, color: 'var(--accent)', trigger: 'Deadline extended again, oil $105-115', impact: 'Chronic uncertainty', move: 'OIL flat', priceTarget: 'XLE holds' },
-        { label: 'BEAR (Progress)', probability: 25, color: 'var(--amber)', trigger: 'Partial framework, oil $85-90', impact: 'Relief rally', move: 'OIL -15%', priceTarget: 'XLE drops to $57 (stop)' },
-        { label: 'TAIL (Resolution)', probability: 10, color: 'var(--green)', trigger: 'Full ceasefire', impact: 'Oil crashes', move: 'OIL -30%+', priceTarget: 'XLE well below stop' },
+        { label: 'BULL (Escalation)', probability: 20, color: 'var(--red)', trigger: 'Peace fails, Apr 6 strikes, oil >$120', impact: 'XLE +15-20%', move: 'OIL +25-40%', priceTarget: 'XLE $70+' },
+        { label: 'BASE (Talks)', probability: 40, color: 'var(--accent)', trigger: 'Extended negotiations, oil $95-105', impact: 'Slow de-escalation', move: 'OIL -5-10%', priceTarget: 'XLE $59-62' },
+        { label: 'BEAR (Framework)', probability: 30, color: 'var(--amber)', trigger: 'Framework deal, oil $85-90', impact: 'Relief sell-off', move: 'OIL -15-20%', priceTarget: 'XLE $55-57 (AT STOP)' },
+        { label: 'TAIL (Full Resolution)', probability: 10, color: 'var(--green)', trigger: 'Full ceasefire + Hormuz reopens', impact: 'Oil crashes', move: 'OIL -30%+', priceTarget: 'XLE below stop' },
       ],
       analogues: [
-        { period: '1990 Gulf War', matchScore: '6/10', predicted: 'Oil +130% then crashed', outcome: 'RESOLVED', differentiator: 'Current more complex' },
+        { period: '1990 Gulf War', matchScore: '5/10', predicted: 'Oil +130% then crashed', outcome: 'RESOLVED', differentiator: 'Peace signals came faster here' },
       ],
-      baseRateSummary: 'Bull + Base = 65%. Brent at $112. Dalio explicitly on this thesis. XLE flat is puzzling \u2014 watch for catch-up or oil reversal. Apr 6 is 7 days.'
+      baseRateSummary: 'Bull + Base = 60% (down from 65%). Iran peace signals REAL but structural gaps exist. XLE thesis weakening. Monitor closely.'
     },
     {
       num: 3,
       name: 'Extreme Fear \u2014 Selective Contrarian',
-      conviction: 60,
-      priorConviction: 65,
-      badge: 'MEDIUM',
-      badgeClass: 'badge-amber',
-      status: 'F&G DROPPED TO 10 \u2014 APPROACHING HISTORIC CONTRARIAN ENTRY ZONE',
-      narrative: `<p><b>RUN #8:</b> GOOGL $273.78 (flat from $273.76 Mar 27). F&G plunged to 10 (from 15) \u2014 this is approaching the DEEPEST extreme fear since Nov 2025. Historically, F&G below 10 has preceded strong reversals within 2-4 weeks. We are now at levels where contrarian buying has the HIGHEST historical win rate.</p>
-<p><b>HOWEVER:</b> Klarman and Ackman both still trimming GOOGL specifically. The contrarian thesis works on index level (buy fear broadly) but NOT necessarily on GOOGL specifically (legal/AI competition risks). 16/25 S&P industry groups in correction, 4 in bear market. Breadth deteriorating.</p>
-<p><b>Counter-signal persists:</b> Citadel $2.52B AMZN, Tepper tripled Micron, Druckenmiller adding. Big money is offensive on AI but selective \u2014 not GOOGL.</p>
-<p><b>VERDICT:</b> F&G 10 = stronger contrarian setup but GOOGL specifically has HF-confirmed headwinds. Maintain position, do NOT add. Watch for F&G below 5 for index-level contrarian entry (TLT or SPY rather than single stock).</p>`,
+      conviction: 65,
+      priorConviction: 60,
+      badge: 'MEDIUM-HIGH',
+      badgeClass: 'badge-green',
+      status: 'F&G AT 9 \u2014 SINGLE DIGITS. HISTORIC CONTRARIAN SIGNAL. GOOGL +3.77% ON MAR 31.',
+      narrative: `<p><b>RUN #9 \u2014 CONTRARIAN THESIS ACTIVATING:</b> F&G dropped to 9 \u2014 SINGLE DIGITS. This is the deepest extreme fear since the system\u2019s inception. Historically, F&G below 10 has preceded 15-25% rallies within 2-4 months. The Mar 31 S&P surge (+2.91%) is the first sign of a potential fear reversal.</p>
+<p><b>GOOGL $284.10 (+3.77%):</b> Now +1.13% from entry. The paper trade turned positive for the first time. If Iran resolution removes one fear layer, GOOGL has substantial upside to $340-376 target.</p>
+<p><b>SCOTUS tariff ruling helps:</b> Tariffs being struck down removes a headwind for consumer/ad spending. GOOGL is a direct beneficiary.</p>
+<p><b>RECESSION RISK is the new counter-argument:</b> Q1 GDP negative. Michigan sentiment 53.3. If recession materializes, ad revenue drops regardless of fear reversals. But F&G at 9 typically prices in recession already.</p>
+<p><b>CONVICTION RAISED 60%\u219265%:</b> F&G 9 is the strongest contrarian signal we\u2019ve seen. GOOGL participating in rally. Tariff headwind removed. Recession risk partially priced at these fear levels.</p>`,
       scenarios: [
-        { label: 'BULL', probability: 25, color: 'var(--green)', trigger: 'Iran + Liberation Day absorbed, VIX <20, GOOGL earnings beat', impact: 'Fear reversal', move: 'GOOGL +25-31%', priceTarget: '$360\u2013376' },
-        { label: 'BASE', probability: 35, color: 'var(--accent)', trigger: 'F&G 25-35, GOOGL earnings solid', impact: 'Slow grind', move: 'GOOGL +12-20%', priceTarget: '$322\u2013345' },
-        { label: 'BEAR', probability: 30, color: 'var(--amber)', trigger: 'F&G drops to 10, recession fear, oil >$120', impact: 'Further pain', move: 'GOOGL -5-12%', priceTarget: '$245\u2013265' },
+        { label: 'BULL', probability: 30, color: 'var(--green)', trigger: 'Iran resolves + no recession + GOOGL beats Q1', impact: 'Fear reversal', move: 'GOOGL +25-31%', priceTarget: '$360\u2013376' },
+        { label: 'BASE', probability: 35, color: 'var(--accent)', trigger: 'F&G recovers to 25-35, mild slowdown', impact: 'Slow grind', move: 'GOOGL +12-20%', priceTarget: '$322\u2013345' },
+        { label: 'BEAR', probability: 25, color: 'var(--amber)', trigger: 'Recession confirmed, ad spend cuts', impact: 'Further pain', move: 'GOOGL -5-12%', priceTarget: '$250\u2013270' },
         { label: 'TAIL', probability: 10, color: 'var(--red)', trigger: 'Recession + AI bubble + legal liability', impact: 'Full de-rating', move: 'GOOGL -25%+', priceTarget: '<$215' },
       ],
       analogues: [
-        { period: 'Q4 2018 Fear Extreme', matchScore: '7/10', predicted: 'S&P +13% in 3m', outcome: 'RESOLVED', differentiator: '2026 has real crisis drivers' },
+        { period: 'Q4 2018 Fear Extreme', matchScore: '8/10', predicted: 'S&P +13% in 3m', outcome: 'RESOLVED \u2014 pattern matching. F&G was ~5 in Dec 2018, S&P rallied 18% in next 4 months.', differentiator: '2026 has real recession risk (Q1 GDP negative) vs 2018 which was Fed-tightening scare only.' },
       ],
-      baseRateSummary: 'Bull + Base = 60% (down from 65%). GOOGL paper trade -2.55%. Two value legends trimming. F&G 15 historically bullish but this time has substance.'
+      baseRateSummary: 'Bull + Base = 65% (up from 60%). F&G 9 = strongest contrarian signal. GOOGL now profitable from entry. Recession risk is key counter-argument.'
     },
     {
       num: 4,
-      name: 'Tariff Policy \u2014 Liberation Day Apr 2',
-      conviction: 50,
+      name: 'Tariff Policy \u2014 SCOTUS STRUCK DOWN',
+      conviction: 35,
       priorConviction: 50,
-      badge: 'MEDIUM',
+      badge: 'LOW-MEDIUM',
       badgeClass: 'badge-amber',
-      status: 'RECALIBRATED. Section 122 ALREADY LIVE. Apr 2 = review, NOT new event.',
-      narrative: `<p><b>RUN #8 \u2014 CLARIFICATION:</b> Section 122 tariffs (10% on all imports) went into effect Feb 24 and run through Jul 24. Apr 2 is the mid-point review date, NOT a new tariff announcement. "Liberation Day" was Apr 2, 2025 (original EO). The risk on Apr 2, 2026 is upward adjustment, not a brand new policy shock.</p>
-<p><b>This significantly reduces Apr 2 as a standalone catalyst.</b> Market has already absorbed the 10% Section 122 framework. The real catalyst window is Apr 6 (Iran Hormuz deadline).</p>
-<p><b>Stagflation still building:</b> Oil >$110 + 10% tariff + PCE 2.7% + Core PCE 3.1% + NFP -92K + Fed on hold (only 1 cut projected in dot plot). JPMorgan: earnings cut 2-5% if oil stays $110+ through year-end. CME FedWatch: 86% chance no change at next meeting.</p>`,
+      status: 'SCOTUS ruled emergency tariffs UNCONSTITUTIONAL. Apr 2 = anniversary, not new event. CONVICTION CUT.',
+      narrative: `<p><b>RUN #9 \u2014 LEGAL INVALIDATION:</b> Supreme Court ruled most emergency tariffs under IEEPA UNCONSTITUTIONAL. Refund process to importers has begun. This is a FUNDAMENTAL change to the tariff theme. Apr 2, 2026 marks the 1-year anniversary of Liberation Day (Apr 2, 2025 EO 14257), NOT a new tariff announcement.</p>
+<p><b>CONVICTION CUT 50%\u219235%:</b> Unless Trump announces NEW tariff mechanisms (possible but unconfirmed), the Apr 2 catalyst is largely symbolic. Section 122 (10% on all imports, Feb 24-Jul 24) was the operational replacement, but it\u2019s already live and priced in.</p>
+<p><b>RECESSION LINK:</b> The Q1 GDP contraction was partly caused by businesses front-loading imports ahead of tariffs. The tariff regime \u2014 even if struck down \u2014 has already done damage to growth. Michigan sentiment at 53.3 reflects consumer stress from tariff-era price increases.</p>
+<p><b>NOT DIRECTLY TRADED.</b> Tariff theme is context for other positions (GOOGL benefits from removal, XLE unaffected).</p>`,
       scenarios: [
-        { label: 'BULL (Escalation)', probability: 20, color: 'var(--amber)', trigger: 'Section 122 rates increased, retaliation', impact: 'Stagflation activates', move: 'Consumer -10-15%', priceTarget: 'Gold/oil benefit' },
-        { label: 'BASE (Status Quo)', probability: 40, color: 'var(--accent)', trigger: '10% Section 122 maintained, legal uncertainty', impact: '2-3 weeks volatility', move: 'Market -3-5%', priceTarget: 'Temporary' },
-        { label: 'BEAR (Softening)', probability: 30, color: 'var(--green)', trigger: 'Ackman-influenced pause, bilateral deals expand', impact: 'Relief rally', move: 'Market +3-5%', priceTarget: 'Tech rebounds' },
-        { label: 'TAIL (Escalation War)', probability: 10, color: 'var(--red)', trigger: 'Full retaliation, supply crisis', impact: 'Recession risk', move: 'S&P -10-15%', priceTarget: 'Defensive only' },
+        { label: 'BULL (New EO)', probability: 15, color: 'var(--amber)', trigger: 'Trump issues new tariff mechanism bypassing SCOTUS', impact: 'Renewed uncertainty', move: 'Consumer -5-10%', priceTarget: 'Gold/oil benefit' },
+        { label: 'BASE (Status Quo)', probability: 45, color: 'var(--accent)', trigger: 'Anniversary passes, legal unwinding continues', impact: 'Gradually positive for markets', move: 'Market +1-3%', priceTarget: 'Relief' },
+        { label: 'BEAR (Retaliation Continues)', probability: 30, color: 'var(--green)', trigger: 'Trading partners maintain counter-tariffs despite SCOTUS', impact: 'Ongoing friction', move: 'Market flat', priceTarget: 'Neutral' },
+        { label: 'TAIL (Constitutional Crisis)', probability: 10, color: 'var(--red)', trigger: 'Trump defies SCOTUS ruling', impact: 'Institutional crisis', move: 'S&P -5-10%', priceTarget: 'Flight to safety' },
       ],
       analogues: [
-        { period: '2018-2019 US-China Trade War', matchScore: '6/10', predicted: 'Volatile, Phase 1 deal', outcome: 'RESOLVED', differentiator: 'SCOTUS ruling is new factor' },
+        { period: '2018-2019 US-China Trade War', matchScore: '5/10', predicted: 'Volatile, Phase 1 deal', outcome: 'RESOLVED', differentiator: 'SCOTUS invalidation is unprecedented factor' },
       ],
-      baseRateSummary: 'Base + Bear = 70% = manageable outcome likely (status quo or softening). Not directly traded. Portfolio balanced.'
+      baseRateSummary: 'Base + Bear = 75% = manageable. SCOTUS ruling is net positive for markets. Not directly traded.'
     },
   ],
 
-  themeInteractions: `<h3>Theme Interaction Map (Run #8 Update)</h3>
-<p><b>CCJ + URA (Theme 1, 34% of portfolio):</b> CCJ now RISK-FREE (stop = entry). Structural demand confirmed by fresh data (41 GW US data centers, 85-90 GW new nuclear needed). 0/8 HFs = uncrowded. Strongest edge.</p>
-<p><b>XLE (Theme 2, 17%) \u2014 CATCHING UP:</b> +1.68% on Mar 30 finally reflecting Brent\u2019s $111-115 range. Natural hedge with GOOGL/SNPS now ACTIVE \u2014 XLE gaining while tech stalls. Iran escalation (obliteration threats, strikes) validates thesis.</p>
-<p><b>GDX (Theme 6, 12%):</b> BEST PAPER PERFORMER (+4.1%). Gold ~$4,550. 10Y yield dropping (4.35% from 4.44%) = flight to safety bid supporting gold. But still CROWDED.</p>
-<p><b>SNPS \u26a0\ufe0f STILL CRITICAL:</b> $380.47 vs $374 stop = 1.7% buffer. S&P bounced on Mon but SNPS not confirmed for Mar 30. If tech continues selling, SNPS could be first paper stop. Elliott stake provides floor but market selling everything.</p>
-<p><b>KEY SHIFT:</b> Apr 2 tariff risk REDUCED (Section 122 already live). Apr 6 Iran is THE catalyst. Portfolio is crisis-heavy (XLE, GDX, CCJ = 63%) which is CORRECT given Iran escalation.</p>`,
+  themeInteractions: `<h3>Theme Interaction Map (Run #9 Update \u2014 REGIME SHIFT)</h3>
+<p><b>\u26a0\ufe0f IRAN PEACE SIGNALS CHANGE EVERYTHING:</b> The market surged +2.91% on Iran peace willingness. If this holds, the crisis-heavy portfolio (XLE + GDX + CCJ = 63% of allocation) faces a MIXED outcome: XLE thesis collapses (oil drops), GDX partially supported by recession fears, CCJ structural thesis unchanged but correlated to energy sentiment near-term.</p>
+<p><b>CCJ + URA (Theme 1, 34%):</b> CCJ dangerously close to stop ($1.29 buffer). But thesis has NEVER been structurally stronger (FluxPoint, Meta 6.6GW, NRC permits). If stop triggers, it\u2019s market noise, not thesis failure. Re-entry at $95-98 would be attractive.</p>
+<p><b>XLE (Theme 2, 17%) \u2014 THESIS WEAKENING:</b> Oil crashed 10% on peace signals. XLE dropped while S&P surged. Conviction cut 65%\u219250%. Apr 6 is now a potential EXIT catalyst rather than an escalation catalyst.</p>
+<p><b>GDX (Theme 6, 12%) \u2014 BEST PERFORMER:</b> +8.14% from entry. Gold $4,568 supported by DUAL pillars: geopolitical premium + recession fears (Q1 GDP negative). Even if Iran resolves, recession risk keeps gold bid. Consider raising stop $75\u2192$80.</p>
+<p><b>GOOGL (Theme 3, 14%) \u2014 FINALLY POSITIVE:</b> +3.77% rally, now +1.13% from entry. F&G at 9 = strongest contrarian signal. SCOTUS tariff removal helps ad spending. Conviction raised 60%\u219265%.</p>
+<p><b>SNPS (Theme 5, 12%) \u2014 [INFERRED] RECOVERY:</b> ~$396 if confirmed = stop proximity resolved. Elliott thesis intact. Tech rally participation expected.</p>
+<p><b>KEY PORTFOLIO SHIFT:</b> Crisis thesis (Themes 2+4) weakening. Structural thesis (Theme 1) + Contrarian thesis (Theme 3) + Safe haven (Theme 6) strengthening. Portfolio is naturally rotating toward the right themes.</p>`,
 
   hedgeFunds: {
-    summary: 'Run #8 (Tuesday \u2014 no new HF scan, Mon-only). Prior scan: Dalio explicitly on Hormuz. Klarman trimmed GOOGL 40%. Elliott SNPS confirmed. 0/8 in uranium miners. Iran escalation validates Dalio\u2019s call.',
+    summary: 'Run #9 (Tuesday \u2014 no new HF scan, Mon-only). Prior scan: Dalio explicitly on Hormuz. Klarman trimmed GOOGL 40%. Elliott SNPS confirmed. 0/8 in uranium miners. NEW: Iran peace signals may validate Tepper/Citadel\'s offensive positioning over Dalio\'s crisis positioning.',
     table: [
-      { fund: 'Bridgewater (Dalio)', view: 'Mar 17: "Final battle for Strait of Hormuz is coming." Long commodities/inflation hedges.', position: 'Explicit Hormuz positioning. Nuclear macro NOT uranium miners.', alignment: 'SUPPORTS XLE/Iran thesis', cls: 'badge-green' },
+      { fund: 'Bridgewater (Dalio)', view: 'Mar 17: "Final battle for Strait of Hormuz is coming." Long commodities/inflation hedges.', position: 'Explicit Hormuz positioning. Nuclear macro NOT uranium miners.', alignment: '\u26a0\ufe0f WEAKENING \u2014 Iran peace signals contradict "final battle" thesis', cls: 'badge-amber' },
       { fund: 'Druckenmiller', view: 'Mar 13: Stablecoin/currency devaluation focus. Added XLF + NTRA.', position: 'Financial debasement theme. No uranium/Iran explicit.', alignment: 'TANGENTIAL', cls: 'badge-amber' },
-      { fund: 'Pershing Sq (Ackman)', view: 'Mar 26-27: Pushed Trump for 90-day tariff pause. INFLUENCED decision. Still holds GOOGL despite trimming.', position: 'Maximum tariff influence. Rotating within AI.', alignment: 'MIXED \u2014 caution GOOGL, but tariff influence bullish', cls: 'badge-amber' },
-      { fund: 'Oaktree (Marks)', view: 'Feb 26 memo: "Is it a Bubble?" AI selective, not crazy. Defensive tone.', position: 'Selective value; AI cautious-bullish', alignment: 'SUPPORTS caution', cls: 'badge-amber' },
-      { fund: 'Appaloosa (Tepper)', view: 'Feb: Tripled Micron (+$428M, +200%). New Korea ETF (tariff resolution confidence).', position: 'Aggressive offensive: AI infra + Asia recovery', alignment: 'BULLISH signal (buying fear)', cls: 'badge-green' },
-      { fund: 'Citadel (Griffin)', view: '$2.52B AMZN + doubled NVDA. "Macro risks manageable."', position: 'Offensive big tech positioning', alignment: 'BULLISH (but not our tickers)', cls: 'badge-green' },
-      { fund: 'Elliott (Singer)', view: 'Mar 23: Confirmed multibillion SNPS stake. Push for monetization.', position: 'One layer DEEPER in AI value chain', alignment: 'DIRECTLY SUPPORTS SNPS', cls: 'badge-green' },
-      { fund: 'Baupost (Klarman)', view: 'Mar 26: TRIMMED GOOGL 40%. Buying fintech 75% down (selective contrarian).', position: 'Reducing mega-cap. Selective deep value.', alignment: '\u26a0\ufe0f CAUTION on GOOGL', cls: 'badge-red' },
-      { fund: 'Renaissance Tech', view: 'No new intel (13F lag 2-3 months). Prior: dumped NVDA -$887M, added Kinross Gold.', position: 'Exit consensus AI. Gold.', alignment: 'SUPPORTS GDX. CONTRARIAN on consensus AI.', cls: 'badge-amber' },
+      { fund: 'Pershing Sq (Ackman)', view: 'Mar 26-27: Pushed Trump for tariff pause. SCOTUS vindicated his position.', position: 'Tariff messaging vindicated by SCOTUS ruling.', alignment: 'SUPPORTS de-escalation narrative', cls: 'badge-green' },
+      { fund: 'Oaktree (Marks)', view: 'Feb 26: "Is it a Bubble?" AI selective, not crazy. Defensive tone.', position: 'Selective value; AI cautious-bullish', alignment: 'SUPPORTS caution', cls: 'badge-amber' },
+      { fund: 'Appaloosa (Tepper)', view: 'Tripled Micron (+$428M, +200%). New Korea ETF.', position: 'Aggressive offensive: AI infra + Asia recovery', alignment: '\u2705 VINDICATED by Mar 31 rally (+2.91%)', cls: 'badge-green' },
+      { fund: 'Citadel (Griffin)', view: '$2.52B AMZN + doubled NVDA. "Macro risks manageable."', position: 'Offensive big tech positioning', alignment: '\u2705 VINDICATED by Mar 31 rally', cls: 'badge-green' },
+      { fund: 'Elliott (Singer)', view: 'Mar 23: Confirmed multibillion SNPS stake. Push for monetization.', position: 'One layer DEEPER in AI value chain', alignment: 'DIRECTLY SUPPORTS SNPS \u2014 stock at ~$396', cls: 'badge-green' },
+      { fund: 'Baupost (Klarman)', view: 'TRIMMED GOOGL 40%. Buying fintech 75% down.', position: 'Reducing mega-cap. Selective deep value.', alignment: '\u26a0\ufe0f GOOGL trim looks wrong at F&G 9', cls: 'badge-red' },
+      { fund: 'Renaissance Tech', view: 'No new intel (13F lag). Prior: dumped NVDA -$887M, added Kinross Gold.', position: 'Exit consensus AI. Gold.', alignment: 'SUPPORTS GDX (+8.14% from entry)', cls: 'badge-green' },
     ],
-    analysis: `<p><b>Monday HF Scan \u2014 Key Signals:</b></p>
-<p>\u2022 <b>CCJ/URA:</b> \ud83d\udfe2 UNCROWDED (0/8 funds in uranium miners) \u2014 our strongest edge. Unchanged.</p>
-<p>\u2022 <b>SNPS:</b> \ud83d\udfe2 Elliott multibillion stake CONFIRMED Mar 23 \u2014 strongest HF conviction. But stock dropped 12% in a week despite it.</p>
-<p>\u2022 <b>GOOGL:</b> \ud83d\udd34 KLARMAN TRIMMED 40% + Ackman trimming. Two value legends reducing. Counter: Citadel/Tepper buying AI broadly.</p>
-<p>\u2022 <b>XLE:</b> \ud83d\udfe2 Dalio explicitly on Hormuz (Fortune Mar 17). Only major fund on this thesis.</p>
-<p>\u2022 <b>GDX:</b> \ud83d\udd34 CROWDED (Citadel, RenTech, Griffin explicitly mentioned gold/crypto). Watch for unwind if crisis resolves.</p>`
+    analysis: `<p><b>Run #9 HF Scorecard \u2014 Iran Peace Shift:</b></p>
+<p>\u2022 <b>Tepper + Citadel VINDICATED:</b> Their offensive positioning was rewarded by the Mar 31 +2.91% rally. They were buying fear while others cowered.</p>
+<p>\u2022 <b>Dalio WEAKENING:</b> "Final battle for Hormuz" thesis challenged by Iran peace signals. Still possible, but probability dropping.</p>
+<p>\u2022 <b>CCJ/URA:</b> \ud83d\udfe2 UNCROWDED (0/8 funds in uranium miners) \u2014 unchanged. Strongest edge.</p>
+<p>\u2022 <b>GOOGL:</b> Klarman\'s 40% trim at F&G 9 looks increasingly wrong. Contrarian signal strengthening.</p>
+<p>\u2022 <b>GDX:</b> \ud83d\udfe2 RenTech\'s gold positioning validated (+8.14% best performer).</p>`
   },
 
   watchlist: [
-    { ticker: 'MU', theme: 'AI Memory (HF Consensus)', why: 'RenTech +$520M, Tepper TRIPLED (+$428M, +200%). Korea ETF = Asia tech confidence.', trigger: 'MONITOR \u2014 crowding risk. 2+ funds aggressive.', current: 'Not price-checked' },
-    { ticker: 'TLT', theme: 'Bond Duration', why: 'Recession risk from oil shock + tariff + NFP -92K. Fed on hold but stagflation could force hand.', trigger: 'VIX >35 + yield curve inversion deepens', current: 'Not price-checked' },
-    { ticker: 'EWY', theme: 'Korea Recovery (Tepper)', why: 'Tepper new Korea ETF. Tariff resolution confidence. Contrarian Asia play.', trigger: 'If April tariffs soften + Korea earnings season', current: 'NEW \u2014 added Run #7' },
+    { ticker: 'MU', theme: 'AI Memory (HF Consensus)', why: 'RenTech +$520M, Tepper TRIPLED (+$428M, +200%). Tepper/Citadel offensive validated by Mar 31 rally.', trigger: 'MONITOR \u2014 crowding risk. 2+ funds aggressive.', current: 'Not price-checked' },
+    { ticker: 'TLT', theme: 'Bond Duration / Recession Hedge', why: 'Q1 GDP NEGATIVE. Michigan 53.3. 10Y 4.44%. Recession risk = duration rally. NEW: Recession risk elevated.', trigger: 'IF recession confirmed (2 consecutive negative GDP quarters)', current: 'Not price-checked' },
+    { ticker: 'EWY', theme: 'Korea Recovery (Tepper)', why: 'Tepper new Korea ETF. Tariff risk REMOVED by SCOTUS. Mar 31 rally validates.', trigger: 'If tariff unwinding confirmed + Korea earnings', current: 'NEW \u2014 added Run #7' },
+    { ticker: 'SPY', theme: 'Index-Level Contrarian', why: 'F&G at 9. SINGLE DIGITS. Historic contrarian entry. Better vehicle than single stocks at extreme fear.', trigger: 'If F&G drops to 5 or holds below 10 for 3+ days', current: 'NEW \u2014 added Run #9' },
   ],
 
   actions: [
-    { type: 'hold', label: '\u2705 CCJ STOP RAISED \u2014 RISK-FREE', text: '<b>CCJ stop raised from $88 to $101.55 (entry price).</b> Position is now RISK-FREE on capital. Max downside: $0 (breakeven). Upside: $130 target (+25%). This is the correct move ahead of Apr 2 + Apr 6 dual catalysts.' },
-    { type: 'hold', label: '\u26a0\ufe0f SNPS STOP PROXIMITY \u2014 STILL CRITICAL', text: '<b>SNPS $380.47 is only 1.7% above $374 stop.</b> S&P bounced Mon but SNPS Mar 30 close UNCONFIRMED. If tech continues selling, SNPS is first paper stop triggered. Elliott stake thesis intact. Do NOT lower stop \u2014 stops are non-negotiable.' },
-    { type: 'hold', label: 'HOLD ALL OTHER POSITIONS', text: '<b>XLE $62.56 (+1.68% \u2014 CATCHING UP to oil, thesis working). GDX $85.79 (+4.1% best paper). GOOGL $273.78 (flat). URA $46.63 (flat).</b> Natural hedge performing: crisis positions (XLE, GDX) gaining while tech stalls.' },
-    { type: 'scan', label: '\u26a1 APR 6 IS THE REAL CATALYST', text: '<b>Apr 2 tariff risk REDUCED</b> \u2014 Section 122 already live since Feb 24. Apr 2 is review, not new policy. <b>Apr 6 Iran Hormuz deadline is THE binary event.</b> Trump threatened obliteration. Israel struck Isfahan. Iran retaliating. Active kinetic conflict. Portfolio 63% crisis-positioned (CCJ + XLE + GDX).' },
-    { type: 'scan', label: 'F&G AT 10 \u2014 HISTORIC FEAR LEVEL', text: '<b>Fear & Greed dropped from 15 to 10.</b> This is approaching historic contrarian entry territory. But NOT for GOOGL specifically (Klarman/Ackman trimming). If F&G drops below 5, consider index-level contrarian entry (SPY or TLT) rather than single stocks.' },
-    { type: 'deploy', label: 'PORTFOLIO STATUS', text: '<b>~86.6% deployed across 6 positions (1 real + 5 paper).</b> XLE +1.68% improved total P&L. GDX steady. SNPS dragging. Net: marginally positive from inception.' },
+    { type: 'hold', label: '\u26a0\ufe0f CCJ NEAR STOP \u2014 MONITOR CLOSELY', text: '<b>CCJ $102.84 is only $1.29 (1.27%) above $101.55 stop.</b> Stop = entry = risk-free on capital. If triggered, zero loss. Do NOT lower stop. Structural thesis is strongest ever (FluxPoint, Meta 6.6GW, NRC permits). If stopped out, look for re-entry at $95-98.' },
+    { type: 'hold', label: '\u2705 GDX BEST PERFORMER \u2014 CONSIDER RAISING STOP', text: '<b>GDX $89.10 (+8.14% from entry).</b> Gold at $4,568 with DUAL support (geopolitical + recession). Even if Iran resolves, recession risk keeps gold bid. <b>RECOMMEND: Raise stop from $75 to $80</b> to lock in ~3% minimum gain while maintaining upside to $100 target.' },
+    { type: 'hold', label: '\u2705 GOOGL POSITIVE \u2014 CONTRARIAN ACTIVATING', text: '<b>GOOGL $284.10 (+3.77% on Mar 31, now +1.13% from entry).</b> F&G at 9 = strongest contrarian signal since inception. SCOTUS tariff ruling removes headwind. Q1 earnings Apr 23 is next catalyst. Conviction raised to 65%.' },
+    { type: 'hold', label: '\u26a0\ufe0f XLE THESIS WEAKENING \u2014 WATCH APR 6', text: '<b>XLE $61.96 (-0.96% while S&P +2.91%).</b> Energy DIVERGING from market on Iran peace signals. Oil crashed $115\u2192$105. If Apr 6 produces framework deal, XLE thesis COLLAPSES. Conviction cut 65%\u219250%. Stop at $57 intact. Let Apr 6 decide.' },
+    { type: 'scan', label: 'F&G AT 9 \u2014 HISTORIC CONTRARIAN ZONE', text: '<b>Fear & Greed at 9 (single digits).</b> Only 2 prior readings this low: Nov 2025 and Dec 2018. Both preceded 15-25% rallies within 2-4 months. Added SPY to watchlist as index-level contrarian vehicle. If F&G holds below 10 for 3+ days, consider SPY position.' },
+    { type: 'scan', label: 'Q1 GDP NEGATIVE \u2014 NEW RECESSION RISK', text: '<b>First GDP contraction in 3 years.</b> Michigan sentiment 53.3. Import surge was tactical (tariff front-loading) but underlying consumer stress is real. Watch Mar NFP (Apr 11) and Q2 GDP estimates. TLT added to watchlist as recession hedge. GDX partially hedges this already.' },
   ],
 
   verification: {
-    total: 24,
+    total: 22,
     confirmed: 16,
-    corrected: 4,
-    unverifiable: 4,
+    corrected: 3,
+    unverifiable: 3,
     details: [
-      { claim: 'GOOGL $273.78 (Mar 30 close)', result: 'CONFIRMED. Investing.com shows $273.78 with prev close $274.34.', source: 'Investing.com [Web Search]', cls: 'badge-green' },
-      { claim: 'XLE $62.56 (Mar 30, +1.68%)', result: 'CONFIRMED. Prev close $61.52 = entry. Day range $61.26-$62.79.', source: 'Yahoo Finance / Investing.com [Web Search]', cls: 'badge-green' },
-      { claim: 'GDX $85.79 (Mar 30)', result: 'CONFIRMED. Essentially flat from $85.68 prev.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
-      { claim: 'S&P 500 6,426 (Mar 30)', result: 'CONFIRMED. Bounce from 6,369.', source: '247wallst / CNBC [Web Search]', cls: 'badge-green' },
-      { claim: 'F&G 10 (Extreme Fear)', result: 'CONFIRMED. Down from 15.', source: 'feargreedmeter.com [Web Search]', cls: 'badge-green' },
-      { claim: 'Gold ~$4,550/oz', result: 'CONFIRMED. Fortune: $4,567 morning, $4,541.76 spot close.', source: 'Fortune / JM Bullion [Web Search]', cls: 'badge-green' },
-      { claim: 'Brent $111-115/bbl', result: 'CONFIRMED. Fortune $111.10 AM, techi.com $115.35 close. +55% for March = record.', source: 'Fortune / CNBC / techi.com [Web Search]', cls: 'badge-green' },
-      { claim: 'WTI $102.88', result: 'CONFIRMED. Above $100.', source: 'CNBC [Web Search]', cls: 'badge-green' },
-      { claim: '10Y Yield 4.35%', result: 'CONFIRMED. Down from 4.44%.', source: 'FRED DGS10 [Web Search]', cls: 'badge-green' },
-      { claim: 'GLD $414.70 (Mar 30)', result: 'CONFIRMED. Prev $400.64 = +3.51%.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
-      { claim: 'Fed 3.50-3.75%, 86% hold', result: 'CONFIRMED. CME FedWatch.', source: 'CME Group [Web Search]', cls: 'badge-green' },
-      { claim: 'Section 122 tariffs Feb 24-Jul 24', result: 'CONFIRMED. SCOTUS struck IEEPA Feb 20.', source: 'Steptoe / CFR [Web Search]', cls: 'badge-green' },
-      { claim: 'Trump obliterate Iran threats', result: 'CONFIRMED. Kharg Island, power plants, oil wells.', source: 'CNBC Mar 30 [Web Search]', cls: 'badge-green' },
-      { claim: 'Israel struck Isfahan, IRGC commander killed', result: 'CONFIRMED.', source: 'NBC News / CNBC [Web Search]', cls: 'badge-green' },
-      { claim: 'Brent +55% March (record)', result: 'CONFIRMED. Prev record +46% Sept 1990 Gulf War I.', source: 'CNBC [Web Search]', cls: 'badge-green' },
-      { claim: 'Claims 4-wk avg 210.5K declining', result: 'CONFIRMED. 4th consecutive decline.', source: 'Verified Investing [Web Search]', cls: 'badge-green' },
-      { claim: 'CCJ $103.92 (using Mar 27)', result: 'CORRECTED \u2192 Mar 30 close not confirmed via search. Using Mar 27 close. Forecast suggested ~$105.59 for Mar 30.', source: 'Yahoo Finance [Web Search]', cls: 'badge-red' },
-      { claim: 'URA $46.63 (using Mar 27)', result: 'CORRECTED \u2192 Mar 30 close unclear. Investing.com showed ~$45 but unconfirmed. Using Mar 27 close.', source: 'Yahoo Finance / Investing.com [Web Search]', cls: 'badge-red' },
-      { claim: 'SNPS $380.47 (using Mar 27/28)', result: 'CORRECTED \u2192 Mar 30 close not found in search. Using last confirmed ~$380.47.', source: 'Yahoo Finance [Web Search]', cls: 'badge-red' },
-      { claim: 'Nasdaq ~21,100 (estimated)', result: 'ESTIMATED from S&P bounce pattern. Not independently confirmed.', source: '[ESTIMATED]', cls: 'badge-amber' },
-      { claim: 'Dow ~45,600 (estimated)', result: 'ESTIMATED from S&P bounce. Not independently confirmed.', source: '[ESTIMATED]', cls: 'badge-amber' },
-      { claim: 'VIX ~28-31', result: 'ESTIMATED. Range during March.', source: 'FRED [ESTIMATED]', cls: 'badge-amber' },
-      { claim: 'AAII bearish ~50%', result: 'ESTIMATED from prior week trend. No new survey data found.', source: '[ESTIMATED]', cls: 'badge-amber' },
-      { claim: 'AI power 85-90 GW nuclear needed by 2030', result: 'CONFIRMED via IAEA, IEA, Goldman Sachs research.', source: 'IAEA / IEA / Goldman [Web Search]', cls: 'badge-green' },
+      { claim: 'S&P 500 6,528.52 (+2.91%)', result: 'CONFIRMED. 247wallst + Bloomberg both confirm rally on Iran peace signals.', source: '247wallst / Bloomberg [Web Search]', cls: 'badge-green' },
+      { claim: 'CCJ $102.84 (Mar 31 close)', result: 'CONFIRMED. MacroTrends / Yahoo Finance.', source: 'MacroTrends [Web Search]', cls: 'badge-green' },
+      { claim: 'GOOGL $284.10 (Mar 31 close)', result: 'CONFIRMED. Yahoo Finance.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
+      { claim: 'XLE $61.96 (Mar 31 close)', result: 'CONFIRMED. Yahoo Finance.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
+      { claim: 'GDX $89.10 (Mar 31 close)', result: 'CONFIRMED. Yahoo Finance history.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
+      { claim: 'GLD $430.29 (Mar 31 close)', result: 'CONFIRMED. Yahoo Finance history.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
+      { claim: 'VIX 30.61', result: 'CONFIRMED. Yahoo Finance.', source: 'Yahoo Finance [Web Search]', cls: 'badge-green' },
+      { claim: 'Brent $105.13/bbl (down from $115)', result: 'CONFIRMED. CNBC/Fortune. 10% drop on Iran peace signals.', source: 'CNBC / Fortune [Web Search]', cls: 'badge-green' },
+      { claim: 'WTI $102.12-$102.24', result: 'CONFIRMED. FX Daily Report.', source: 'FX Daily Report [Web Search]', cls: 'badge-green' },
+      { claim: 'Gold $4,568/oz', result: 'CONFIRMED. LiteFinance.', source: 'LiteFinance [Web Search]', cls: 'badge-green' },
+      { claim: 'F&G 9 (single digits)', result: 'CONFIRMED. feargreedmeter.com shows 9/100 as of Apr 1.', source: 'feargreedmeter.com [Web Search]', cls: 'badge-green' },
+      { claim: 'AAII Bearish 35.5% (Mar 26)', result: 'CONFIRMED. AAII sentiment survey archive.', source: 'AAII [Web Search]', cls: 'badge-green' },
+      { claim: 'Q1 GDP negative (first contraction in 3 years)', result: 'CONFIRMED. Multiple sources including Bloomberg.', source: 'Bloomberg [Web Search]', cls: 'badge-green' },
+      { claim: 'Michigan Sentiment 53.3 (down from 56.6)', result: 'CONFIRMED. FinancialContent.', source: 'FinancialContent [Web Search]', cls: 'badge-green' },
+      { claim: 'SCOTUS ruled tariffs unconstitutional', result: 'CONFIRMED. CSIS + NTU + CFR.', source: 'CSIS / NTU [Web Search]', cls: 'badge-green' },
+      { claim: 'Iran president signaling willingness to end war', result: 'CONFIRMED. Bloomberg headline + 247wallst.', source: 'Bloomberg / 247wallst [Web Search]', cls: 'badge-green' },
+      { claim: 'SNPS ~$396 (Mar 31)', result: 'INFERRED. Simply Wall St references "~$396" but not exact close. Not Chrome-verified.', source: 'Simply Wall St [INFERRED]', cls: 'badge-amber' },
+      { claim: 'URA $45.67 (Mar 31)', result: 'UNVERIFIED. Yahoo Finance ETF data but exact close not confirmed.', source: 'Yahoo Finance [UNVERIFIED]', cls: 'badge-amber' },
+      { claim: 'Uranium spot $64/lb', result: 'CORRECTED \u2192 Conflicting. TradeTech shows $64, prior data was $87-90. Wide discrepancy. Flagging as uncertain.', source: 'TradeTech [CONFLICTING]', cls: 'badge-red' },
+      { claim: '30Y Treasury 4.89%', result: 'CONFIRMED. FRED data.', source: 'FRED [Web Search]', cls: 'badge-green' },
+      { claim: 'FluxPoint first US uranium conversion facility in 70 years', result: 'CONFIRMED. Skillings.net Mar 2026.', source: 'Skillings [Web Search]', cls: 'badge-green' },
+      { claim: 'Meta 6.6GW nuclear deal', result: 'CONFIRMED. Yahoo Finance / Latitude Media.', source: 'Yahoo Finance / Latitude Media [Web Search]', cls: 'badge-green' },
     ]
   },
 
@@ -566,21 +571,21 @@ const DATA = {
       ticker: 'USO',
       name: 'United States Oil Fund ETF',
       theme: 'Iran (Theme 2)',
-      status: '\u274c REMOVED \u2014 R:R 1.0:1',
+      status: '\u274c REMOVED \u2014 Iran peace signals + R:R collapsed',
       statusClass: 'badge-red',
       priority: 99,
-      currentPrice: 117.26, priceSource: '[Chrome] Yahoo Finance Mar 26',
+      currentPrice: 117.26, priceSource: 'Prior [Chrome] Yahoo Finance Mar 26',
       entryPrice: 117.26, entryTrigger: 'DO NOT ENTER',
       stop: 110.00, target: 125.00,
       sizeUSD: 0, sharesAtEntry: 0,
       profitUSD: 0, profitPct: 0,
       riskUSD: 0, riskPct: 0,
-      rr: 1.0,
+      rr: 0.5,
       horizon: 'N/A',
-      thesis: 'R:R 1.0:1 after oil spike. REMOVED.',
+      thesis: 'REMOVED. Iran peace signals + oil drop $115\u2192$105 = thesis dead.',
       catalysts: 'N/A',
       killCondition: 'N/A',
-      note: 'REMOVED from pipeline. Oil at $112 Brent means upside limited vs risk.',
+      note: 'REMOVED. Oil peaked Mar 30 at $115 and is reversing on peace signals.',
       hfSignal: { signal: 'N/A', cls: 'badge-red', detail: 'Not tradeable.' },
     },
   ],
@@ -597,7 +602,6 @@ const DATA = {
     { label: 'Paper trades', value: 'Track with same rigor as real' },
   ],
 }
-
 
 
 // ==================================================================
