@@ -330,8 +330,8 @@ const DATA = {
     {
       ticker: 'GDX',
       name: 'VanEck Gold Miners ETF',
-      theme: 'Safe Haven / Gold Leverage',
-      themeNum: 6,
+      theme: 'Gold / Monetary Debasement',
+      themeNum: 4,
       shares: 14,
       entry: 82.39,
       current: 94.43,
@@ -463,25 +463,29 @@ const DATA = {
     },
     {
       num: 4,
-      name: 'Tariff Policy \u2014 DEAD (SCOTUS Killed It)',
-      conviction: 25,
-      priorConviction: 30,
-      badge: 'LOW',
-      badgeClass: 'badge-amber',
-      status: 'SCOTUS ruled IEEPA tariffs unconstitutional Feb 20. $170B refund. Manufacturing lost 89K jobs. NON-FACTOR.',
-      narrative: `<p><b>RUN #11 \u2014 FULLY DEAD AS MARKET DRIVER:</b> SCOTUS ruled Feb 20 that IEEPA does NOT authorize tariffs. $170B refund process underway. Apr 2 anniversary was complete non-event \u2014 market didn't react at all. Manufacturing employment DECLINED 89K jobs post-Liberation Day.</p>
-<p><b>CONVICTION CUT 30%\u219225%:</b> No new tariff mechanisms. Market fully looking past tariffs. Only tail risk: Trump defies SCOTUS (10% probability). The legacy damage (Q1 GDP contraction partially tariff-driven) persists but is priced in.</p>
-<p><b>NOT DIRECTLY TRADED.</b> Tariff theme provides background context only. SCOTUS removal helps ad spending (GOOGL) and reduces uncertainty (broad market).</p>`,
+      name: 'Gold / Monetary Debasement',
+      conviction: 75,
+      priorConviction: 0,
+      badge: 'HIGH',
+      badgeClass: 'badge-green',
+      status: 'NEW THEME (replaces dead Tariff). GDX +14.6% \u2014 BEST PERFORMER. Gold ~$4,690/oz. Dalio: "the safest money." Central banks 850t/yr.',
+      narrative: `<p><b>RUN #11 \u2014 NEW THEME (replacing Tariff/SCOTUS, which is retired).</b> GDX has been our best performer at +14.6% since entry, yet had no dedicated theme framework tracking conviction, analogues, or fund positioning. That changes now.</p>
+<p><b>THE THESIS \u2014 STRUCTURAL, NOT SPECULATIVE:</b> Gold at ~$4,690/oz (down from $5,338 peak one month ago, but +$1,528 YoY). Three independent demand pillars: (1) <b>Central bank buying:</b> ~850-1,000 tonnes/yr since 2022, 2x the 2010-2021 average of 473t. Poland targeting 700t reserves. China 15 consecutive months buying. Total CB gold holdings now $5.1 TRILLION \u2014 eclipsing total foreign Treasury holdings for the first time. (2) <b>Fiscal debasement:</b> US debt $38T. Dalio at World Governments Summit (Feb 2026): gold is \"the safest money\" in a \"capital war\" era. Recommends 5-15% portfolio allocation. (3) <b>Stagflation hedge:</b> PCE revised UP 2.4%\u21922.7%, Q1 GDP negative. Gold is the classic stagflation asset \u2014 protects against inflation while hedging recession.</p>
+<p><b>WALL STREET CONSENSUS \u2014 UNANIMOUS BULL:</b> JPM $6,300, BofA $6,000, Wells Fargo $6,100-6,300, Goldman $5,400 (raised from $4,900), UBS $6,200 (upside $7,200). Average target $5,180. Current $4,690 = 10-34% upside to analyst targets.</p>
+<p><b>DUAL SUPPORT (WHY GDX WINS MOST SCENARIOS):</b> If Iran escalates: gold spikes (geopolitical safe haven bid). If peace: recession fears provide floor (stagflation). If recession: gold rallies (flight to safety + rate cut expectations). Only scenario gold loses: everything resolves simultaneously (peace + no recession + inflation normalizes) \u2014 probability ~10%.</p>
+<p><b>HF VALIDATION:</b> RenTech dumped NVDA (-$887M) and added Kinross Gold. Dalio explicit gold advocate. Druckenmiller on currency debasement theme. 3/9 major funds aligned = moderate crowding but structural demand means crowding HELPS (central banks keep buying regardless).</p>`,
       scenarios: [
-        { label: 'BULL (New EO)', probability: 10, color: 'var(--amber)', trigger: 'Trump issues new tariff mechanism', impact: 'Renewed uncertainty', move: 'Market -3-5%', priceTarget: 'Disruption' },
-        { label: 'BASE (Fade)', probability: 55, color: 'var(--accent)', trigger: 'Anniversary passes, refund continues', impact: 'Gradually positive', move: 'Market +1-2%', priceTarget: 'Relief' },
-        { label: 'BEAR (Retaliation)', probability: 25, color: 'var(--green)', trigger: 'Trading partners maintain retaliatory tariffs', impact: 'Slow friction', move: 'Market flat', priceTarget: 'Neutral' },
-        { label: 'TAIL (Defiance)', probability: 10, color: 'var(--red)', trigger: 'Trump defies SCOTUS', impact: 'Constitutional crisis', move: 'S&P -5-10%', priceTarget: 'Flight to safety' },
+        { label: 'BULL', probability: 30, color: 'var(--green)', trigger: 'Iran escalation + recession confirmed + central banks accelerate buying', impact: 'Gold $5,500-6,000. GDX $110-120', move: 'GDX +17-27%', priceTarget: '$110\u2013120' },
+        { label: 'BASE', probability: 40, color: 'var(--accent)', trigger: 'Stagflation persists, CB buying steady, Iran stalemate', impact: 'Gold $5,000-5,400. GDX $100-108', move: 'GDX +6-14%', priceTarget: '$100\u2013108' },
+        { label: 'BEAR', probability: 20, color: 'var(--amber)', trigger: 'Iran resolves, soft landing, inflation normalizes, USD strengthens', impact: 'Gold $4,200-4,500. GDX pulls back', move: 'GDX -5-12%', priceTarget: '$83\u201390' },
+        { label: 'TAIL', probability: 10, color: 'var(--red)', trigger: 'All-clear (peace + no recession + inflation at 2%)', impact: 'Gold $3,800. Triple unwind', move: 'GDX -20%+', priceTarget: '<$76' },
       ],
       analogues: [
-        { period: '2018-2019 US-China Trade War', matchScore: '3/10', predicted: 'Phase 1 deal', outcome: 'RESOLVED', differentiator: 'SCOTUS killed this one. Unprecedented.' },
+        { period: '1971-1980 Gold Bull (Nixon shock + stagflation)', matchScore: '6/10', predicted: 'Gold 24x over decade', outcome: 'REFERENCE', differentiator: 'Today: gradual debasement not sudden shock. But CB buying = modern version of de-dollarization.' },
+        { period: '2019-2020 Gold Rally (rate cuts + COVID)', matchScore: '7/10', predicted: 'Gold +40% in 18 months', outcome: 'CONFIRMED', differentiator: 'Similar macro: rate cuts expected + recession fear. Today adds geopolitical + CB buying layers.' },
+        { period: '2008-2011 Post-GFC Gold (QE debasement)', matchScore: '5/10', predicted: 'Gold +170% ($700\u2192$1,900)', outcome: 'CONFIRMED then crashed', differentiator: 'QE was the driver then. Today: fiscal deficits + CB buying + geopolitics = more structural than QE-dependent.' },
       ],
-      baseRateSummary: 'Base (Fade) = 55%. Tariffs are dead as market driver. Not traded. Background context only.'
+      baseRateSummary: 'Bull + Base = 70%. Gold has THREE independent demand pillars (CB buying, debasement, stagflation). DUAL SUPPORT means GDX wins most scenarios. Only triple-unwind (10%) is negative. Best risk-adjusted position in portfolio.'
     },
   ],
 
@@ -489,10 +493,10 @@ const DATA = {
 <p><b>\u26a0\ufe0f CRITICAL: 3-day weekend before Apr 6 Iran deadline.</b> All positions exposed to Monday gap risk. No ability to adjust until market opens Mon Apr 6.</p>
 <p><b>CCJ + URA (Theme 1, 34%):</b> SAFEST positions. Nuclear WINS EITHER IRAN OUTCOME. Escalation = energy crisis strengthens nuclear case. Peace = broad rally lifts all. CCJ $112.57 (+10.8%), URA $48.84 (+4.6%). Both well above stops.</p>
 <p><b>XLE (Theme 2, 17%) \u2014 KEPT OPEN (reversed close call):</b> XLE $59.27 with $57 stop. Trump \"bomb to stone ages\" speech revived oil thesis. If military action over weekend: oil $120+, XLE rallies hard. If peace: oil $90, XLE hits stop. Maximum binary bet. 3.8% to stop vs potentially 15-25% upside.</p>
-<p><b>GDX (Theme 6, 13%) \u2014 BEST PERFORMER + DUAL SUPPORT:</b> GDX $94.43 (+14.6%). Gold supported by BOTH geopolitical fear AND stagflation (PCE 2.7% + GDP negative). Approaching $96 partial exit. If Iran escalates: gold spikes. If peace: recession fears provide floor. WINS MOST SCENARIOS.</p>
+<p><b>GDX (Theme 4 \u2014 Gold/Monetary Debasement, 13%) \u2014 BEST PERFORMER + TRIPLE SUPPORT:</b> GDX $94.43 (+14.6%). Now has its own theme framework. Gold ~$4,690 supported by THREE pillars: (1) central bank buying 850t/yr, (2) fiscal debasement ($38T US debt, Dalio \"safest money\"), (3) stagflation hedge (PCE 2.7% + GDP negative). Approaching $96 partial exit. WINS MOST SCENARIOS \u2014 only loses if peace + no recession + inflation normalizes simultaneously (10%).</p>
 <p><b>GOOGL (Theme 3, 14%) \u2014 BINARY EXPOSURE:</b> $294.35 (+4.8%). Most vulnerable to Apr 6 gap. Escalation = risk-off = tech sells. Peace = risk-on = GOOGL rallies. Fear metrics extreme = contrarian setup intact.</p>
 <p><b>SNPS (Theme 5, 12%) \u2014 DANGER ZONE:</b> $396.74 (-1.3% from entry). Only 6.1% above $374 stop. If Apr 6 brings broad selloff, SNPS could gap through stop. Elliott thesis intact but position fragile.</p>
-<p><b>PORTFOLIO POSTURE: Structural + binary hedged.</b> Nuclear wins either way. Gold wins either way. XLE is the explicit escalation bet. GOOGL is the peace/recovery bet. SNPS is vulnerable. The portfolio has natural offsets for Apr 6.</p>`,
+<p><b>PORTFOLIO POSTURE: Structural + binary hedged.</b> Nuclear (Theme 1) wins either way. Gold/Debasement (Theme 4, NEW) wins either way. XLE (Theme 2) is the explicit escalation bet. GOOGL (Theme 3) is the peace/recovery bet. SNPS is vulnerable. The portfolio has natural offsets for Apr 6. Two themes (Nuclear + Gold) are scenario-agnostic = 47% of portfolio protected.</p>`,
 
   hedgeFunds: {
     summary: 'Run #11 (Thursday \u2014 no HF scan, Mon-only). Iran whiplash validates the difficulty of positioning around geopolitical rhetoric. Dalio\'s Hormuz thesis REVIVED by Trump\'s Apr 2 speech. Tepper/Citadel offensive positioning at risk if weekend brings escalation. 0/8 in uranium miners UNCHANGED.',
@@ -505,7 +509,7 @@ const DATA = {
       { fund: 'Citadel (Griffin)', view: '$2.52B AMZN + doubled NVDA.', position: 'Offensive big tech.', alignment: '\u26a0\ufe0f AT RISK if Apr 6 escalation', cls: 'badge-amber' },
       { fund: 'Elliott (Singer)', view: 'Multibillion SNPS stake. Push for monetization.', position: 'AI chip design value unlock.', alignment: '\u26a0\ufe0f SNPS $396.74 near stop. Fragile.', cls: 'badge-amber' },
       { fund: 'Baupost (Klarman)', view: 'TRIMMED GOOGL 40%. Buying fintech 75% down.', position: 'Reduced mega-cap.', alignment: 'MIXED \u2014 GOOGL trim looks wrong but defensive stance looks right pre-Apr 6', cls: 'badge-amber' },
-      { fund: 'Renaissance Tech', view: 'Dumped NVDA -$887M, added Kinross Gold.', position: 'Exit AI. Gold.', alignment: '\u2705 GDX +14.6% \u2014 STILL BEST in portfolio. Gold dual support.', cls: 'badge-green' },
+      { fund: 'Renaissance Tech', view: 'Dumped NVDA -$887M, added Kinross Gold.', position: 'Exit AI. Gold.', alignment: '\u2705 GDX +14.6% \u2014 BEST in portfolio. Now Theme 4 (Gold/Monetary Debasement). Triple support.', cls: 'badge-green' },
     ],
     analysis: `<p><b>Run #11 HF Scorecard \u2014 Iran Whiplash Day:</b></p>
 <p>\u2022 <b>Lesson: 24-hour reversal humbles everyone.</b> Run #10 said Tepper/Citadel \"VINDICATED.\" Run #11: they're at risk if escalation comes. Dalio was \"FAILING\" \u2014 now revived. Markets punish certainty.</p>
@@ -582,6 +586,21 @@ const DATA = {
       killCondition: 'N/A',
       note: 'REMOVED. XLE is the active Iran/oil position.',
       hfSignal: { signal: 'N/A', cls: 'badge-red', detail: 'Not tradeable.' },
+    },
+  ],
+
+
+  retiredThemes: [
+    {
+      num: 'R1',
+      name: 'Tariff Policy (SCOTUS Killed It)',
+      activePeriod: 'Mar 24 \u2013 Apr 3, 2026',
+      peakConviction: 55,
+      finalConviction: 25,
+      trajectory: '55% \u2192 50% \u2192 40% \u2192 30% \u2192 25% (RETIRED)',
+      reason: 'SCOTUS ruled IEEPA tariffs unconstitutional Feb 20, 2026. $170B refund process underway. Liberation Day anniversary (Apr 2) was complete non-event. Market fully priced through. Theme provided background context only \u2014 was never directly traded.',
+      badge: 'DEAD',
+      badgeClass: 'badge-red',
     },
   ],
 
@@ -713,6 +732,27 @@ function renderThemes() {
     </div>
   `).join('');
   document.getElementById('themeInteractions').innerHTML = DATA.themeInteractions;
+}
+
+function renderRetiredThemes() {
+  if (!DATA.retiredThemes || DATA.retiredThemes.length === 0) return;
+  const container = document.getElementById('themesContainer');
+  const retiredHTML = `
+    <div class="card" style="border-left: 3px solid var(--text-muted); opacity: 0.7;">
+      <h3 style="margin:0 0 12px; color: var(--text-muted);">Retired Themes</h3>
+      ${DATA.retiredThemes.map(rt => `
+        <div style="margin-bottom:12px; padding:10px; background:rgba(255,255,255,0.03); border-radius:8px;">
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
+            <span style="font-weight:600;">${rt.name}</span>
+            <span class="badge ${rt.badgeClass}">${rt.badge}</span>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Active: ${rt.activePeriod}</span>
+          </div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">Conviction: ${rt.trajectory}</div>
+          <div style="font-size:0.8rem; margin-top:4px;">${rt.reason}</div>
+        </div>
+      `).join('')}
+    </div>`;
+  container.insertAdjacentHTML('beforeend', retiredHTML);
 }
 
 function renderHF() {
@@ -968,6 +1008,7 @@ renderPortfolio();
 renderChart();
 renderMacro();
 renderThemes();
+renderRetiredThemes();
 renderProbability();
 renderHF();
 renderTradeCards();
