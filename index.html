@@ -451,12 +451,13 @@ function renderPortfolio() {
 
   // Position rows
   const container = document.getElementById('positionsContainer');
-  container.innerHTML = DATA.positions.map(p => {
+  container.innerHTML = DATA.positions.map((p, i) => {
     const pospl = (p.current - p.entry) * p.shares;
     const pospct = ((p.current - p.entry) / p.entry * 100);
     const rr = ((p.target - p.current) / (p.current - p.stop)).toFixed(1);
+    const status = pospl >= 0 ? 'PROFIT' : 'LOSS';
     return `<div class="pf-pos-row">
-      <div><div class="ticker">${p.ticker} <span class="badge badge-green" style="font-size: 0.65rem;">${p.status.toUpperCase()}</span></div><div class="ticker-sub">${p.name} · Theme ${p.themeNum}</div></div>
+      <div><div class="ticker">${p.ticker} <span class="badge badge-green" style="font-size: 0.65rem;">${status}</span></div><div class="ticker-sub">${p.name} · ${p.theme || ''}</div></div>
       <div><div class="metric-label">Entry</div><div class="metric-value">$${p.entry.toFixed(2)}</div></div>
       <div><div class="metric-label">Current</div><div class="metric-value" style="font-weight:800;">$${p.current.toFixed(2)}</div></div>
       <div><div class="metric-label">P&L</div><div class="metric-value" style="color:${pospl >= 0 ? 'var(--green)' : 'var(--red)'}">${pospl >= 0 ? '+' : ''}$${pospl.toFixed(2)} (${pospct >= 0 ? '+' : ''}${pospct.toFixed(1)}%)</div></div>
@@ -506,26 +507,29 @@ function renderChart() {
 
 function renderMacro() {
   document.getElementById('macroKPIs').innerHTML = DATA.macro.kpis.map(k =>
-    `<div class="kpi"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div><div class="kpi-sub" style="color:${k.color}">${k.sub}</div></div>`
+    `<div class="kpi"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div><div class="kpi-sub">${k.detail || ''}</div></div>`
   ).join('');
   document.getElementById('macroNarrative').innerHTML = `<h3>Macro Regime: ${DATA.macro.regime}</h3>${DATA.macro.narrative}`;
 }
 
 function renderThemes() {
   const c = document.getElementById('themesContainer');
-  c.innerHTML = DATA.themes.map(t => `
-    <div class="card">
+  c.innerHTML = DATA.themes.map((t, i) => {
+    const num = i + 1;
+    const badgeClass = t.conviction >= 65 ? 'badge-green' : t.conviction >= 50 ? 'badge-amber' : 'badge-blue';
+    const badge = t.conviction >= 65 ? 'HIGH' : t.conviction >= 50 ? 'MEDIUM' : 'LOW';
+    return `<div class="card">
       <div class="theme-header">
-        <h3 style="margin:0">Theme ${t.num}: ${t.name}</h3>
-        <span class="badge ${t.badgeClass}">${t.badge} — ${t.conviction}%</span>
-        ${t.priorConviction !== t.conviction ? `<span style="font-size:0.75rem;color:var(--text-muted);">(was ${t.priorConviction}%)</span>` : ''}
+        <h3 style="margin:0">${t.emoji || ''} Theme ${num}: ${t.name}</h3>
+        <span class="badge ${badgeClass}">${badge} — ${t.conviction}%</span>
+        ${t.prevConviction && t.prevConviction !== t.conviction ? `<span style="font-size:0.75rem;color:var(--text-muted);">(was ${t.prevConviction}%)</span>` : ''}
       </div>
       <div class="conviction-bar"><div class="conviction-fill" style="width:${t.conviction}%; background:${t.conviction >= 65 ? 'var(--green)' : t.conviction >= 50 ? 'var(--amber)' : 'var(--accent)'};"></div></div>
-      <div style="font-size:0.8rem;color:var(--text-muted);margin:4px 0 12px;">${t.status}</div>
-      ${t.narrative}
-    </div>
-  `).join('');
-  document.getElementById('themeInteractions').innerHTML = DATA.themeInteractions;
+      <div style="font-size:0.8rem;color:var(--text-muted);margin:4px 0 12px;">${t.direction || ''}</div>
+      <p style="font-size:0.88rem;">${t.summary || ''}</p>
+    </div>`;
+  }).join('');
+  document.getElementById('themeInteractions').innerHTML = DATA.themeInteractions || '';
 }
 
 function renderRetiredThemes() {
@@ -537,11 +541,10 @@ function renderRetiredThemes() {
       ${DATA.retiredThemes.map(rt => `
         <div style="margin-bottom:12px; padding:10px; background:rgba(255,255,255,0.03); border-radius:8px;">
           <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-            <span style="font-weight:600;">${rt.name}</span>
-            <span class="badge ${rt.badgeClass}">${rt.badge}</span>
-            <span style="font-size:0.75rem; color:var(--text-muted);">Active: ${rt.activePeriod}</span>
+            <span style="font-weight:600;">${rt.emoji || ''} ${rt.name}</span>
+            <span class="badge badge-red">RETIRED — ${rt.conviction}%</span>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Retired: ${rt.retiredDate || 'N/A'}</span>
           </div>
-          <div style="font-size:0.8rem; color:var(--text-muted);">Conviction: ${rt.trajectory}</div>
           <div style="font-size:0.8rem; margin-top:4px;">${rt.reason}</div>
         </div>
       `).join('')}
@@ -551,27 +554,36 @@ function renderRetiredThemes() {
 
 function renderHF() {
   const c = document.getElementById('hfContainer');
+  const positions = DATA.hedgeFunds.positions || DATA.hedgeFunds.table || [];
+  const signalBadge = (s) => {
+    if (!s) return '';
+    if (s.includes('BULLISH')) return '<span class="badge badge-green">BULLISH</span>';
+    if (s.includes('BEARISH')) return '<span class="badge badge-red">BEARISH</span>';
+    if (s.includes('MIXED')) return '<span class="badge badge-amber">MIXED</span>';
+    return `<span class="badge badge-blue">${s}</span>`;
+  };
   c.innerHTML = `<div class="card">
-    <h3>Uranium Theme — Fund Alignment</h3>
+    <h3>Fund Positioning Overview</h3>
+    <p style="font-size:0.8rem;color:var(--text-muted);">Last scan: ${DATA.hedgeFunds.lastScanDate || 'N/A'} · Next: ${DATA.hedgeFunds.nextScanDate || 'N/A'}</p>
     <table>
-      <tr><th>Fund</th><th>Published View</th><th>Position</th><th>Alignment</th></tr>
-      ${DATA.hedgeFunds.table.map(f => `<tr><td>${f.fund}</td><td>${f.view}</td><td>${f.position}</td><td><span class="badge ${f.cls}">${f.alignment}</span></td></tr>`).join('')}
+      <tr><th>Fund</th><th>Theme Focus</th><th>Position / View</th><th>Signal</th></tr>
+      ${positions.map(f => `<tr><td><b>${f.fund}</b></td><td>${f.theme || ''}</td><td>${f.position || ''}</td><td>${signalBadge(f.signal)}</td></tr>`).join('')}
     </table>
-    <p><b>Summary:</b> ${DATA.hedgeFunds.summary}</p>
-    ${DATA.hedgeFunds.analysis}
+    <p style="margin-top:1rem;"><b>Summary:</b> ${DATA.hedgeFunds.summary || ''}</p>
   </div>`;
 }
 
 function renderTradeCards() {
   const c = document.getElementById('tradeCardsContainer');
+  // Active positions
   c.innerHTML = DATA.positions.map(p => {
     const pl = (p.current - p.entry) * p.shares;
     const plPct = ((p.current - p.entry) / p.entry * 100);
     const rr = ((p.target - p.current) / (p.current - p.stop)).toFixed(1);
     return `<div class="trade-card">
-      <h3>${p.ticker} LONG — ${p.theme}</h3>
+      <h3>${p.ticker} LONG — ${p.theme || ''}</h3>
       <div class="trade-grid">
-        <div class="trade-item"><div class="label">Entry</div><div class="value">$${p.entry.toFixed(2)} (${p.entryDate})</div></div>
+        <div class="trade-item"><div class="label">Entry</div><div class="value">$${p.entry.toFixed(2)} (${p.entryDate || 'N/A'})</div></div>
         <div class="trade-item"><div class="label">Current</div><div class="value" style="color:${pl >= 0 ? 'var(--green)' : 'var(--red)'}">$${p.current.toFixed(2)} (${plPct >= 0 ? '+' : ''}${plPct.toFixed(1)}%)</div></div>
         <div class="trade-item"><div class="label">Stop</div><div class="value" style="color:var(--red)">$${p.stop.toFixed(2)} (-${((p.current - p.stop)/p.current*100).toFixed(1)}%)</div></div>
         <div class="trade-item"><div class="label">Target</div><div class="value" style="color:var(--green)">$${p.target.toFixed(2)} (+${((p.target - p.current)/p.current*100).toFixed(1)}%)</div></div>
@@ -580,15 +592,43 @@ function renderTradeCards() {
         <div class="trade-item"><div class="label">R:R (current)</div><div class="value">${rr}:1</div></div>
         <div class="trade-item"><div class="label">Conviction</div><div class="value">${p.conviction}%</div></div>
       </div>
-      ${p.partialExit ? `<p style="font-size:0.85rem;"><b>Partial exit:</b> ${p.partialExit.pct}% at $${p.partialExit.price} (+${((p.partialExit.price - p.current)/p.current*100).toFixed(1)}% from here)</p>` : ''}
-      <h3 style="font-size:0.95rem;">Catalyst Calendar</h3>
-      <table><tr><th>Date</th><th>Event</th><th>Impact</th></tr>
-      ${p.catalysts.map(c => `<tr><td>${c.date}</td><td>${c.event}</td><td>${c.impact}</td></tr>`).join('')}
-      </table>
-      <p style="font-size:0.85rem; margin-top:12px;"><b>Kill Condition:</b> ${p.killCondition}</p>
-      <p style="font-size:0.85rem;"><b>Why I Could Be Wrong:</b> ${p.whyWrong}</p>
+      <div style="background:var(--surface2);border-radius:8px;padding:0.75rem 1rem;margin-top:0.75rem;">
+        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:4px">Catalysts</div>
+        <p style="margin:0;font-size:0.85rem;">${p.catalyst || ''}</p>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.5rem;">
+        <div style="background:rgba(239,68,68,0.08);border-radius:8px;padding:0.6rem 0.75rem;border:1px solid rgba(239,68,68,0.2);">
+          <div style="font-size:0.65rem;text-transform:uppercase;color:var(--red);margin-bottom:3px">Thesis Killer</div>
+          <p style="margin:0;font-size:0.78rem;">${p.thesisKiller || ''}</p>
+        </div>
+        <div style="background:var(--surface2);border-radius:8px;padding:0.6rem 0.75rem;">
+          <div style="font-size:0.65rem;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px">Notes</div>
+          <p style="margin:0;font-size:0.78rem;">${p.notes || ''}</p>
+        </div>
+      </div>
+      <p style="font-size:0.75rem;color:var(--text-muted);margin-top:8px;">Source: ${p.priceSource || ''}</p>
     </div>`;
   }).join('');
+
+  // Closed positions
+  if (DATA.closedPositions && DATA.closedPositions.length > 0) {
+    c.insertAdjacentHTML('beforeend', `
+      <div class="card" style="border-left:3px solid var(--text-muted);opacity:0.8;margin-top:1.5rem;">
+        <h3 style="color:var(--text-muted)">Closed Positions</h3>
+        <table>
+          <tr><th>Ticker</th><th>Entry</th><th>Exit</th><th>Date</th><th>P&L</th><th>Reason</th></tr>
+          ${DATA.closedPositions.map(cp => `<tr>
+            <td><b>${cp.ticker}</b></td>
+            <td>$${cp.entry.toFixed(2)}</td>
+            <td>$${cp.exit.toFixed(2)}</td>
+            <td>${cp.exitDate}</td>
+            <td style="color:${cp.pnl >= 0 ? 'var(--green)' : 'var(--red)'}">${cp.pnl >= 0 ? '+' : ''}$${cp.pnl.toFixed(2)}</td>
+            <td style="font-size:0.78rem">${cp.reason}</td>
+          </tr>`).join('')}
+        </table>
+      </div>
+    `);
+  }
 }
 
 function renderWatchlist() {
@@ -628,61 +668,37 @@ function renderPipeline() {
     <p style="font-size:0.8rem;color:var(--green);margin:0.75rem 0 0;">✓ All pipeline prices Chrome-verified via Yahoo Finance. Oil/crude macro data (WTI/Brent) remains web-search sourced — verify at entry.</p>
   </div>`;
 
-  c.innerHTML = DATA.pipeline.map(p => {
-    const statusColor = Object.entries(statusColors).find(([k]) => p.status.startsWith(k.split(' —')[0]));
-    const sc = statusColor ? statusColor[1] : 'var(--text-muted)';
-    const rrColor = p.rr >= 2.5 ? 'var(--green)' : p.rr >= 2.0 ? 'var(--accent)' : 'var(--red)';
-    const unverified = p.priceSource.includes('UNVERIFIED') || p.priceSource.includes('Web');
+  c.innerHTML = DATA.pipeline.map((p, i) => {
+    // Handle simple WAIT/status-only entries
+    if (p.ticker === 'NONE' || !p.currentPrice) {
+      return `<div class="card" style="border-left:3px solid var(--amber);">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span class="badge badge-amber">${p.action || p.status || 'WAIT'}</span>
+        </div>
+        <p style="margin:0;">${p.reason || ''}</p>
+      </div>`;
+    }
 
+    // Full pipeline card for detailed entries
+    const sc = 'var(--amber)';
+    const rrColor = p.rr >= 2.5 ? 'var(--green)' : p.rr >= 2.0 ? 'var(--accent)' : 'var(--red)';
     return `<div class="trade-card" style="border-color:${sc}; margin-bottom:1.5rem;">
       <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:0.75rem;">
         <div>
-          <h3 style="color:${sc};margin:0;">#${p.priority} — ${p.ticker}: ${p.name}</h3>
-          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px">${p.theme}</div>
+          <h3 style="color:${sc};margin:0;">#${p.priority || (i+1)} — ${p.ticker}: ${p.name || ''}</h3>
+          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px">${p.theme || ''}</div>
         </div>
-        <span class="badge" style="background:${sc}20;color:${sc};padding:4px 12px;">${p.status}</span>
+        <span class="badge badge-amber" style="padding:4px 12px;">${p.status || p.action || ''}</span>
       </div>
-
       <div class="trade-grid">
-        <div class="trade-item">
-          <div class="label">Current Price</div>
-          <div class="value">$${p.currentPrice.toFixed(2)} ${unverified ? '<span style="color:var(--amber);font-size:0.65rem;">[UNVERIFIED]</span>' : '<span style="color:var(--green);font-size:0.65rem;">[Chrome ✓]</span>'}</div>
-        </div>
+        <div class="trade-item"><div class="label">Current Price</div><div class="value">$${p.currentPrice.toFixed(2)}</div></div>
         <div class="trade-item"><div class="label">Entry Target</div><div class="value">$${p.entryPrice.toFixed(2)}</div></div>
-        <div class="trade-item"><div class="label">Stop Loss</div><div class="value" style="color:var(--red)">$${p.stop.toFixed(2)} (${((p.entryPrice - p.stop)/p.entryPrice*100).toFixed(1)}%)</div></div>
-        <div class="trade-item"><div class="label">Price Target</div><div class="value" style="color:var(--green)">$${p.target.toFixed(2)} (+${((p.target - p.entryPrice)/p.entryPrice*100).toFixed(1)}%)</div></div>
-        <div class="trade-item"><div class="label">Position Size</div><div class="value">$${p.sizeUSD.toLocaleString()} (${(p.sizeUSD/DATA.meta.allocation*100).toFixed(0)}%)</div></div>
-        <div class="trade-item"><div class="label">Shares at Entry</div><div class="value">~${p.sharesAtEntry} shares</div></div>
-        <div class="trade-item"><div class="label">Profit Potential</div><div class="value" style="color:var(--green)">+$${p.profitUSD} (+${p.profitPct}%)</div></div>
-        <div class="trade-item"><div class="label">Max Risk</div><div class="value" style="color:var(--red)">-$${p.riskUSD} (-${p.riskPct}%)</div></div>
-        <div class="trade-item"><div class="label">R:R</div><div class="value" style="color:${rrColor};font-size:1.2rem;font-weight:800;">${p.rr}:1${p.rr < 2.0 ? ' ⚠️' : ''}</div></div>
-        <div class="trade-item"><div class="label">Horizon</div><div class="value">${p.horizon}</div></div>
+        <div class="trade-item"><div class="label">Stop</div><div class="value" style="color:var(--red)">$${p.stop.toFixed(2)}</div></div>
+        <div class="trade-item"><div class="label">Target</div><div class="value" style="color:var(--green)">$${p.target.toFixed(2)}</div></div>
+        <div class="trade-item"><div class="label">Size</div><div class="value">$${(p.sizeUSD||0).toLocaleString()}</div></div>
+        ${p.rr ? `<div class="trade-item"><div class="label">R:R</div><div class="value" style="color:${rrColor}">${p.rr}:1</div></div>` : ''}
       </div>
-
-      <div style="background:var(--surface2);border-radius:8px;padding:0.75rem 1rem;margin-top:0.75rem;">
-        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:4px">Entry Trigger</div>
-        <p style="margin:0;font-size:0.85rem;">${p.entryTrigger}</p>
-      </div>
-      <div style="background:var(--surface2);border-radius:8px;padding:0.75rem 1rem;margin-top:0.5rem;">
-        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:4px">Thesis</div>
-        <p style="margin:0;font-size:0.85rem;">${p.thesis}</p>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.5rem;">
-        <div style="background:var(--surface2);border-radius:8px;padding:0.6rem 0.75rem;">
-          <div style="font-size:0.65rem;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px">Key Catalysts</div>
-          <p style="margin:0;font-size:0.78rem;">${p.catalysts}</p>
-        </div>
-        <div style="background:rgba(239,68,68,0.08);border-radius:8px;padding:0.6rem 0.75rem;border:1px solid rgba(239,68,68,0.2);">
-          <div style="font-size:0.65rem;text-transform:uppercase;color:var(--red);margin-bottom:3px">Kill Condition</div>
-          <p style="margin:0;font-size:0.78rem;">${p.killCondition}</p>
-        </div>
-      </div>
-      ${p.hfSignal ? `<div style="margin-top:0.5rem;padding:0.6rem 0.75rem;background:var(--surface2);border-radius:8px;border-left:2px solid ${p.hfSignal.cls === 'badge-green' ? 'var(--green)' : p.hfSignal.cls === 'badge-red' ? 'var(--red)' : 'var(--amber)'};">
-        <span style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);">HF Conviction &amp; Crowding</span>
-        <div style="display:flex;align-items:baseline;gap:8px;margin:3px 0 4px;"><span class="badge ${p.hfSignal.cls}" style="font-size:0.72rem;">${p.hfSignal.signal}</span></div>
-        <p style="margin:0;font-size:0.78rem;color:var(--text-muted);line-height:1.4;">${p.hfSignal.detail}</p>
-      </div>` : ''}
-      ${p.note ? `<p style="font-size:0.8rem;color:var(--amber);margin-top:0.5rem;padding:0.5rem;background:rgba(245,158,11,0.08);border-radius:6px;border-left:2px solid var(--amber);">⚠️ ${p.note}</p>` : ''}
+      ${p.reason ? `<p style="margin-top:0.75rem;font-size:0.85rem;">${p.reason}</p>` : ''}
     </div>`;
   }).join('');
 }
@@ -752,7 +768,7 @@ function renderProbability() {
         <div class="prob-label" style="color:${color}">${s.label}</div>
         <div class="prob-pct" style="color:${color}">${s.probability}%</div>
         <div class="prob-move" style="color:${color}">${s.move}</div>
-        <div class="prob-target">Target: ${s.priceTarget}</div>
+        <div class="prob-target">Target: ${s.target || s.priceTarget || ''}</div>
         <div class="prob-trigger">${s.trigger}</div>
       </div>`;
     }).join('')}</div>`;
@@ -762,13 +778,12 @@ function renderProbability() {
     if (t.analogues && t.analogues.length > 0) {
       analoguesHtml = `<h3 style="font-size:0.9rem;margin:1.2rem 0 0.5rem">Historical Analogues</h3>
       <table class="analogue-table">
-        <tr><th>Period</th><th>Match</th><th>Predicted Move</th><th>Actual Outcome</th><th>Key Differentiator</th></tr>
+        <tr><th>Period</th><th>Match</th><th>Predicted Move</th><th>Key Differentiator</th></tr>
         ${t.analogues.map(a => `<tr>
-          <td><b>${a.period}</b></td>
-          <td>${a.matchScore}</td>
-          <td>${a.predicted}</td>
-          <td>${a.outcome}</td>
-          <td>${a.differentiator}</td>
+          <td><b>${a.name || a.period || ''}</b></td>
+          <td>${a.match || a.matchScore || ''}</td>
+          <td>${a.prediction || a.predicted || ''}</td>
+          <td>${a.differentiator || ''}</td>
         </tr>`).join('')}
       </table>`;
     }
@@ -783,10 +798,13 @@ function renderProbability() {
         </div>`
       : '';
 
+    const themeNum = DATA.themes.indexOf(t) + 1;
+    const themeBadgeClass = t.conviction >= 65 ? 'badge-green' : t.conviction >= 50 ? 'badge-amber' : 'badge-blue';
+    const themeBadge = t.conviction >= 65 ? 'HIGH' : t.conviction >= 50 ? 'MEDIUM' : 'LOW';
     return `<div class="card">
       <div class="theme-header">
-        <h3 style="margin:0">Theme ${t.num}: ${t.name}</h3>
-        <span class="badge ${t.badgeClass}">${t.badge} — ${t.conviction}%</span>
+        <h3 style="margin:0">${t.emoji || ''} Theme ${themeNum}: ${t.name}</h3>
+        <span class="badge ${themeBadgeClass}">${themeBadge} — ${t.conviction}%</span>
       </div>
       <div style="margin:0.75rem 0 0.5rem">${barHtml}</div>
       ${cardsHtml}
