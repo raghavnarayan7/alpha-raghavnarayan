@@ -417,63 +417,80 @@ const DATA = {
   ],
 }
 
-// RENDER FUNCTIONS — These don't change; they just read from DATA.
+// RENDER FUNCTIONS — rewritten to match DATA schema, defensive against missing fields.
 // ==================================================================
+
+function safeRender(name, fn) {
+  try { fn(); } catch (e) { console.error('Render error in ' + name + ':', e); }
+}
+
+function fmt$(n, d) { d = d || 2; return '$' + Number(n).toLocaleString('en-US', {minimumFractionDigits: d, maximumFractionDigits: d}); }
+
+// Compute canonical portfolio totals: open unrealized + realized
+function computePortfolio() {
+  const invested = DATA.positions.reduce((s, p) => s + p.shares * p.entry, 0);
+  const current = DATA.positions.reduce((s, p) => s + p.shares * p.current, 0);
+  const openPL = current - invested;
+  const realized = (DATA.closedPositions || []).reduce((s, p) => s + (p.pnl || 0), 0);
+  const pv = DATA.meta.allocation + openPL;  // allocation already includes realized
+  return { invested, current, openPL, realized, pv };
+}
 
 function renderSubtitle() {
   document.getElementById('briefingSubtitle').innerHTML =
-    `${DATA.meta.lastUpdated} &nbsp;|&nbsp; Run #${DATA.meta.runNumber} (${DATA.meta.runDate}) &nbsp;|&nbsp; Allocation: USD ${DATA.meta.allocation.toLocaleString()}<br>` +
-    `<span class="badge badge-green">PHASE 8 VERIFICATION: ${DATA.meta.verificationSummary}</span>`;
+    DATA.meta.lastUpdated + ' &nbsp;|&nbsp; Run #' + DATA.meta.runNumber + ' (' + DATA.meta.runDate + ') &nbsp;|&nbsp; Effective base: $' + DATA.meta.allocation.toLocaleString() + '<br>' +
+    '<span class="badge badge-green" style="font-size:0.7rem;">PHASE 8 VERIFICATION: ' + DATA.meta.verificationSummary + '</span>';
 }
 
 function renderPortfolio() {
-  const invested = DATA.positions.reduce((s, p) => s + p.shares * p.entry, 0);
-  const current = DATA.positions.reduce((s, p) => s + p.shares * p.current, 0);
-  const pl = current - invested;
-  const pv = DATA.meta.allocation + pl;
-  const ret = ((pv - DATA.meta.allocation) / DATA.meta.allocation * 100);
+  const { invested, openPL, pv } = computePortfolio();
+  const inceptionBase = 10000;
+  const ret = ((pv - inceptionBase) / inceptionBase * 100);
   const cash = DATA.meta.allocation - invested;
   const deployed = (invested / DATA.meta.allocation * 100);
   const days = Math.max(1, Math.floor((new Date() - new Date(DATA.meta.inception)) / 86400000));
 
-  // Day change
-  const prevValue = DATA.history.length >= 2 ? DATA.history[DATA.history.length - 2].value : DATA.meta.allocation;
+  const prevValue = DATA.history.length >= 2 ? DATA.history[DATA.history.length - 2].value : inceptionBase;
   const dayChange = pv - prevValue;
   const dayChangePct = ((dayChange / prevValue) * 100);
 
-  document.getElementById('portfolioValue').textContent = '$' + pv.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-  document.getElementById('portfolioValue').style.color = pl >= 0 ? 'var(--green)' : 'var(--red)';
-  document.getElementById('portfolioReturn').innerHTML = `${pl >= 0 ? '+' : ''}$${pl.toFixed(2)} (${ret >= 0 ? '+' : ''}${ret.toFixed(2)}%) from inception`;
+  document.getElementById('portfolioValue').textContent = fmt$(pv);
+  document.getElementById('portfolioValue').style.color = pv >= inceptionBase ? 'var(--green)' : 'var(--red)';
+  document.getElementById('portfolioReturn').innerHTML = (pv - inceptionBase >= 0 ? '+' : '') + '$' + (pv - inceptionBase).toFixed(2) + ' (' + (ret >= 0 ? '+' : '') + ret.toFixed(2) + '%) from inception';
   document.getElementById('inceptionDate').textContent = DATA.meta.inception;
-  document.getElementById('dayCount').textContent = `${days} day${days !== 1 ? 's' : ''} active`;
+  document.getElementById('dayCount').textContent = days + ' day' + (days !== 1 ? 's' : '') + ' active';
 
-  document.getElementById('kpiDeployed').innerHTML = `<div class="kpi-label">Deployed</div><div class="kpi-value">${deployed.toFixed(0)}%</div><div class="kpi-sub">$${invested.toLocaleString('en-US', {maximumFractionDigits: 0})} in ${DATA.positions.length} position${DATA.positions.length !== 1 ? 's' : ''}</div>`;
-  document.getElementById('kpiCash').innerHTML = `<div class="kpi-label">Cash</div><div class="kpi-value">$${cash.toLocaleString('en-US', {maximumFractionDigits: 0})}</div><div class="kpi-sub">${(100 - deployed).toFixed(0)}% available</div>`;
-  document.getElementById('kpiMaxDrawdown').innerHTML = `<div class="kpi-label">Max Risk (all stops)</div><div class="kpi-value" style="color:var(--red)">-$${DATA.positions.reduce((s,p) => s + (p.current - p.stop) * p.shares, 0).toFixed(0)}</div><div class="kpi-sub">${(DATA.positions.reduce((s,p) => s + (p.current - p.stop) * p.shares, 0) / DATA.meta.allocation * 100).toFixed(1)}% of allocation</div>`;
-  document.getElementById('kpiPositions').innerHTML = `<div class="kpi-label">Positions</div><div class="kpi-value">${DATA.positions.length} / 8</div><div class="kpi-sub">${DATA.watchlist.length} on watchlist</div>`;
-  document.getElementById('kpiDayChange').innerHTML = `<div class="kpi-label">Day Change</div><div class="kpi-value" style="color:${dayChange >= 0 ? 'var(--green)' : 'var(--red)'}">${dayChange >= 0 ? '+' : ''}$${dayChange.toFixed(2)}</div><div class="kpi-sub">${dayChangePct >= 0 ? '+' : ''}${dayChangePct.toFixed(2)}%</div>`;
+  document.getElementById('kpiDeployed').innerHTML = '<div class="kpi-label">Deployed</div><div class="kpi-value">' + deployed.toFixed(0) + '%</div><div class="kpi-sub">$' + invested.toLocaleString('en-US',{maximumFractionDigits:0}) + ' in ' + DATA.positions.length + ' position' + (DATA.positions.length!==1?'s':'') + '</div>';
+  document.getElementById('kpiCash').innerHTML = '<div class="kpi-label">Cash</div><div class="kpi-value">$' + cash.toLocaleString('en-US',{maximumFractionDigits:0}) + '</div><div class="kpi-sub">' + (100-deployed).toFixed(0) + '% available</div>';
+  const totalStopRisk = DATA.positions.reduce((s,p) => s + (p.current - p.stop) * p.shares, 0);
+  document.getElementById('kpiMaxDrawdown').innerHTML = '<div class="kpi-label">Max Risk (all stops)</div><div class="kpi-value" style="color:var(--red)">-$' + totalStopRisk.toFixed(0) + '</div><div class="kpi-sub">' + (totalStopRisk/DATA.meta.allocation*100).toFixed(1) + '% of allocation</div>';
+  document.getElementById('kpiPositions').innerHTML = '<div class="kpi-label">Positions</div><div class="kpi-value">' + DATA.positions.length + ' / 8</div><div class="kpi-sub">' + (DATA.watchlist||[]).length + ' on watchlist</div>';
+  document.getElementById('kpiDayChange').innerHTML = '<div class="kpi-label">Day Change</div><div class="kpi-value" style="color:' + (dayChange>=0?'var(--green)':'var(--red)') + '">' + (dayChange>=0?'+':'') + '$' + dayChange.toFixed(2) + '</div><div class="kpi-sub">' + (dayChangePct>=0?'+':'') + dayChangePct.toFixed(2) + '%</div>';
 
-  // Position rows
   const container = document.getElementById('positionsContainer');
   container.innerHTML = DATA.positions.map(p => {
     const pospl = (p.current - p.entry) * p.shares;
     const pospct = ((p.current - p.entry) / p.entry * 100);
-    const rr = ((p.target - p.current) / (p.current - p.stop)).toFixed(1);
-    return `<div class="pf-pos-row">
-      <div><div class="ticker">${p.ticker} <span class="badge badge-green" style="font-size: 0.65rem;">${p.status.toUpperCase()}</span></div><div class="ticker-sub">${p.name} · Theme ${p.themeNum}</div></div>
-      <div><div class="metric-label">Entry</div><div class="metric-value">$${p.entry.toFixed(2)}</div></div>
-      <div><div class="metric-label">Current</div><div class="metric-value" style="font-weight:800;">$${p.current.toFixed(2)}</div></div>
-      <div><div class="metric-label">P&L</div><div class="metric-value" style="color:${pospl >= 0 ? 'var(--green)' : 'var(--red)'}">${pospl >= 0 ? '+' : ''}$${pospl.toFixed(2)} (${pospct >= 0 ? '+' : ''}${pospct.toFixed(1)}%)</div></div>
-      <div><div class="metric-label">Stop / Target</div><div class="metric-value"><span style="color:var(--red)">$${p.stop}</span> / <span style="color:var(--green)">$${p.target}</span></div></div>
-      <div><div class="metric-label">R:R Now</div><div class="metric-value">${rr}:1</div></div>
-    </div>`;
+    const denom = p.current - p.stop;
+    const rr = denom > 0 ? ((p.target - p.current) / denom).toFixed(1) : 'N/A';
+    const statusLbl = p.status || 'HELD';
+    return '<div class="pf-pos-row">' +
+      '<div><div class="ticker">' + p.ticker + ' <span class="badge badge-green" style="font-size: 0.65rem;">' + String(statusLbl).toUpperCase() + '</span></div><div class="ticker-sub">' + p.name + (p.theme ? ' · ' + p.theme : '') + '</div></div>' +
+      '<div><div class="metric-label">Entry</div><div class="metric-value">$' + p.entry.toFixed(2) + '</div></div>' +
+      '<div><div class="metric-label">Current</div><div class="metric-value" style="font-weight:800;">$' + p.current.toFixed(2) + '</div></div>' +
+      '<div><div class="metric-label">P&L</div><div class="metric-value" style="color:' + (pospl>=0?'var(--green)':'var(--red)') + '">' + (pospl>=0?'+':'') + '$' + pospl.toFixed(2) + ' (' + (pospct>=0?'+':'') + pospct.toFixed(1) + '%)</div></div>' +
+      '<div><div class="metric-label">Stop / Target</div><div class="metric-value"><span style="color:var(--red)">$' + p.stop + '</span> / <span style="color:var(--green)">$' + p.target + '</span></div></div>' +
+      '<div><div class="metric-label">R:R Now</div><div class="metric-value">' + rr + ':1</div></div>' +
+    '</div>';
   }).join('');
 }
 
 function renderChart() {
-  const ctx = document.getElementById('perfChart').getContext('2d');
+  const el = document.getElementById('perfChart');
+  if (!el) return;
+  const ctx = el.getContext('2d');
   if (DATA.history.length < 2) {
-    document.getElementById('perfChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:60px 0;">Chart populates as daily data accumulates</div>';
+    el.parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:60px 0;">Chart populates as daily data accumulates</div>';
     return;
   }
   new Chart(ctx, {
@@ -497,7 +514,7 @@ function renderChart() {
         legend: { labels: { color: '#94a3b8', font: { size: 12 } } },
         tooltip: {
           backgroundColor: '#1a2332', borderColor: '#2a3444', borderWidth: 1, titleColor: '#e2e8f0', bodyColor: '#e2e8f0',
-          callbacks: { label: ctx => { const v = ctx.parsed.y; const r = ((v-10000)/10000*100).toFixed(2); return `$${v.toLocaleString('en-US',{minimumFractionDigits:2})} (${r>=0?'+':''}${r}%)`; } }
+          callbacks: { label: ctx => { const v = ctx.parsed.y; const r = ((v-10000)/10000*100).toFixed(2); return '$' + v.toLocaleString('en-US',{minimumFractionDigits:2}) + ' (' + (r>=0?'+':'') + r + '%)'; } }
         }
       },
       scales: {
@@ -510,60 +527,62 @@ function renderChart() {
 
 function renderMacro() {
   document.getElementById('macroKPIs').innerHTML = DATA.macro.kpis.map(k =>
-    `<div class="kpi"><div class="kpi-label">${k.label}</div><div class="kpi-value">${k.value}</div><div class="kpi-sub" style="color:${k.color}">${k.sub}</div></div>`
+    '<div class="kpi"><div class="kpi-label">' + k.label + '</div><div class="kpi-value" style="font-size:1.1rem">' + k.value + '</div><div class="kpi-sub" style="text-align:left;margin-top:6px">' + (k.detail || k.sub || '') + '</div><div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px;">src: ' + (k.source || '—') + '</div></div>'
   ).join('');
-  document.getElementById('macroNarrative').innerHTML = `<h3>Macro Regime: ${DATA.macro.regime}</h3>${DATA.macro.narrative}`;
+  document.getElementById('macroNarrative').innerHTML = '<h3>Macro Regime: ' + DATA.macro.regime + '</h3>' + DATA.macro.narrative;
+}
+
+function convictionColor(n) {
+  return n >= 70 ? 'var(--green)' : n >= 50 ? 'var(--amber)' : n >= 30 ? 'var(--accent)' : 'var(--text-muted)';
 }
 
 function renderThemes() {
   const c = document.getElementById('themesContainer');
-  c.innerHTML = DATA.themes.map(t => `
-    <div class="card">
-      <div class="theme-header">
-        <h3 style="margin:0">Theme ${t.num}: ${t.name}</h3>
-        <span class="badge ${t.badgeClass}">${t.badge} — ${t.conviction}%</span>
-        ${t.priorConviction !== t.conviction ? `<span style="font-size:0.75rem;color:var(--text-muted);">(was ${t.priorConviction}%)</span>` : ''}
-      </div>
-      <div class="conviction-bar"><div class="conviction-fill" style="width:${t.conviction}%; background:${t.conviction >= 65 ? 'var(--green)' : t.conviction >= 50 ? 'var(--amber)' : 'var(--accent)'};"></div></div>
-      <div style="font-size:0.8rem;color:var(--text-muted);margin:4px 0 12px;">${t.status}</div>
-      ${t.narrative}
-    </div>
-  `).join('');
-  document.getElementById('themeInteractions').innerHTML = DATA.themeInteractions;
+  c.innerHTML = DATA.themes.map((t, i) => {
+    const prior = t.prevConviction !== undefined ? t.prevConviction : t.priorConviction;
+    const dir = t.direction || '';
+    return '<div class="card">' +
+      '<div class="theme-header">' +
+        '<h3 style="margin:0">' + (t.emoji || '') + ' Theme ' + (i+1) + ': ' + t.name + '</h3>' +
+        '<span class="badge" style="background:' + convictionColor(t.conviction) + '20;color:' + convictionColor(t.conviction) + '">' + t.conviction + '%</span>' +
+        (prior !== undefined && prior !== t.conviction ? '<span style="font-size:0.75rem;color:var(--text-muted);">(was ' + prior + '%)</span>' : '') +
+        (dir ? '<span style="font-size:0.75rem;color:var(--text-muted);margin-left:6px;">' + dir + '</span>' : '') +
+      '</div>' +
+      '<div class="conviction-bar"><div class="conviction-fill" style="width:' + t.conviction + '%; background:' + convictionColor(t.conviction) + ';"></div></div>' +
+      (t.summary ? '<p style="margin-top:12px;font-size:0.9rem;">' + t.summary + '</p>' : '') +
+    '</div>';
+  }).join('');
+  document.getElementById('themeInteractions').innerHTML = DATA.themeInteractions || '';
 }
 
 function renderRetiredThemes() {
   if (!DATA.retiredThemes || DATA.retiredThemes.length === 0) return;
   const container = document.getElementById('themesContainer');
-  const retiredHTML = `
-    <div class="card" style="border-left: 3px solid var(--text-muted); opacity: 0.7;">
-      <h3 style="margin:0 0 12px; color: var(--text-muted);">Retired Themes</h3>
-      ${DATA.retiredThemes.map(rt => `
-        <div style="margin-bottom:12px; padding:10px; background:rgba(255,255,255,0.03); border-radius:8px;">
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">
-            <span style="font-weight:600;">${rt.name}</span>
-            <span class="badge ${rt.badgeClass}">${rt.badge}</span>
-            <span style="font-size:0.75rem; color:var(--text-muted);">Active: ${rt.activePeriod}</span>
-          </div>
-          <div style="font-size:0.8rem; color:var(--text-muted);">Conviction: ${rt.trajectory}</div>
-          <div style="font-size:0.8rem; margin-top:4px;">${rt.reason}</div>
-        </div>
-      `).join('')}
-    </div>`;
+  const retiredHTML = '<div class="card" style="border-left: 3px solid var(--text-muted); opacity: 0.75;">' +
+    '<h3 style="margin:0 0 12px; color: var(--text-muted);">Retired Themes</h3>' +
+    DATA.retiredThemes.map(rt => '<div style="margin-bottom:12px; padding:10px; background:rgba(255,255,255,0.03); border-radius:8px;">' +
+        '<div style="display:flex; align-items:center; gap:8px; margin-bottom:4px;">' +
+          '<span style="font-weight:600;">' + (rt.emoji || '') + ' ' + rt.name + '</span>' +
+          '<span class="badge badge-amber" style="font-size:0.7rem;">Conviction ' + rt.conviction + '%</span>' +
+          '<span style="font-size:0.75rem; color:var(--text-muted);">Retired ' + rt.retiredDate + '</span>' +
+        '</div>' +
+        '<div style="font-size:0.8rem; margin-top:4px;">' + rt.reason + '</div>' +
+      '</div>').join('') +
+    '</div>';
   container.insertAdjacentHTML('beforeend', retiredHTML);
 }
 
 function renderHF() {
   const c = document.getElementById('hfContainer');
-  c.innerHTML = `<div class="card">
-    <h3>Uranium Theme — Fund Alignment</h3>
-    <table>
-      <tr><th>Fund</th><th>Published View</th><th>Position</th><th>Alignment</th></tr>
-      ${DATA.hedgeFunds.table.map(f => `<tr><td>${f.fund}</td><td>${f.view}</td><td>${f.position}</td><td><span class="badge ${f.cls}">${f.alignment}</span></td></tr>`).join('')}
-    </table>
-    <p><b>Summary:</b> ${DATA.hedgeFunds.summary}</p>
-    ${DATA.hedgeFunds.analysis}
-  </div>`;
+  if (!c) return;
+  const hf = DATA.hedgeFunds || {};
+  const rows = (hf.positions || []).map(f => '<tr><td><b>' + f.fund + '</b></td><td>' + f.theme + '</td><td>' + f.position + '</td><td><span class="badge badge-blue">' + f.signal + '</span></td></tr>').join('');
+  c.innerHTML = '<div class="card">' +
+    '<h3>Hedge Fund Positioning</h3>' +
+    '<div style="font-size:0.8rem;color:var(--text-muted);margin-bottom:8px">Last scan: ' + (hf.lastScanDate || '—') + ' · Next: ' + (hf.nextScanDate || '—') + '</div>' +
+    '<table><tr><th>Fund</th><th>Theme</th><th>Position</th><th>Signal</th></tr>' + rows + '</table>' +
+    (hf.summary ? '<p style="margin-top:10px;"><b>Summary:</b> ' + hf.summary + '</p>' : '') +
+  '</div>';
 }
 
 function renderTradeCards() {
@@ -571,36 +590,43 @@ function renderTradeCards() {
   c.innerHTML = DATA.positions.map(p => {
     const pl = (p.current - p.entry) * p.shares;
     const plPct = ((p.current - p.entry) / p.entry * 100);
-    const rr = ((p.target - p.current) / (p.current - p.stop)).toFixed(1);
-    return `<div class="trade-card">
-      <h3>${p.ticker} LONG — ${p.theme}</h3>
-      <div class="trade-grid">
-        <div class="trade-item"><div class="label">Entry</div><div class="value">$${p.entry.toFixed(2)} (${p.entryDate})</div></div>
-        <div class="trade-item"><div class="label">Current</div><div class="value" style="color:${pl >= 0 ? 'var(--green)' : 'var(--red)'}">$${p.current.toFixed(2)} (${plPct >= 0 ? '+' : ''}${plPct.toFixed(1)}%)</div></div>
-        <div class="trade-item"><div class="label">Stop</div><div class="value" style="color:var(--red)">$${p.stop.toFixed(2)} (-${((p.current - p.stop)/p.current*100).toFixed(1)}%)</div></div>
-        <div class="trade-item"><div class="label">Target</div><div class="value" style="color:var(--green)">$${p.target.toFixed(2)} (+${((p.target - p.current)/p.current*100).toFixed(1)}%)</div></div>
-        <div class="trade-item"><div class="label">Position</div><div class="value">${p.shares} shares ($${(p.shares * p.current).toFixed(0)})</div></div>
-        <div class="trade-item"><div class="label">Unrealized P&L</div><div class="value" style="color:${pl >= 0 ? 'var(--green)' : 'var(--red)'}">${pl >= 0 ? '+' : ''}$${pl.toFixed(2)}</div></div>
-        <div class="trade-item"><div class="label">R:R (current)</div><div class="value">${rr}:1</div></div>
-        <div class="trade-item"><div class="label">Conviction</div><div class="value">${p.conviction}%</div></div>
-      </div>
-      ${p.partialExit ? `<p style="font-size:0.85rem;"><b>Partial exit:</b> ${p.partialExit.pct}% at $${p.partialExit.price} (+${((p.partialExit.price - p.current)/p.current*100).toFixed(1)}% from here)</p>` : ''}
-      <h3 style="font-size:0.95rem;">Catalyst Calendar</h3>
-      <table><tr><th>Date</th><th>Event</th><th>Impact</th></tr>
-      ${p.catalysts.map(c => `<tr><td>${c.date}</td><td>${c.event}</td><td>${c.impact}</td></tr>`).join('')}
-      </table>
-      <p style="font-size:0.85rem; margin-top:12px;"><b>Kill Condition:</b> ${p.killCondition}</p>
-      <p style="font-size:0.85rem;"><b>Why I Could Be Wrong:</b> ${p.whyWrong}</p>
-    </div>`;
+    const denom = p.current - p.stop;
+    const rr = denom > 0 ? ((p.target - p.current) / denom).toFixed(1) : 'N/A';
+    return '<div class="trade-card">' +
+      '<h3>' + p.ticker + ' LONG — ' + (p.theme || p.name) + '</h3>' +
+      '<div class="trade-grid">' +
+        '<div class="trade-item"><div class="label">Entry</div><div class="value">$' + p.entry.toFixed(2) + ' (' + (p.entryDate || '—') + ')</div></div>' +
+        '<div class="trade-item"><div class="label">Current</div><div class="value" style="color:' + (pl>=0?'var(--green)':'var(--red)') + '">$' + p.current.toFixed(2) + ' (' + (plPct>=0?'+':'') + plPct.toFixed(1) + '%)</div></div>' +
+        '<div class="trade-item"><div class="label">Stop</div><div class="value" style="color:var(--red)">$' + p.stop.toFixed(2) + ' (-' + ((p.current - p.stop)/p.current*100).toFixed(1) + '%)</div></div>' +
+        '<div class="trade-item"><div class="label">Target</div><div class="value" style="color:var(--green)">$' + p.target.toFixed(2) + ' (+' + ((p.target - p.current)/p.current*100).toFixed(1) + '%)</div></div>' +
+        '<div class="trade-item"><div class="label">Position</div><div class="value">' + p.shares + ' shares ($' + (p.shares*p.current).toFixed(0) + ')</div></div>' +
+        '<div class="trade-item"><div class="label">Unrealized P&L</div><div class="value" style="color:' + (pl>=0?'var(--green)':'var(--red)') + '">' + (pl>=0?'+':'') + '$' + pl.toFixed(2) + '</div></div>' +
+        '<div class="trade-item"><div class="label">R:R (current)</div><div class="value">' + rr + ':1</div></div>' +
+        '<div class="trade-item"><div class="label">Conviction</div><div class="value">' + (p.conviction||'—') + '%</div></div>' +
+      '</div>' +
+      (p.notes ? '<p style="font-size:0.85rem;margin-top:12px;"><b>Notes:</b> ' + p.notes + '</p>' : '') +
+      (p.catalyst ? '<p style="font-size:0.85rem;"><b>Catalyst:</b> ' + p.catalyst + '</p>' : '') +
+      (p.thesisKiller ? '<p style="font-size:0.85rem;color:var(--amber)"><b>Thesis Killer:</b> ' + p.thesisKiller + '</p>' : '') +
+      (p.priceSource ? '<p style="font-size:0.7rem;color:var(--text-muted);margin-top:8px;">Price source: ' + p.priceSource + '</p>' : '') +
+    '</div>';
   }).join('');
+
+  // Append closed-positions log
+  if (DATA.closedPositions && DATA.closedPositions.length > 0) {
+    const closedHtml = '<div class="card" style="border-left:3px solid var(--text-muted);">' +
+      '<h3>Closed Positions Log</h3>' +
+      '<table><tr><th>Ticker</th><th>Shares</th><th>Entry</th><th>Exit</th><th>Exit Date</th><th>P&L</th><th>Reason</th></tr>' +
+      DATA.closedPositions.map(cp => '<tr><td><b>' + cp.ticker + '</b></td><td>' + cp.shares + '</td><td>$' + cp.entry + '</td><td>$' + cp.exit + '</td><td>' + cp.exitDate + '</td><td style="color:' + (cp.pnl>=0?'var(--green)':'var(--red)') + '">' + (cp.pnl>=0?'+':'') + '$' + cp.pnl.toFixed(2) + '</td><td style="font-size:0.8rem;">' + cp.reason + '</td></tr>').join('') +
+      '</table></div>';
+    c.insertAdjacentHTML('beforeend', closedHtml);
+  }
 }
 
 function renderWatchlist() {
   const c = document.getElementById('watchlistContainer');
-  c.innerHTML = `<table>
-    <tr><th>Ticker</th><th>Theme</th><th>Why Interesting</th><th>Trigger</th></tr>
-    ${DATA.watchlist.map(w => `<tr><td><b>${w.ticker}</b></td><td>${w.theme}</td><td>${w.why}</td><td style="color:var(--amber)">${w.trigger}</td></tr>`).join('')}
-  </table>`;
+  c.innerHTML = '<table><tr><th>Ticker</th><th>Theme</th><th>Why Interesting</th><th>Trigger</th></tr>' +
+    (DATA.watchlist||[]).map(w => '<tr><td><b>' + w.ticker + '</b></td><td>' + w.theme + '</td><td>' + w.why + '</td><td style="color:var(--amber)">' + w.trigger + '</td></tr>').join('') +
+    '</table>';
 }
 
 function renderPipeline() {
@@ -608,213 +634,108 @@ function renderPipeline() {
   const c = document.getElementById('pipelineContainer');
   if (!summary || !c || !DATA.pipeline) return;
 
-  const invested = DATA.positions.reduce((s, p) => s + p.shares * p.entry, 0);
+  const { invested } = computePortfolio();
   const cash = DATA.meta.allocation - invested;
-  const pipelineTotal = DATA.pipeline.filter(p => p.status !== 'MONITOR — CROWDED, BELOW R:R THRESHOLD').reduce((s, p) => s + p.sizeUSD, 0);
 
-  const statusColors = {
-    'WAIT — PULLBACK': 'var(--amber)',
-    'CONDITIONAL — WAIT FOR FRIDAY': 'var(--red)',
-    'CONDITIONAL — LOWER PRIORITY THAN XLE': 'var(--amber)',
-    'NOT YET — WAIT FOR FEAR TO EASE': 'var(--accent)',
-    'RESEARCH NEEDED': 'var(--purple)',
-    'MONITOR — CROWDED, BELOW R:R THRESHOLD': 'var(--text-muted)',
-  };
-
-  // Summary bar
-  summary.innerHTML = `<div class="card" style="margin-bottom:1rem;">
-    <div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;">
-      <div><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Currently Deployed</div><div style="font-size:1.4rem;font-weight:800;color:var(--green)">$${invested.toFixed(0)} (${(invested/DATA.meta.allocation*100).toFixed(0)}%)</div></div>
-      <div><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Available Cash</div><div style="font-size:1.4rem;font-weight:800;color:var(--accent)">$${cash.toFixed(0)} (${(cash/DATA.meta.allocation*100).toFixed(0)}%)</div></div>
-      <div><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">If All Pipeline Triggers</div><div style="font-size:1.4rem;font-weight:800;color:var(--amber)">$${(invested + pipelineTotal).toFixed(0)} / $${DATA.meta.allocation.toLocaleString()} deployed</div></div>
-      <div><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Target</div><div style="font-size:1.4rem;font-weight:800">70–80% ($7,000–8,000)</div></div>
-    </div>
-    <p style="font-size:0.8rem;color:var(--green);margin:0.75rem 0 0;">✓ All pipeline prices Chrome-verified via Yahoo Finance. Oil/crude macro data (WTI/Brent) remains web-search sourced — verify at entry.</p>
-  </div>`;
+  summary.innerHTML = '<div class="card" style="margin-bottom:1rem;">' +
+    '<div style="display:flex;gap:1.5rem;flex-wrap:wrap;align-items:center;">' +
+      '<div><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Currently Deployed</div><div style="font-size:1.4rem;font-weight:800;color:var(--green)">$' + invested.toFixed(0) + ' (' + (invested/DATA.meta.allocation*100).toFixed(0) + '%)</div></div>' +
+      '<div><div style="font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px">Available Cash</div><div style="font-size:1.4rem;font-weight:800;color:var(--accent)">$' + cash.toFixed(0) + ' (' + (cash/DATA.meta.allocation*100).toFixed(0) + '%)</div></div>' +
+    '</div></div>';
 
   c.innerHTML = DATA.pipeline.map(p => {
-    const statusColor = Object.entries(statusColors).find(([k]) => p.status.startsWith(k.split(' —')[0]));
-    const sc = statusColor ? statusColor[1] : 'var(--text-muted)';
-    const rrColor = p.rr >= 2.5 ? 'var(--green)' : p.rr >= 2.0 ? 'var(--accent)' : 'var(--red)';
-    const unverified = p.priceSource.includes('UNVERIFIED') || p.priceSource.includes('Web');
-
-    return `<div class="trade-card" style="border-color:${sc}; margin-bottom:1.5rem;">
-      <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;margin-bottom:0.75rem;">
-        <div>
-          <h3 style="color:${sc};margin:0;">#${p.priority} — ${p.ticker}: ${p.name}</h3>
-          <div style="font-size:0.8rem;color:var(--text-muted);margin-top:3px">${p.theme}</div>
-        </div>
-        <span class="badge" style="background:${sc}20;color:${sc};padding:4px 12px;">${p.status}</span>
-      </div>
-
-      <div class="trade-grid">
-        <div class="trade-item">
-          <div class="label">Current Price</div>
-          <div class="value">$${p.currentPrice.toFixed(2)} ${unverified ? '<span style="color:var(--amber);font-size:0.65rem;">[UNVERIFIED]</span>' : '<span style="color:var(--green);font-size:0.65rem;">[Chrome ✓]</span>'}</div>
-        </div>
-        <div class="trade-item"><div class="label">Entry Target</div><div class="value">$${p.entryPrice.toFixed(2)}</div></div>
-        <div class="trade-item"><div class="label">Stop Loss</div><div class="value" style="color:var(--red)">$${p.stop.toFixed(2)} (${((p.entryPrice - p.stop)/p.entryPrice*100).toFixed(1)}%)</div></div>
-        <div class="trade-item"><div class="label">Price Target</div><div class="value" style="color:var(--green)">$${p.target.toFixed(2)} (+${((p.target - p.entryPrice)/p.entryPrice*100).toFixed(1)}%)</div></div>
-        <div class="trade-item"><div class="label">Position Size</div><div class="value">$${p.sizeUSD.toLocaleString()} (${(p.sizeUSD/DATA.meta.allocation*100).toFixed(0)}%)</div></div>
-        <div class="trade-item"><div class="label">Shares at Entry</div><div class="value">~${p.sharesAtEntry} shares</div></div>
-        <div class="trade-item"><div class="label">Profit Potential</div><div class="value" style="color:var(--green)">+$${p.profitUSD} (+${p.profitPct}%)</div></div>
-        <div class="trade-item"><div class="label">Max Risk</div><div class="value" style="color:var(--red)">-$${p.riskUSD} (-${p.riskPct}%)</div></div>
-        <div class="trade-item"><div class="label">R:R</div><div class="value" style="color:${rrColor};font-size:1.2rem;font-weight:800;">${p.rr}:1${p.rr < 2.0 ? ' ⚠️' : ''}</div></div>
-        <div class="trade-item"><div class="label">Horizon</div><div class="value">${p.horizon}</div></div>
-      </div>
-
-      <div style="background:var(--surface2);border-radius:8px;padding:0.75rem 1rem;margin-top:0.75rem;">
-        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:4px">Entry Trigger</div>
-        <p style="margin:0;font-size:0.85rem;">${p.entryTrigger}</p>
-      </div>
-      <div style="background:var(--surface2);border-radius:8px;padding:0.75rem 1rem;margin-top:0.5rem;">
-        <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:4px">Thesis</div>
-        <p style="margin:0;font-size:0.85rem;">${p.thesis}</p>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.5rem;margin-top:0.5rem;">
-        <div style="background:var(--surface2);border-radius:8px;padding:0.6rem 0.75rem;">
-          <div style="font-size:0.65rem;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px">Key Catalysts</div>
-          <p style="margin:0;font-size:0.78rem;">${p.catalysts}</p>
-        </div>
-        <div style="background:rgba(239,68,68,0.08);border-radius:8px;padding:0.6rem 0.75rem;border:1px solid rgba(239,68,68,0.2);">
-          <div style="font-size:0.65rem;text-transform:uppercase;color:var(--red);margin-bottom:3px">Kill Condition</div>
-          <p style="margin:0;font-size:0.78rem;">${p.killCondition}</p>
-        </div>
-      </div>
-      ${p.hfSignal ? `<div style="margin-top:0.5rem;padding:0.6rem 0.75rem;background:var(--surface2);border-radius:8px;border-left:2px solid ${p.hfSignal.cls === 'badge-green' ? 'var(--green)' : p.hfSignal.cls === 'badge-red' ? 'var(--red)' : 'var(--amber)'};">
-        <span style="font-size:0.65rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);">HF Conviction &amp; Crowding</span>
-        <div style="display:flex;align-items:baseline;gap:8px;margin:3px 0 4px;"><span class="badge ${p.hfSignal.cls}" style="font-size:0.72rem;">${p.hfSignal.signal}</span></div>
-        <p style="margin:0;font-size:0.78rem;color:var(--text-muted);line-height:1.4;">${p.hfSignal.detail}</p>
-      </div>` : ''}
-      ${p.note ? `<p style="font-size:0.8rem;color:var(--amber);margin-top:0.5rem;padding:0.5rem;background:rgba(245,158,11,0.08);border-radius:6px;border-left:2px solid var(--amber);">⚠️ ${p.note}</p>` : ''}
-    </div>`;
+    if (p.ticker === 'NONE') {
+      return '<div class="card" style="border-left:3px solid var(--amber);"><h3 style="margin-top:0;color:var(--amber)">' + (p.action || 'WAIT') + '</h3><p style="margin:0;font-size:0.9rem;">' + p.reason + '</p></div>';
+    }
+    return '<div class="card"><h3 style="margin-top:0">' + p.ticker + '</h3><p>' + JSON.stringify(p) + '</p></div>';
   }).join('');
 }
 
 function renderActions() {
   const c = document.getElementById('actionsContainer');
   const typeMap = { hold: { cls: '', color: 'var(--green)' }, scan: { cls: 'warn', color: 'var(--amber)' }, deploy: { cls: '', color: 'var(--accent)' }, exit: { cls: 'danger', color: 'var(--red)' } };
-  c.innerHTML = DATA.actions.map(a => {
+  c.innerHTML = (DATA.actions||[]).map(a => {
     const t = typeMap[a.type] || typeMap.scan;
-    return `<div class="action-box ${t.cls}"><div class="action-label" style="color:${t.color}">${a.label}</div><p style="margin:0;">${a.text}</p></div>`;
+    return '<div class="action-box ' + t.cls + '"><div class="action-label" style="color:' + t.color + '">' + a.label + '</div><p style="margin:0;">' + a.text + '</p></div>';
   }).join('');
 }
 
 function renderVerification() {
   const c = document.getElementById('verificationContainer');
-  c.innerHTML = `<p><b>Last Full Verification (Run #${DATA.meta.runNumber}):</b> ${DATA.verification.total} claims — ${DATA.verification.confirmed} confirmed, ${DATA.verification.corrected} corrected.</p>
-  <table>
-    <tr><th>Claim</th><th>Result</th><th>Source</th></tr>
-    ${DATA.verification.details.map(v => `<tr><td>${v.claim}</td><td><span class="badge ${v.cls}">${v.result}</span></td><td>${v.source}</td></tr>`).join('')}
-  </table>
-  <p style="font-size:0.8rem; color:var(--text-muted); margin-top:12px;">Phase 8 Verification Gate caught HY spreads error in Run #2 — identical to Run #1 error. Structural fix confirmed working.</p>`;
+  c.innerHTML = '<p><b>Last Full Verification (Run #' + DATA.meta.runNumber + '):</b> ' + DATA.verification.total + ' claims — ' + DATA.verification.confirmed + ' confirmed, ' + DATA.verification.corrected + ' corrected.</p>' +
+    '<table><tr><th>Claim</th><th>Result</th><th>Source</th></tr>' +
+    DATA.verification.details.map(v => '<tr><td>' + v.claim + '</td><td><span class="badge ' + v.cls + '">' + v.result + '</span></td><td style="font-size:0.8rem;">' + v.source + '</td></tr>').join('') +
+    '</table>';
 }
 
 function renderRulesFooter() {
-  document.getElementById('footerNote').textContent = `Run #${DATA.meta.runNumber} (${DATA.meta.runDate}) · ${DATA.meta.verificationSummary} · Rules: ${DATA.rules.map(r => r.label + ': ' + r.value).join(' · ')}`;
+  const el = document.getElementById('footerNote');
+  if (el) el.textContent = 'Run #' + DATA.meta.runNumber + ' (' + DATA.meta.runDate + ') · ' + DATA.meta.verificationSummary;
 }
 
 function renderProbability() {
   const c = document.getElementById('probabilityContainer');
   if (!c) return;
+  const labelColors = { 'BULL': 'var(--green)', 'BASE': 'var(--accent)', 'BEAR': 'var(--amber)', 'TAIL': 'var(--red)' };
+  function labelColor(lbl) {
+    for (const k in labelColors) { if (lbl.startsWith(k)) return labelColors[k]; }
+    return 'var(--accent)';
+  }
 
-  const labelColors = {
-    'BULL': 'var(--green)',
-    'BULL (Escalation)': 'var(--red)',
-    'BULL (Escalation)': 'var(--red)',
-    'BASE': 'var(--accent)',
-    'BASE (Status Quo)': 'var(--accent)',
-    'BEAR': 'var(--amber)',
-    'BEAR (Partial Progress)': 'var(--amber)',
-    'BEAR (SCOTUS Kills It)': 'var(--green)',
-    'TAIL': 'var(--red)',
-    'TAIL (Full Resolution)': 'var(--green)',
-    'TAIL (Full Trade War)': 'var(--red)',
-  };
-
-  c.innerHTML = DATA.themes.map(t => {
+  c.innerHTML = DATA.themes.map((t, i) => {
     if (!t.scenarios || t.scenarios.length === 0) return '';
-
-    // Calculate weighted expected value summary
-    const posScenarios = t.scenarios.filter(s => parseFloat(s.probability) > 0);
-    const bullBase = t.scenarios.filter(s => s.label.startsWith('BULL') || s.label.startsWith('BASE')).reduce((sum, s) => sum + s.probability, 0);
-
-    // Build probability bar summary
     const barHtml = t.scenarios.map(s => {
-      const color = s.color || labelColors[s.label] || 'var(--accent)';
-      return `<div class="prob-bar-row">
-        <span style="font-size:0.7rem;font-weight:700;width:130px;color:${color}">${s.label}</span>
-        <div class="prob-bar-track"><div class="prob-bar-fill" style="width:${s.probability}%;background:${color}"></div></div>
-        <span style="font-size:0.78rem;font-weight:700;color:${color};width:32px;text-align:right">${s.probability}%</span>
-      </div>`;
+      const color = labelColor(s.label);
+      return '<div class="prob-bar-row">' +
+        '<span style="font-size:0.7rem;font-weight:700;width:130px;color:' + color + '">' + s.label + '</span>' +
+        '<div class="prob-bar-track"><div class="prob-bar-fill" style="width:' + s.probability + '%;background:' + color + '"></div></div>' +
+        '<span style="font-size:0.78rem;font-weight:700;color:' + color + ';width:32px;text-align:right">' + s.probability + '%</span>' +
+      '</div>';
     }).join('');
 
-    // Build scenario cards
-    const cardsHtml = `<div class="prob-grid">${t.scenarios.map(s => {
-      const color = s.color || labelColors[s.label] || 'var(--accent)';
-      return `<div class="prob-scenario" style="border-color:${color}30">
-        <div class="prob-label" style="color:${color}">${s.label}</div>
-        <div class="prob-pct" style="color:${color}">${s.probability}%</div>
-        <div class="prob-move" style="color:${color}">${s.move}</div>
-        <div class="prob-target">Target: ${s.priceTarget}</div>
-        <div class="prob-trigger">${s.trigger}</div>
-      </div>`;
-    }).join('')}</div>`;
+    const cardsHtml = '<div class="prob-grid">' + t.scenarios.map(s => {
+      const color = labelColor(s.label);
+      return '<div class="prob-scenario" style="border-color:' + color + '30">' +
+        '<div class="prob-label" style="color:' + color + '">' + s.label + '</div>' +
+        '<div class="prob-pct" style="color:' + color + '">' + s.probability + '%</div>' +
+        '<div class="prob-move" style="color:' + color + '">' + s.move + '</div>' +
+        (s.target ? '<div class="prob-target">Target: ' + s.target + '</div>' : '') +
+        (s.trigger ? '<div class="prob-trigger">Trigger: ' + s.trigger + '</div>' : '') +
+      '</div>';
+    }).join('') + '</div>';
 
-    // Analogues table
     let analoguesHtml = '';
     if (t.analogues && t.analogues.length > 0) {
-      analoguesHtml = `<h3 style="font-size:0.9rem;margin:1.2rem 0 0.5rem">Historical Analogues</h3>
-      <table class="analogue-table">
-        <tr><th>Period</th><th>Match</th><th>Predicted Move</th><th>Actual Outcome</th><th>Key Differentiator</th></tr>
-        ${t.analogues.map(a => `<tr>
-          <td><b>${a.period}</b></td>
-          <td>${a.matchScore}</td>
-          <td>${a.predicted}</td>
-          <td>${a.outcome}</td>
-          <td>${a.differentiator}</td>
-        </tr>`).join('')}
-      </table>`;
+      analoguesHtml = '<h3 style="font-size:0.9rem;margin:1.2rem 0 0.5rem">Historical Analogues</h3>' +
+        '<table class="analogue-table"><tr><th>Period</th><th>Match</th><th>Predicted Move</th><th>Differentiator</th></tr>' +
+        t.analogues.map(a => '<tr><td><b>' + (a.name || a.period) + '</b></td><td>' + (a.match || a.matchScore || '—') + '</td><td>' + (a.prediction || a.predicted || '—') + '</td><td>' + (a.differentiator || '—') + '</td></tr>').join('') +
+        '</table>';
     }
 
-    // Base rate conclusion
-    const evColor = bullBase >= 60 ? 'var(--green)' : bullBase >= 40 ? 'var(--amber)' : 'var(--red)';
-    const baseSummaryHtml = t.baseRateSummary
-      ? `<div style="margin-top:1rem;padding:0.75rem 1rem;background:var(--surface2);border-radius:8px;border-left:3px solid ${evColor};">
-          <span style="font-size:0.7rem;text-transform:uppercase;letter-spacing:1px;font-weight:700;color:${evColor}">Base Rate Conclusion</span>
-          <p style="margin:0.3rem 0 0;font-size:0.85rem;">${t.baseRateSummary}</p>
-          <span class="ev-badge" style="background:${evColor}20;color:${evColor}">Bull+Base = ${bullBase}%</span>
-        </div>`
-      : '';
-
-    return `<div class="card">
-      <div class="theme-header">
-        <h3 style="margin:0">Theme ${t.num}: ${t.name}</h3>
-        <span class="badge ${t.badgeClass}">${t.badge} — ${t.conviction}%</span>
-      </div>
-      <div style="margin:0.75rem 0 0.5rem">${barHtml}</div>
-      ${cardsHtml}
-      ${analoguesHtml}
-      ${baseSummaryHtml}
-    </div>`;
+    return '<div class="card">' +
+      '<div class="theme-header"><h3 style="margin:0">Theme ' + (i+1) + ': ' + t.name + '</h3><span class="badge" style="background:' + convictionColor(t.conviction) + '20;color:' + convictionColor(t.conviction) + '">' + t.conviction + '%</span></div>' +
+      '<div style="margin:0.75rem 0 0.5rem">' + barHtml + '</div>' +
+      cardsHtml +
+      analoguesHtml +
+    '</div>';
   }).join('');
 }
 
-// INIT
-renderSubtitle();
-renderPortfolio();
-renderChart();
-renderMacro();
-renderThemes();
-renderRetiredThemes();
-renderProbability();
-renderHF();
-renderTradeCards();
-renderWatchlist();
-renderPipeline();
-renderActions();
-renderVerification();
-renderRulesFooter();
+// INIT — each renderer wrapped so one failure doesn't block others
+safeRender('subtitle', renderSubtitle);
+safeRender('portfolio', renderPortfolio);
+safeRender('chart', renderChart);
+safeRender('macro', renderMacro);
+safeRender('themes', renderThemes);
+safeRender('retiredThemes', renderRetiredThemes);
+safeRender('probability', renderProbability);
+safeRender('hf', renderHF);
+safeRender('tradeCards', renderTradeCards);
+safeRender('watchlist', renderWatchlist);
+safeRender('pipeline', renderPipeline);
+safeRender('actions', renderActions);
+safeRender('verification', renderVerification);
+safeRender('rulesFooter', renderRulesFooter);
 </script>
 </body>
 </html>
