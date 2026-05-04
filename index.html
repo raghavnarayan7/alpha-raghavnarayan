@@ -137,9 +137,12 @@ tr:hover td { background: rgba(59,130,246,0.05); }
   <div class="pf-positions" id="positionsContainer"></div>
 </div>
 
+<!-- Benchmark Comparison Card -->
+<div class="card" id="alphaSummary"></div>
+
 <!-- Portfolio Chart -->
 <div class="card">
-  <h3>Portfolio Value — Inception to Date</h3>
+  <h3>Portfolio Value vs S&amp;P 500 vs Nasdaq — Inception to Date (rebased to $10K)</h3>
   <div class="chart-box"><canvas id="perfChart"></canvas></div>
 </div>
 
@@ -208,7 +211,8 @@ const DATA = {
     inception: '2026-03-24',
     model: 'GLIC Alpha v2.0',
     benchmark: 'S&P 500',
-    benchmarkReturn: '+12.5%',
+    benchmarkReturn: '+10.28%',
+    benchmarkReturnNdx: '+15.41%',
     verificationSummary: '34 claims checked, 1 material correction (CCJ Q1 timing: May 5 BMO not May 1), 0 unverified. Monday HF Phase 2B refresh — Druckenmiller new long copper/gold/Japan/Korea VINDICATES gold theme.',
   },
   positions: [
@@ -351,6 +355,79 @@ const DATA = {
     { date: '2026-04-30', value: 11456 },
     { date: '2026-05-01', value: 11461 },
   ],
+  benchmarks: {
+    inceptionSpx: 6556.37,
+    inceptionNdx: 21761.89,
+    currentSpx: 7230.12,
+    currentNdx: 25114.44,
+    spxReturn: 10.28,
+    ndxReturn: 15.41,
+    portfolioReturn: 14.61,
+    alphaSpx: 4.33,
+    alphaNdx: -0.80,
+    sourceTag: 'Yahoo Finance chart API [Chrome ✓] — verified Run #22 (May 4, 2026)',
+    sampleNote: '28 trading days — too short for system alpha claim. Need 6-12 months + Sharpe-adjusted before declaring excess return statistically real.',
+    spxHistory: [
+      { date: '2026-03-24', value: 10000.00 },
+      { date: '2026-03-25', value: 10054.19 },
+      { date: '2026-03-26', value: 9879.19 },
+      { date: '2026-03-27', value: 9713.99 },
+      { date: '2026-03-30', value: 9675.66 },
+      { date: '2026-03-31', value: 9957.52 },
+      { date: '2026-04-01', value: 10028.90 },
+      { date: '2026-04-02', value: 10040.14 },
+      { date: '2026-04-06', value: 10084.59 },
+      { date: '2026-04-07', value: 10092.25 },
+      { date: '2026-04-08', value: 10345.37 },
+      { date: '2026-04-09', value: 10409.21 },
+      { date: '2026-04-10', value: 10397.35 },
+      { date: '2026-04-13', value: 10503.13 },
+      { date: '2026-04-14', value: 10626.89 },
+      { date: '2026-04-15', value: 10711.64 },
+      { date: '2026-04-16', value: 10739.60 },
+      { date: '2026-04-17', value: 10868.91 },
+      { date: '2026-04-20', value: 10843.10 },
+      { date: '2026-04-21', value: 10774.27 },
+      { date: '2026-04-22', value: 10886.97 },
+      { date: '2026-04-23', value: 10841.97 },
+      { date: '2026-04-24', value: 10928.43 },
+      { date: '2026-04-27', value: 10941.89 },
+      { date: '2026-04-28', value: 10888.34 },
+      { date: '2026-04-29', value: 10884.00 },
+      { date: '2026-04-30', value: 10995.43 },
+      { date: '2026-05-01', value: 11027.63 },
+    ],
+    ndxHistory: [
+      { date: '2026-03-24', value: 10000.00 },
+      { date: '2026-03-25', value: 10077.17 },
+      { date: '2026-03-26', value: 9837.42 },
+      { date: '2026-03-27', value: 9626.17 },
+      { date: '2026-03-30', value: 9555.53 },
+      { date: '2026-03-31', value: 9921.30 },
+      { date: '2026-04-01', value: 10036.33 },
+      { date: '2026-04-02', value: 10053.90 },
+      { date: '2026-04-06', value: 10107.73 },
+      { date: '2026-04-07', value: 10117.62 },
+      { date: '2026-04-08', value: 10401.21 },
+      { date: '2026-04-09', value: 10487.33 },
+      { date: '2026-04-10', value: 10524.31 },
+      { date: '2026-04-13', value: 10653.37 },
+      { date: '2026-04-14', value: 10862.60 },
+      { date: '2026-04-15', value: 11035.81 },
+      { date: '2026-04-16', value: 11075.65 },
+      { date: '2026-04-17', value: 11243.73 },
+      { date: '2026-04-20', value: 11214.28 },
+      { date: '2026-04-21', value: 11147.91 },
+      { date: '2026-04-22', value: 11330.62 },
+      { date: '2026-04-23', value: 11229.95 },
+      { date: '2026-04-24', value: 11412.89 },
+      { date: '2026-04-27', value: 11436.09 },
+      { date: '2026-04-28', value: 11333.48 },
+      { date: '2026-04-29', value: 11337.82 },
+      { date: '2026-04-30', value: 11438.49 },
+      { date: '2026-05-01', value: 11540.56 },
+    ],
+  },
   macro: {
     regime: 'IRAN PROPOSAL + RISK-ON GRINDING HIGHER — Iran sent updated peace proposal May 1 via Pakistan mediators, Trump vowed maintain blockade, Brent settled $108.17 (-1.7% on the news but oil structurally elevated). S&P new ATH 7,230. F&G 66.6 (Greed) unchanged. Uranium sector consolidating after Apr 30 reversal.',
     kpis: [
@@ -630,28 +707,59 @@ function renderChart() {
     document.getElementById('perfChart').parentElement.innerHTML = '<div style="text-align:center;color:var(--text-muted);padding:60px 0;">Chart populates as daily data accumulates</div>';
     return;
   }
+
+  // Build a unified date axis from portfolio history
+  const labels = DATA.history.map(d => d.date);
+  const portfolioSeries = DATA.history.map(d => d.value);
+
+  // Helper: lookup a benchmark date in its history; fall back to last known value
+  const lookupBench = (benchHistory, date) => {
+    const hit = benchHistory.find(d => d.date === date);
+    if (hit) return hit.value;
+    // fallback: nearest prior date
+    const earlier = benchHistory.filter(d => d.date <= date);
+    return earlier.length ? earlier[earlier.length - 1].value : null;
+  };
+
+  const datasets = [{
+    label: `Portfolio (+${DATA.benchmarks.portfolioReturn}%)`,
+    data: portfolioSeries,
+    borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.08)',
+    fill: true, tension: 0.3, pointRadius: 4, pointHoverRadius: 7, borderWidth: 2.5,
+  }];
+
+  if (DATA.benchmarks && DATA.benchmarks.spxHistory) {
+    datasets.push({
+      label: `S&P 500 (+${DATA.benchmarks.spxReturn}%)`,
+      data: labels.map(d => lookupBench(DATA.benchmarks.spxHistory, d)),
+      borderColor: '#94a3b8', borderDash: [6,4], pointRadius: 0, borderWidth: 1.8, fill: false, tension: 0.3,
+    });
+  }
+  if (DATA.benchmarks && DATA.benchmarks.ndxHistory) {
+    datasets.push({
+      label: `Nasdaq Comp (+${DATA.benchmarks.ndxReturn}%)`,
+      data: labels.map(d => lookupBench(DATA.benchmarks.ndxHistory, d)),
+      borderColor: '#f59e0b', borderDash: [3,3], pointRadius: 0, borderWidth: 1.8, fill: false, tension: 0.3,
+    });
+  }
+  // Baseline last so it sits behind
+  datasets.push({
+    label: 'Baseline ($10K)',
+    data: labels.map(() => 10000),
+    borderColor: 'rgba(148,163,184,0.18)', borderDash: [2,4], pointRadius: 0, borderWidth: 1, fill: false,
+  });
+
   new Chart(ctx, {
     type: 'line',
-    data: {
-      labels: DATA.history.map(d => d.date),
-      datasets: [{
-        label: 'Portfolio',
-        data: DATA.history.map(d => d.value),
-        borderColor: '#3b82f6', backgroundColor: 'rgba(59,130,246,0.08)',
-        fill: true, tension: 0.3, pointRadius: 5, pointHoverRadius: 7, borderWidth: 2.5,
-      }, {
-        label: 'Baseline ($10K)',
-        data: DATA.history.map(() => 10000),
-        borderColor: 'rgba(148,163,184,0.25)', borderDash: [5,5], pointRadius: 0, borderWidth: 1, fill: false,
-      }]
-    },
+    data: { labels, datasets },
     options: {
       responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: { labels: { color: '#94a3b8', font: { size: 12 } } },
+        legend: { labels: { color: '#e2e8f0', font: { size: 12 } } },
         tooltip: {
           backgroundColor: '#1a2332', borderColor: '#2a3444', borderWidth: 1, titleColor: '#e2e8f0', bodyColor: '#e2e8f0',
-          callbacks: { label: ctx => { const v = ctx.parsed.y; const r = ((v-10000)/10000*100).toFixed(2); return `$${v.toLocaleString('en-US',{minimumFractionDigits:2})} (${r>=0?'+':''}${r}%)`; } }
+          callbacks: { label: ctx => { const v = ctx.parsed.y; if (v == null) return ''; const r = ((v-10000)/10000*100).toFixed(2); return `${ctx.dataset.label.split(' (')[0]}: $${v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} (${r>=0?'+':''}${r}%)`; } }
         }
       },
       scales: {
@@ -660,6 +768,29 @@ function renderChart() {
       }
     }
   });
+}
+
+function renderAlphaSummary() {
+  if (!DATA.benchmarks) return;
+  const b = DATA.benchmarks;
+  const card = document.getElementById('alphaSummary');
+  if (!card) return;
+  const alphaSpxColor = b.alphaSpx >= 0 ? 'var(--green)' : 'var(--red)';
+  const alphaNdxColor = b.alphaNdx >= 0 ? 'var(--green)' : 'var(--red)';
+  card.innerHTML = `
+    <h3 style="margin-top:0; margin-bottom: 0.75rem; font-size: 1rem;">Benchmark Comparison — Inception to Date</h3>
+    <div class="kpi-grid" style="margin-bottom: 0.75rem;">
+      <div class="kpi"><div class="kpi-label">GLIC Alpha</div><div class="kpi-value" style="color:var(--green)">+${b.portfolioReturn}%</div><div class="kpi-sub">Concentrated, 60% deployed</div></div>
+      <div class="kpi"><div class="kpi-label">S&P 500</div><div class="kpi-value">+${b.spxReturn}%</div><div class="kpi-sub">Broad market</div></div>
+      <div class="kpi"><div class="kpi-label">Nasdaq Comp</div><div class="kpi-value">+${b.ndxReturn}%</div><div class="kpi-sub">Tech-heavy</div></div>
+      <div class="kpi"><div class="kpi-label">Alpha vs S&P</div><div class="kpi-value" style="color:${alphaSpxColor}">${b.alphaSpx >= 0 ? '+' : ''}${b.alphaSpx} pts</div><div class="kpi-sub">${b.alphaSpx >= 0 ? '✓ outperforming' : '✗ trailing'}</div></div>
+      <div class="kpi"><div class="kpi-label">Alpha vs Nasdaq</div><div class="kpi-value" style="color:${alphaNdxColor}">${b.alphaNdx >= 0 ? '+' : ''}${b.alphaNdx} pts</div><div class="kpi-sub">${b.alphaNdx >= 0 ? '✓ outperforming' : '✗ trailing'}</div></div>
+    </div>
+    <div style="font-size: 0.8rem; color: var(--amber); padding: 8px 12px; background: rgba(245,158,11,0.06); border-left: 2px solid var(--amber); border-radius: 4px;">
+      <b>Caveat:</b> ${b.sampleNote}
+    </div>
+    <div style="font-size: 0.7rem; color: var(--text-muted); margin-top: 6px;">${b.sourceTag}</div>
+  `;
 }
 
 function renderMacro() {
@@ -974,6 +1105,7 @@ function renderProbability() {
 // INIT
 renderSubtitle();
 renderPortfolio();
+renderAlphaSummary();
 renderChart();
 renderMacro();
 renderThemes();
